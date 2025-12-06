@@ -8,7 +8,6 @@
     <title>Angkorkey — Clean Shop</title>
 
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"/>
 
     <style>
@@ -74,13 +73,7 @@
 
         .backdrop { backdrop-filter: blur(6px) }
 
-        .thumb {
-            border: 2px solid transparent;
-            transition: border-color .2s ease
-        }
-        .thumb[aria-current="true"] { border-color: var(--accent) }
-
-        /* Custom Prose Overrides for Description */
+        /* Custom Prose Overrides */
         .prose p { margin-bottom: 0.5em; }
         .prose ul { list-style-type: disc; padding-left: 1.2em; margin-bottom: 0.5em; }
         .prose strong { color: var(--ink); font-weight: 600; }
@@ -122,270 +115,87 @@
 
 <div id="productModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 backdrop bg-black/60"></div>
 
-<div id="descPopup" class="fixed inset-0 z-[60] hidden items-center justify-center p-4 backdrop bg-black/60">
-    <div class="bg-white max-w-md w-full rounded-2xl overflow-hidden shadow-xl transform scale-95 opacity-0 transition-all duration-300 ease-out flex flex-col max-h-[80vh]">
-        <div class="relative p-6 flex flex-col h-full">
-            <button id="descCloseBtn"
-                    class="absolute top-4 right-4 bg-gray-100 hover:bg-[color:var(--accent)] hover:text-white transition-colors size-9 rounded-full grid place-items-center z-10"
-                    aria-label="Close">
-                <i class="bi bi-x-lg text-sm"></i>
-            </button>
-            <h3 class="text-lg font-semibold mb-3 pr-8 shrink-0">Description</h3>
-
-            <div id="descPopupText" class="prose prose-sm prose-slate max-w-none text-gray-600 leading-relaxed overflow-y-auto pr-2">
-                </div>
-        </div>
-    </div>
-</div>
-
 <script>
     /* ----------------------- Data ----------------------- */
     const PRODUCTS = [
-
         {
             id: '2',
             name: 'Moondrop Chu II',
             price: 22,
             category: 'iem',
-            description: '<p><strong>High-Fidelity Sound</strong> in a durable metal build. This is the ultimate value proposition for the discerning listener.</p>\n' +
-                '<ul>\n' +
-                '    <li><strong>10mm Dynamic Driver</strong> with VDSF tuning</li>\n' +
-                '    <li>Wide soundstage & detailed resolution</li>\n' +
-                '    <li>Detachable 0.78mm 2-pin cable (3.5mm plug)</li>\n' +
-                '</ul>\n' +
-                '<p>Premium zinc alloy construction with a CNC-machined brass nozzle for under $25.</p>',
-            images: [
-                'assets/images/Main-03.jpg',
-                'assets/images/Main-02.jpg',
-                'assets/images/Main-01.jpg',
-                'assets/images/Main-04.jpg'
-            ]
-        }
-        ,
+            description: '<p><strong>High-Fidelity Sound</strong> in a durable metal build. This is the ultimate value proposition for the discerning listener.</p><ul><li><strong>10mm Dynamic Driver</strong> with VDSF tuning</li><li>Wide soundstage & detailed resolution</li><li>Detachable 0.78mm 2-pin cable (3.5mm plug)</li></ul><p>Premium zinc alloy construction with a CNC-machined brass nozzle for under $25.</p>',
+            images: ['assets/images/Main-03.jpg', 'assets/images/Main-02.jpg', 'assets/images/Main-01.jpg', 'assets/images/Main-04.jpg']
+        },
         {
             id: '3',
             name: 'QKZ AK3',
             price: 8,
             category: 'iem',
-            description: '<p><strong>Dazzling Clear Design & Studio-Grade Sound</strong>. These IEMs combine eye-catching style with precise acoustic performance for a professional listening experience.</p>\n' +
-                '<ul>\n' +
-                '    <li><strong>Transparent Resin Shell</strong> with cool color accents</li>\n' +
-                '    <li><strong>Hi-Fi Acoustic Tuning</strong> for true-to-source reproduction</li>\n' +
-                '    <li>28° angled nozzle for a <strong>secure, comfortable fit</strong></li>\n' +
-                '    <li><strong>3.5mm cable with built-in microphone</strong> for calls & control</li>\n' +
-                '    <li><strong>Includes a free protective storage bag</strong></li>\n' +
-                '</ul>\n' +
-                '<p>Features a detachable 2-pin HIFI-grade cable and a fingerprint-resistant, skin-friendly surface for all-day wear.</p>',
-            images: [
-                'assets/images/QkzAK3__0005.webp',
-                'assets/images/QkzAK3__0006.webp',
-                'assets/images/QkzAK3__0007webp',
-                'assets/images/QkzAK3__0008.webp',
-
-            ]
-        },{
+            description: '<p><strong>Dazzling Clear Design & Studio-Grade Sound</strong>.</p><ul><li><strong>Transparent Resin Shell</strong></li><li><strong>Hi-Fi Acoustic Tuning</strong></li><li>28° angled nozzle</li><li><strong>3.5mm cable with Mic</strong></li></ul>',
+            images: ['assets/images/QkzAK3__0005.webp', 'assets/images/QkzAK3__0006.webp', 'assets/images/QkzAK3__0007webp', 'assets/images/QkzAK3__0008.webp']
+        },
+        {
             id: '4',
             name: 'QKZ X HBB',
             price: 22,
             category: 'iem',
-            description: '<p><strong>Dazzling Clear Design & Studio-Grade Sound</strong>. These IEMs combine eye-catching style with precise acoustic performance for a professional listening experience.</p>\n' +
-                '<ul>\n' +
-                '    <li><strong>Transparent Resin Shell</strong> with cool color accents</li>\n' +
-                '    <li><strong>Hi-Fi Acoustic Tuning</strong> for true-to-source reproduction</li>\n' +
-                '    <li>28° angled nozzle for a <strong>secure, comfortable fit</strong></li>\n' +
-                '    <li><strong>3.5mm cable with built-in microphone</strong> for calls & control</li>\n' +
-                '    <li><strong>Includes a free protective storage bag</strong></li>\n' +
-                '</ul>\n' +
-                '<p>Features a detachable 2-pin HIFI-grade cable and a fingerprint-resistant, skin-friendly surface for all-day wear.</p>',
-            images: [
-                'assets/images/QkzXHBB__0001.webp',
-                'assets/images/QkzXHBB__0002.webp',
-                'assets/images/QkzXHBB__0003.webp',
-                'assets/images/QkzXHBB__0004.webp',
-
-
-            ]
-        },{
+            description: '<p><strong>Bass-Tuned Collaboration</strong>. Designed with Hawaii Bad Boy (HBB) for rich, impactful low-end without muddying the mids.</p><ul><li><strong>Optimized Magnetic Circuit</strong></li><li>Custom tuned for Rock, Hip-Hop, and Pop</li><li>Detachable 2-pin cable</li></ul>',
+            images: ['assets/images/QkzXHBB__0001.webp', 'assets/images/QkzXHBB__0002.webp', 'assets/images/QkzXHBB__0003.webp', 'assets/images/QkzXHBB__0004.webp']
+        },
+        {
             id: '5',
             name: 'KZ Castor Pro',
             price: 22,
             category: 'iem',
-            description: '<p><strong>Dual Dynamic Driver Power & Customizable Sound</strong>. The KZ Castor Pro delivers exceptional clarity and bass with a versatile tuning switch system.</p>\n' +
-                '<ul>\n' +
-                '    <li><strong>Dual Dynamic Drivers</strong> (10mm + 6mm) for powerful, detailed sound</li>\n' +
-                '    <li><strong>4-Way Tuning Switches</strong> to customize your bass and treble</li>\n' +
-                '    <li><strong>Professional Detachable Cable</strong> (3.5mm with microphone)</li>\n' +
-                '    <li>Ergonomic resin shell for a <strong>secure, comfortable fit</strong></li>\n' +
-                '    <li><strong>Includes a free protective storage case</strong></li>\n' +
-                '</ul>\n' +
-                '<p>Experience a new level of audio personalization with its innovative switch system, perfect for gaming, music, and calls.</p>',
-            images: [
-                'assets/images/KZCastorPro__0001.webp',
-                'assets/images/KZCastorPro__0002.webp',
-                'assets/images/KZCastorPro__0003.webp',
-                'assets/images/KZCastorPro__0004.webp',
-
-
-
-            ]
-        },{
+            description: '<p><strong>Dual Dynamic Driver Power & Customizable Sound</strong>.</p><ul><li><strong>Dual Drivers</strong> (10mm + 6mm)</li><li><strong>4-Way Tuning Switches</strong></li><li>Ergonomic resin shell</li></ul>',
+            images: ['assets/images/KZCastorPro__0001.webp', 'assets/images/KZCastorPro__0002.webp', 'assets/images/KZCastorPro__0003.webp', 'assets/images/KZCastorPro__0004.webp']
+        },
+        {
             id: '6',
             name: 'Tanchjim Bunny Type C',
             price: 25,
             category: 'iem',
-            description: '<p><strong>All-in-One Hi-Fi Audio Experience</strong>. The Tanchjim Bunny DSP integrates high-resolution audio with powerful processing in a complete, portable package.</p>\n' +
-                '<ul>\n' +
-                '    <li><strong>Built-in Hi-Fi DAC & Amplifier</strong> for studio-grade sound processing</li>\n' +
-                '    <li><strong>Dual Dynamic Driver System</strong> (10mm + 6mm) for rich, balanced audio</li>\n' +
-                '    <li>Intelligent <strong>DSP Tuning</strong> with multiple sound profiles</li>\n' +
-                '    <li><strong>Plug-and-Play USB-C Connectivity</strong> (no extra adapters needed) With MIC</li>\n' +
-                '    <li>Lightweight ergonomic design for <strong>all-day comfortable wear</strong></li>\n' +
-                '</ul>\n' +
-                '<p>Enjoy pristine, detail-rich sound directly from your phone, tablet, or computer—perfect for music lovers, gamers, and content creators.</p>',
-            images: [
-                'assets/images/TBunny__0003.webp',
-                'assets/images/TBunny__0002.webp',
-                'assets/images/TBunny__0001.webp',
-                'assets/images/TBunny__0004.webp',
-
-
-
-            ]
-        },{
+            description: '<p><strong>All-in-One Hi-Fi Audio Experience</strong> with built-in DSP.</p><ul><li><strong>Built-in DAC & Amp</strong></li><li><strong>Dual Dynamic Driver</strong></li><li>Plug-and-Play USB-C</li></ul>',
+            images: ['assets/images/TBunny__0003.webp', 'assets/images/TBunny__0002.webp', 'assets/images/TBunny__0001.webp', 'assets/images/TBunny__0004.webp']
+        },
+        {
             id: '7',
             name: 'Tanchjim Bunny 3.5mm',
             price: 25,
             category: 'iem',
-            description: '<p><strong>Pure Analog Audio Performance</strong>. The Tanchjim Bunny 3.5mm version delivers its acclaimed dual-driver sound directly from any standard audio jack for maximum compatibility.</p>\n' +
-                '<ul>\n' +
-                '    <li><strong>Dual Dynamic Driver System</strong> (10mm + 6mm) for rich, balanced audio</li>\n' +
-                '    <li><strong>Universal 3.5mm Connection</strong> works with all phones, laptops, and players</li>\n' +
-                '    <li>Lightweight ergonomic resin shell for a <strong>secure, comfortable fit</strong></li>\n' +
-                '    <li><strong>Professional Detachable Cable</strong> (0.78mm 2-pin) for easy customization</li>\n' +
-                '    <li><strong>Acoustic Tuning for Hi-Fi Sound</strong> with high-resolution detail</li>\n' +
-                '</ul>\n' +
-                '<p>Experience the detailed, energetic Tanchjim sound signature anywhere—no batteries, charging, or drivers required.</p>',
-            images: [
-                'assets/images/TBunny__0003.webp',
-                'assets/images/TBunny_3.5_0001.webp',
-                'assets/images/TBunny_3.5_0002.webp',
-                'assets/images/TBunny__0004.webp',
-
-
-
-            ]
-        },{
+            description: '<p><strong>Pure Analog Audio Performance</strong>.</p><ul><li><strong>Dual Dynamic Driver System</strong></li><li><strong>Universal 3.5mm Connection</strong></li><li>Lightweight ergonomic shell</li></ul>',
+            images: ['assets/images/TBunny__0003.webp', 'assets/images/TBunny_3.5_0001.webp', 'assets/images/TBunny_3.5_0002.webp', 'assets/images/TBunny__0004.webp']
+        },
+        {
             id: '8',
-            name: 'Tangzu Waner SG 2 Green ',
+            name: 'Tangzu Waner SG 2 Green',
             price: 38,
             category: 'iem',
-            description: '<p><strong>Signature Audiophile Tuning in an Iconic Shell</strong>. The Tangzu x Warner Bros. SG-2 merges collectible style with high-performance, neutrally-tuned audio for a true listening experience.</p>\n' +
-                '<ul>\n' +
-                '    <li><strong>Neutral-Balanced Tuning</strong> for accurate, studio-grade sound reproduction</li>\n' +
-                '    <li><strong>Dual Magnetic Circuit Dynamic Driver</strong> (10mm) for exceptional clarity</li>\n' +
-                '    <li>Iconic <strong>Space Jam-themed Design</strong> with a durable zinc alloy shell</li>\n' +
-                '    <li><strong>Detachable Cable with Microphone</strong> (3.5mm) for calls and control</li>\n' +
-                '    <li><strong>Includes themed accessories</strong> (carrying pouch, themed stickers)</li>\n' +
-                '</ul>\n' +
-                '<p>This collaboration offers a taste of high-fidelity, detailed sound in a uniquely collectible package, making it a standout for both new listeners and enthusiasts.</p>',
-            images: [
-                'assets/images/TWanerSG2B_0002.webp',
-                'assets/images/TWanerSG2B_0001.webp',
-                'assets/images/TWanerSG2B_0003.webp',
-                'assets/images/TWanerSG2B_0004.webp',
-
-
-
-
-            ]
-        },{
+            description: '<p><strong>Space Jam Edition</strong>. High-performance, neutrally-tuned audio.</p><ul><li><strong>Neutral-Balanced Tuning</strong></li><li><strong>Dual Magnetic Circuit Driver</strong></li><li>Collectible design</li></ul>',
+            images: ['assets/images/TWanerSG2B_0002.webp', 'assets/images/TWanerSG2B_0001.webp', 'assets/images/TWanerSG2B_0003.webp', 'assets/images/TWanerSG2B_0004.webp']
+        },
+        {
             id: '9',
-            name: 'Tangzu Waner SG 2 Black ',
+            name: 'Tangzu Waner SG 2 Black',
             price: 38,
             category: 'iem',
-            description: '<p><strong>Signature Audiophile Tuning in an Iconic Shell</strong>. The Tangzu x Warner Bros. SG-2 merges collectible style with high-performance, neutrally-tuned audio for a true listening experience.</p>\n' +
-                '<ul>\n' +
-                '    <li><strong>Neutral-Balanced Tuning</strong> for accurate, studio-grade sound reproduction</li>\n' +
-                '    <li><strong>Dual Magnetic Circuit Dynamic Driver</strong> (10mm) for exceptional clarity</li>\n' +
-                '    <li>Iconic <strong>Space Jam-themed Design</strong> with a durable zinc alloy shell</li>\n' +
-                '    <li><strong>Detachable Cable with Microphone</strong> (3.5mm) for calls and control</li>\n' +
-                '    <li><strong>Includes themed accessories</strong> (carrying pouch, themed stickers)</li>\n' +
-                '</ul>\n' +
-                '<p>This collaboration offers a taste of high-fidelity, detailed sound in a uniquely collectible package, making it a standout for both new listeners and enthusiasts.</p>',
-            images: [
-                'assets/images/TWanerSG2B_0003-1.webp',
-                'assets/images/TWanerSG2B_0001-1.webp',
-                'assets/images/TWanerSG2B_0003-1.webp',
-                'assets/images/TWanerSG2B_0004-1.webp',
-
-
-
-
-            ]
-        },{
+            description: '<p><strong>Space Jam Edition</strong> in Black.</p><ul><li><strong>Neutral-Balanced Tuning</strong></li><li><strong>Dual Magnetic Circuit Driver</strong></li><li>Collectible design</li></ul>',
+            images: ['assets/images/TWanerSG2B_0003-1.webp', 'assets/images/TWanerSG2B_0001-1.webp', 'assets/images/TWanerSG2B_0003-1.webp', 'assets/images/TWanerSG2B_0004-1.webp']
+        },
+        {
             id: '10',
             name: 'Monitor Stand',
             price: 15,
             category: 'accessories',
-            description: '<p><strong>Expanded Workspace with Integrated Hub</strong>. This 55cm wide monitor stand lifts your screen to an ergonomic height while providing a centralized, clutter-free charging station.</p>\n' +
-                '<ul>\n' +
-                '    <li><strong>Spacious Platform:</strong> 55cm (W) x 20cm (D) fits most monitors and laptops</li>\n' +
-                '    <li><strong>Integrated 4-Port USB Hub:</strong> Features <strong>USB-A and Type-C</strong> ports</li>\n' +
-                '    <li><strong>7.5cm Ergonomic Height:</strong> Optimal lift for improved viewing posture</li>\n' +
-                '    <li><strong>Cable Management:</strong> Hidden channel to organize wires neatly</li>\n' +
-                '    <li><strong>Sturdy & Stable:</strong> Durable construction to securely hold your setup</li>\n' +
-                '</ul>\n' +
-                '<p>Free up valuable desk space and connect your peripherals effortlessly with this all-in-one stand and hub solution.</p>',
-            images: [
-                'assets/images/MonitorStand_0001.webp',
-                'assets/images/MonitorStand_0002.webp',
-                'assets/images/MonitorStand_0003.webp',
-                'assets/images/MonitorStand_0004.webp',
-
-
-            ]
+            description: '<p><strong>Expanded Workspace with Integrated Hub</strong>.</p><ul><li><strong>Spacious Platform:</strong> 55cm x 20cm</li><li><strong>Integrated 4-Port USB Hub</strong></li><li><strong>7.5cm Ergonomic Height</strong></li></ul>',
+            images: ['assets/images/MonitorStand_0001.webp', 'assets/images/MonitorStand_0002.webp', 'assets/images/MonitorStand_0003.webp', 'assets/images/MonitorStand_0004.webp']
         },
-
     ];
 
     /* ----------------------- Utilities ----------------------- */
     const $ = (sel, ctx = document) => ctx.querySelector(sel);
     const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
     const fmtPrice = v => new Intl.NumberFormat(undefined, {style: 'currency', currency: 'USD'}).format(v);
-
-    /* ----------------------- Description Popup ----------------------- */
-    const descPopup = $('#descPopup');
-    const descPopupText = $('#descPopupText');
-    const descCloseBtn = $('#descCloseBtn');
-
-    function openDescPopup(fullText) {
-        // CHANGED: Use innerHTML to render Summernote HTML tags
-        descPopupText.innerHTML = fullText;
-
-        const content = descPopup.querySelector('.bg-white');
-        descPopup.classList.remove('hidden');
-        descPopup.classList.add('flex');
-
-        setTimeout(() => {
-            content.classList.remove('scale-95', 'opacity-0');
-            content.classList.add('scale-100', 'opacity-100');
-        }, 10);
-    }
-
-    function closeDescPopup() {
-        const content = descPopup.querySelector('.bg-white');
-        content.classList.remove('scale-100', 'opacity-100');
-        content.classList.add('scale-95', 'opacity-0');
-        setTimeout(() => {
-            descPopup.classList.add('hidden');
-            descPopup.classList.remove('flex');
-        }, 300);
-    }
-
-    descCloseBtn.addEventListener('click', closeDescPopup);
-    descPopup.addEventListener('click', (e) => {
-        if (e.target === descPopup) closeDescPopup();
-    });
 
     /* ----------------------- Render Products ----------------------- */
     let currentFilter = 'all';
@@ -453,45 +263,50 @@
         });
     });
 
-    /* ----------------------- Modal ----------------------- */
+    /* ----------------------- Fixed Modal Logic ----------------------- */
     const modal = $('#productModal');
     let lastFocus = null;
 
+    // UPDATED: Fixed layout template that doesn't scroll the page
     function modalTemplate(p) {
         return `
-        <div class="bg-white max-w-4xl w-full rounded-2xl overflow-hidden shadow-xl mx-4 flex flex-col md:flex-row max-h-[90vh] md:max-h-none overflow-y-auto md:overflow-visible" role="dialog" aria-modal="true" aria-label="${p.name}">
+        <div class="bg-white max-w-4xl w-full rounded-2xl shadow-2xl mx-4 flex flex-col md:flex-row h-[85vh] overflow-hidden relative" role="dialog" aria-modal="true" aria-label="${p.name}">
 
-          <div class="w-full md:w-1/2 p-3 flex flex-col bg-white">
-            <div class="relative flex-1">
-               <img id="mainImg" src="${p.images[0]}" onerror="this.src='https://placehold.co/400?text=No+Image'" alt="${p.name}" class="w-full aspect-square object-cover rounded-xl bg-gray-50"/>
+          <div class="w-full h-[45%] md:w-1/2 md:h-full bg-gray-50 flex flex-col relative group border-b md:border-b-0 md:border-r border-gray-100">
+
+            <div class="flex-1 relative min-h-0 p-6 flex items-center justify-center">
+               <img id="mainImg" src="${p.images[0]}" onerror="this.src='https://placehold.co/400?text=No+Image'" alt="${p.name}" class="max-w-full max-h-full object-contain drop-shadow-sm mix-blend-multiply transition-opacity duration-300"/>
             </div>
-            <div class="flex gap-2 pt-3 overflow-x-auto scrollbar-hide">
-               ${p.images.map((src, idx) => `<img src="${src}" onerror="this.style.display='none'" alt="thumb" class="thumb size-16 object-cover rounded-md cursor-pointer border border-gray-200" ${idx === 0 ? 'aria-current="true"' : ''} data-thumb>`).join('')}
+
+            <div class="h-16 shrink-0 bg-white flex items-center px-4 gap-2 overflow-x-auto scrollbar-hide border-t border-gray-100 z-10">
+               ${p.images.map((src, idx) => `
+                <button class="shrink-0 size-10 rounded-lg border border-gray-200 overflow-hidden hover:opacity-80 transition-all ${idx === 0 ? 'ring-2 ring-[color:var(--accent)]' : ''}" data-thumb>
+                    <img src="${src}" class="w-full h-full object-cover" />
+                </button>`).join('')}
             </div>
           </div>
 
-          <div class="w-full md:w-1/2 p-6 md:p-8 flex flex-col relative">
-            <button id="closeBtn" class="absolute top-4 right-4 bg-gray-100 hover:bg-[color:var(--accent)] hover:text-white transition-colors size-9 rounded-full grid place-items-center" aria-label="Close">
-              <i class="bi bi-x-lg text-sm"></i>
-            </button>
+          <div class="w-full h-[55%] md:w-1/2 md:h-full flex flex-col bg-white relative">
 
-            <div class="mt-2">
-                <h2 class="text-2xl font-bold mb-2 text-gray-900">${p.name}</h2>
-                <p class="text-xl font-semibold text-[color:var(--accent)] mb-6">${fmtPrice(p.price)}</p>
-
-                <div class="mb-8 p-4 bg-gray-50 rounded-xl border border-gray-100">
-                    <div class="prose prose-sm text-gray-500 mb-2 line-clamp-2 max-h-[3rem] overflow-hidden">
-                        ${p.description}
-                    </div>
-                    <button id="descTrigger" class="text-[color:var(--accent)] font-medium hover:underline text-sm inline-flex items-center gap-1">
-                        <i class="bi bi-info-circle"></i> <span>Read full details</span>
+            <div class="p-5 pb-2 shrink-0">
+                 <div class="flex justify-between items-start">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-900 leading-tight pr-10 line-clamp-2">${p.name}</h2>
+                    <button id="closeBtn" class="absolute top-4 right-4 bg-gray-100 hover:bg-[color:var(--accent)] hover:text-white transition-colors size-8 rounded-full grid place-items-center shrink-0 z-20" aria-label="Close">
+                      <i class="bi bi-x-lg text-sm"></i>
                     </button>
+                 </div>
+                 <p class="text-lg md:text-xl font-semibold text-[color:var(--accent)] mt-1">${fmtPrice(p.price)}</p>
+            </div>
+
+            <div class="px-5 py-2 overflow-y-auto flex-1">
+                <div class="prose prose-sm text-gray-500 leading-relaxed">
+                    ${p.description}
                 </div>
             </div>
 
-            <div class="mt-auto pt-4 md:pt-0">
-              <a id="tgLink" href="#" target="_blank" class="w-full bg-black hover:bg-[color:var(--accent)] transition-colors text-white py-3.5 rounded-xl text-center text-sm font-medium inline-flex items-center justify-center gap-2">
-                <i class="bi bi-telegram"></i><span>Order on Telegram</span>
+            <div class="p-5 pt-3 mt-auto shrink-0 border-t border-gray-50 bg-white/50 backdrop-blur-sm">
+              <a id="tgLink" href="#" target="_blank" class="w-full bg-black hover:bg-[color:var(--accent)] transition-colors text-white py-3 rounded-xl text-center text-sm font-bold tracking-wide inline-flex items-center justify-center gap-2 shadow-lg shadow-gray-200">
+                <i class="bi bi-telegram"></i><span>Order Now</span>
               </a>
             </div>
           </div>
@@ -502,50 +317,66 @@
         const p = PRODUCTS.find(x => x.id === id);
         if (!p) return;
         lastFocus = document.activeElement;
+
+        // Show modal container
         modal.classList.remove('hidden');
         modal.classList.add('flex');
+
+        // Render content
         modal.innerHTML = modalTemplate(p);
+
+        // Lock body scroll
         document.body.style.overflow = 'hidden';
 
+        // Setup Image Logic
         const main = $('#mainImg', modal);
-        $$('[data-thumb]', modal).forEach((thumb, idx) => {
+        const thumbs = $$('[data-thumb]', modal);
+
+        thumbs.forEach((thumb, idx) => {
             thumb.addEventListener('click', () => {
-                main.src = p.images[idx];
-                $$('[data-thumb]', modal).forEach(x => x.setAttribute('aria-current', 'false'));
-                thumb.setAttribute('aria-current', 'true');
+                // Fade out, change src, fade in
+                main.style.opacity = '0.5';
+                setTimeout(() => {
+                    main.src = p.images[idx];
+                    main.style.opacity = '1';
+                }, 100);
+
+                // Update active state styling
+                thumbs.forEach(t => t.classList.remove('ring-2', 'ring-[color:var(--accent)]'));
+                thumb.classList.add('ring-2', 'ring-[color:var(--accent)]');
             });
         });
+
+        // Setup Link
         $('#tgLink', modal).href = `https://t.me/angkorkey_admin_2?text=${encodeURIComponent('Hello, I\'m interested in ' + p.name)}`;
 
+        // Setup Close Logic
         const close = () => {
             modal.classList.add('hidden');
             modal.classList.remove('flex');
-            modal.innerHTML = '';
+            modal.innerHTML = ''; // Clean up to stop videos/etc if you had them
             document.body.style.overflow = '';
             if (lastFocus) lastFocus.focus();
         }
+
         $('#closeBtn', modal).addEventListener('click', close);
+
+        // Click outside to close
         modal.addEventListener('click', (e) => {
             if (e.target === modal) close();
         });
+
+        // Esc key to close
+        const escClose = (e) => {
+            if (e.key === 'Escape') {
+                close();
+                document.removeEventListener('keydown', escClose);
+            }
+        };
         document.addEventListener('keydown', escClose);
 
-        function escClose(e) {
-            if (e.key === 'Escape') {
-                if (!descPopup.classList.contains('hidden')) {
-                    closeDescPopup();
-                } else {
-                    close();
-                    document.removeEventListener('keydown', escClose);
-                }
-            }
-        }
-
+        // Focus management
         $('#closeBtn', modal).focus();
-
-        // Description trigger handler
-        const descTrigger = $('#descTrigger', modal);
-        descTrigger.addEventListener('click', () => openDescPopup(p.description));
     }
 
     /* ----------------------- Stagger on view ----------------------- */
