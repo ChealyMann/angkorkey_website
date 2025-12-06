@@ -322,6 +322,19 @@
         return tmp.textContent || tmp.innerText || "";
     }
 
+    // Helper to get description snippet
+    function getDescSnippet(html) {
+        const tmp = document.createElement("DIV");
+        tmp.innerHTML = html;
+        // Get first paragraph or first 150 characters
+        const firstP = tmp.querySelector('p');
+        if (firstP) {
+            return firstP.outerHTML;
+        }
+        const text = tmp.textContent || tmp.innerText || "";
+        return text.length > 150 ? text.substring(0, 150) + '...' : text;
+    }
+
     function modalTemplate(p) {
         return `
         <div class="bg-white max-w-4xl w-full rounded-2xl shadow-2xl mx-4 flex flex-col md:flex-row h-[85vh] overflow-hidden relative" role="dialog" aria-modal="true" aria-label="${p.name}">
@@ -352,7 +365,7 @@
 
             <div class="px-5 py-2 overflow-y-auto flex-1">
                 <div class="prose prose-sm text-gray-500 leading-relaxed">
-                    ${p.description}
+                    ${getDescSnippet(p.description)}
                 </div>
                 <button id="descTrigger" class="mt-4 text-[color:var(--accent)] font-medium hover:underline text-sm inline-flex items-center gap-1">
                     <i class="bi bi-arrows-fullscreen"></i> <span>Read full details</span>
