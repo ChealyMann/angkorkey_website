@@ -1,144 +1,228 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full antialiased [scrollbar-gutter:stable]">
+<html lang="km" class="h-full antialiased selection:bg-red-500 selection:text-white">
 
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="theme-color" content="#0a0a0a"/>
-    <title>Angkorkey — Clean Shop</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#ffffff" />
+    <title>Angkorkey — ហាងលក់គ្រឿង Electronics</title>
 
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"/>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Kantumruy+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Kantumruy Pro', 'Inter', 'sans-serif'],
+                        khmer: ['Kantumruy Pro', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        accent: '#ef4444', // Red-500
+                        ink: '#0f172a',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.3s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 
     <style>
-        :root {
-            --ink: #0a0a0a;
-            --muted: #6b7280;
-            --ring: #111827;
-            --card: #ffffff;
-            --border: #e5e7eb;
-            --accent: #ef4444;
+        /* Hide scrollbars but allow scrolling */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        body { -webkit-tap-highlight-color: transparent; }
+
+        /* Glass effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
-        * { box-sizing: border-box }
-        html, body { height: 100% }
-
-        body {
-            font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Inter, Arial, sans-serif;
-            background: #fff;
-            color: var(--ink)
+        /* Card Hover Effects */
+        .product-card { transition: transform 0.2s, box-shadow 0.2s; }
+        .product-card:active { transform: scale(0.98); }
+        @media (min-width: 768px) {
+            .product-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); }
         }
 
-        /* Utilities */
-        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none }
-        .scrollbar-hide::-webkit-scrollbar { display: none }
-
-        .chip {
-            background: #f9fafb;
-            border: 1px solid var(--border);
-            color: #374151;
-            transition: all .2s ease
+        /* Line clamp for Khmer text specifically */
+        .line-clamp-kh {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.6;
         }
-        .chip[data-active="true"] {
-            background: var(--accent);
-            color: #fff;
-            border-color: var(--accent)
-        }
-        .chip:active { transform: scale(.98) }
-
-        .card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            transition: transform .25s ease, border-color .25s ease;
-        }
-        .card:hover {
-            transform: translateY(-2px);
-            border-color: var(--accent);
-        }
-
-        /* Animations */
-        @keyframes cardIn {
-            0% { opacity: 0; transform: translateY(8px) scale(.98) }
-            100% { opacity: 1; transform: translateY(0) scale(1) }
-        }
-        .card-enter {
-            opacity: 0;
-            animation: cardIn .38s cubic-bezier(.22, .61, .36, 1) forwards;
-            will-change: transform, opacity
-        }
-        @media (prefers-reduced-motion: reduce) {
-            .card, .chip { transition: none }
-            .card-enter { animation: none; opacity: 1 }
-        }
-
-        .backdrop { backdrop-filter: blur(6px) }
-
-        /* Custom Prose Overrides */
-        .prose p { margin-bottom: 0.5em; }
-        .prose ul { list-style-type: disc; padding-left: 1.2em; margin-bottom: 0.5em; }
-        .prose strong { color: var(--ink); font-weight: 600; }
     </style>
 </head>
 
-<body class="min-h-full">
-<header class="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-gray-100">
-    <div class="max-w-6xl mx-auto px-5 py-4 flex items-center gap-3">
-        <div class="size-8 rounded-lg bg-black text-white grid place-items-center font-semibold">A</div>
-        <h1 class="text-xl md:text-2xl font-semibold tracking-tight">Angkorkey</h1>
-        <div class="ml-auto hidden md:flex items-center gap-3">
-            <a class="text-sm text-gray-600 hover:text-[color:var(--accent)]" href="#">About</a>
-            <a class="text-sm text-gray-600 hover:text-[color:var(--accent)]" href="#">Contact</a>
+<body class="bg-gray-50 text-ink h-full flex flex-col font-sans">
+
+    <header class="sticky top-0 z-30 glass border-b border-gray-200/50">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+                <div class="size-9 bg-black text-white rounded-xl flex items-center justify-center font-bold text-lg shadow-md shadow-gray-200 font-inter">A</div>
+                <h1 class="text-lg font-bold tracking-tight font-inter">Angkorkey</h1>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <a href="https://t.me/angkorkey" target="_blank" class="text-sm font-medium text-gray-600 hover:text-accent transition-colors hidden md:block font-inter">Join Channel</a>
+                <button class="size-9 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200 transition-colors md:hidden">
+                    <i class="bi bi-list text-lg"></i>
+                </button>
+            </div>
         </div>
-    </div>
-</header>
+    </header>
 
-<section class="max-w-6xl mx-auto px-5 pt-4 pb-2">
-    <div class="relative">
-        <i class="bi bi-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-        <input id="searchInput" type="text" inputmode="search" placeholder="Search products…"
-               class="w-full pl-10 pr-3 py-3 rounded-xl bg-gray-50 border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[color:var(--accent)] focus:border-[color:var(--accent)]"
-               aria-label="Search products"/>
-    </div>
-</section>
+    <div class="sticky top-16 z-20 bg-gray-50/95 backdrop-blur-sm pt-4 pb-2 border-b border-gray-200/50 md:static md:bg-transparent md:border-none">
+        <div class="max-w-6xl mx-auto px-4 space-y-3">
+            <div class="relative group">
+                <i class="bi bi-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-accent transition-colors"></i>
+                <input id="searchInput" type="search" placeholder="ស្វែងរកកាស, គ្រឿងបន្ថែម..."
+                    class="w-full h-12 pl-11 pr-4 rounded-xl bg-white border-2 border-transparent shadow-sm ring-1 ring-gray-200 focus:outline-none focus:ring-accent focus:border-transparent transition-all placeholder:text-gray-400 text-sm md:text-base font-khmer padding-top-fix">
+            </div>
 
-<section class="max-w-6xl mx-auto px-5 pb-4">
-    <div class="flex gap-2 overflow-x-auto scrollbar-hide pb-2 snap-x">
-        <button class="chip px-4 py-1.5 rounded-lg text-sm snap-start" data-category="all" data-active="true">All</button>
-        <button class="chip px-4 py-1.5 rounded-lg text-sm snap-start" data-category="iem">Headphone</button>
-        <button class="chip px-4 py-1.5 rounded-lg text-sm snap-start" data-category="accessories">Accessories</button>
-    </div>
-</section>
-
-<main class="max-w-6xl mx-auto px-5 pb-16">
-    <div id="productsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5"></div>
-</main>
-
-<div id="productModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 backdrop bg-black/60"></div>
-
-<div id="descPopup" class="fixed inset-0 z-[60] hidden items-center justify-center p-4 backdrop bg-black/60">
-    <div class="bg-white max-w-md w-full rounded-2xl overflow-hidden shadow-xl transform scale-95 opacity-0 transition-all duration-300 ease-out flex flex-col max-h-[80vh]">
-        <div class="relative p-6 flex flex-col h-full">
-            <button id="descCloseBtn"
-                    class="absolute top-4 right-4 bg-gray-100 hover:bg-[color:var(--accent)] hover:text-white transition-colors size-9 rounded-full grid place-items-center z-10"
-                    aria-label="Close">
-                <i class="bi bi-x-lg text-sm"></i>
-            </button>
-            <h3 class="text-lg font-semibold mb-3 pr-8 shrink-0">Product Details</h3>
-            <div id="descPopupText" class="prose prose-sm prose-slate max-w-none text-gray-600 leading-relaxed overflow-y-auto pr-2">
+            <div class="flex gap-2 overflow-x-auto no-scrollbar pb-2 snap-x">
+                <button class="filter-chip snap-start px-5 py-2 rounded-full text-sm font-medium transition-all border border-transparent data-[active=true]:bg-black data-[active=true]:text-white data-[active=true]:shadow-lg active:scale-95 bg-white text-gray-600 shadow-sm border-gray-100 whitespace-nowrap" data-cat="all" data-active="true">ទាំងអស់</button>
+                <button class="filter-chip snap-start px-5 py-2 rounded-full text-sm font-medium transition-all border border-transparent data-[active=true]:bg-black data-[active=true]:text-white data-[active=true]:shadow-lg active:scale-95 bg-white text-gray-600 shadow-sm border-gray-100 whitespace-nowrap" data-cat="iem">កាស (IEM)</button>
+                <button class="filter-chip snap-start px-5 py-2 rounded-full text-sm font-medium transition-all border border-transparent data-[active=true]:bg-black data-[active=true]:text-white data-[active=true]:shadow-lg active:scale-95 bg-white text-gray-600 shadow-sm border-gray-100 whitespace-nowrap" data-cat="accessories">គ្រឿងបន្ថែម</button>
             </div>
         </div>
     </div>
-</div>
+
+    <main class="flex-1 max-w-6xl mx-auto px-4 py-6 w-full">
+        <div id="grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 pb-20">
+            </div>
+
+        <div id="emptyState" class="hidden flex-col items-center justify-center py-20 text-center">
+            <div class="size-16 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 mb-4">
+                <i class="bi bi-search text-2xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900">រកមិនឃើញផលិតផល</h3>
+            <p class="text-gray-500 text-sm mt-1">សូមព្យាយាមស្វែងរកពាក្យផ្សេង</p>
+        </div>
+    </main>
+
+    <div id="modalOverlay" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity opacity-0" id="modalBackdrop"></div>
+
+        <div class="absolute inset-0 md:inset-4 md:flex md:items-center md:justify-center pointer-events-none">
+
+            <div id="modalCard" class="bg-white w-full h-full md:h-auto md:max-h-[85vh] md:max-w-4xl md:rounded-2xl shadow-2xl flex flex-col md:flex-row overflow-hidden transform transition-all translate-y-full md:translate-y-10 opacity-0 pointer-events-auto">
+
+                <button id="modalCloseMobile" class="absolute top-4 right-4 z-40 size-9 rounded-full bg-white/80 backdrop-blur shadow-sm flex items-center justify-center text-gray-600 md:hidden active:scale-90 transition-transform">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+
+                <div class="w-full h-[50%] md:w-1/2 md:h-full bg-gray-50 flex flex-col relative shrink-0">
+                    <div class="flex-1 w-full h-full flex items-center justify-center p-4 relative">
+                        <div class="aspect-square w-full h-auto max-h-full bg-white rounded-3xl overflow-hidden flex items-center justify-center border border-gray-100 shadow-sm">
+                             <img id="mMainImg" src="" class="w-full h-full object-contain mix-blend-multiply transition-opacity duration-200 p-2" alt="Product Image">
+                        </div>
+                    </div>
+
+                    <div class="h-16 md:h-20 w-full bg-white/50 md:bg-white backdrop-blur-md border-t border-gray-100 px-4 flex items-center justify-center gap-3 overflow-x-auto no-scrollbar shrink-0 z-10">
+                        <div id="mThumbs" class="flex gap-2">
+                            </div>
+                    </div>
+                </div>
+
+                <div class="w-full h-[50%] md:w-1/2 md:h-full flex flex-col bg-white relative">
+                    <button id="modalCloseDesktop" class="absolute top-4 right-4 text-gray-400 hover:text-accent hidden md:block transition-colors z-20">
+                        <i class="bi bi-x-lg text-lg"></i>
+                    </button>
+
+                    <div class="flex-1 overflow-y-auto px-5 pt-6 pb-24 md:pb-6">
+                        <div class="flex items-start justify-between gap-4">
+                            <div>
+                                <span id="mCat" class="text-xs font-bold uppercase tracking-wider text-gray-400 font-inter">IEM</span>
+                                <h2 id="mTitle" class="text-xl md:text-2xl font-bold text-gray-900 leading-tight mt-1 font-inter"></h2>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 flex items-center gap-3">
+                            <span id="mPrice" class="text-2xl font-bold text-accent font-inter"></span>
+                            <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold border border-emerald-200">មានក្នុងស្តុក</span>
+                        </div>
+
+                        <div class="mt-5 prose prose-sm prose-slate text-gray-500 line-clamp-kh" id="mShortDesc"></div>
+
+                        <button id="btnReadMore" class="mt-2 text-sm font-medium text-black underline decoration-gray-300 underline-offset-4 hover:text-accent hover:decoration-accent transition-all flex items-center gap-1">
+                            មើលលក្ខណៈសម្បត្តិលម្អិត <i class="bi bi-arrow-right"></i>
+                        </button>
+
+                        <hr class="my-6 border-gray-100">
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="flex items-center gap-2 text-xs text-gray-500 bg-gray-50 p-2 rounded-lg border border-gray-100">
+                                <i class="bi bi-shield-check text-lg text-emerald-500"></i>
+                                <span>ធានាគុណភាពត្រឹមត្រូវ</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-xs text-gray-500 bg-gray-50 p-2 rounded-lg border border-gray-100">
+                                <i class="bi bi-truck text-lg text-blue-500"></i>
+                                <span>ដឹកជញ្ជូនរហ័ស</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="absolute bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-100 md:relative md:bg-transparent md:border-t-0 z-20 safe-area-pb">
+                        <a id="mTelegramBtn" href="#" target="_blank" class="w-full bg-black hover:bg-gray-800 text-white font-semibold h-12 rounded-xl flex items-center justify-center gap-2 shadow-xl shadow-gray-200 active:scale-95 transition-all">
+                            <i class="bi bi-telegram text-lg"></i>
+                            <span class="font-khmer pt-0.5">កម្ម៉ង់តាម Telegram</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="specsSheet" class="fixed inset-0 z-[60] hidden" role="dialog">
+        <div class="absolute inset-0 bg-black/20 backdrop-blur-[2px] transition-opacity opacity-0" id="specsBackdrop"></div>
+        <div id="specsPanel" class="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl md:rounded-2xl md:bottom-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-[500px] max-h-[85vh] flex flex-col shadow-[0_-10px_40px_rgba(0,0,0,0.1)] transform translate-y-full md:translate-y-10 transition-transform duration-300">
+
+            <div class="w-full h-6 flex items-center justify-center shrink-0 md:hidden" id="specsSwipeHandle">
+                <div class="w-12 h-1.5 bg-gray-200 rounded-full mt-2"></div>
+            </div>
+
+            <div class="flex items-center justify-between px-6 pt-2 pb-4 border-b border-gray-100">
+                <h3 class="font-bold text-lg text-gray-900">ព័ត៌មានលម្អិត</h3>
+                <button id="specsClose" class="size-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 text-gray-600">
+                    <i class="bi bi-x-lg text-sm"></i>
+                </button>
+            </div>
+
+            <div id="specsContent" class="overflow-y-auto p-6 prose prose-slate prose-sm max-w-none prose-p:text-gray-600 prose-headings:text-gray-900 prose-li:marker:text-accent font-khmer leading-relaxed">
+                </div>
+        </div>
+    </div>
 
 <script>
-    /* ----------------------- Data ----------------------- */
+    /* ================= DATA (Khmer Translation) ================= */
     const PRODUCTS = [
         {
             id: '2',
             name: 'Moondrop Chu II',
             price: 22,
             category: 'iem',
-            description: '<p><strong>High-Fidelity Sound</strong> in a durable metal build. This is the ultimate value proposition for the discerning listener.</p><ul><li><strong>10mm Dynamic Driver</strong> with VDSF tuning</li><li>Wide soundstage & detailed resolution</li><li>Detachable 0.78mm 2-pin cable (3.5mm plug)</li></ul><p>Premium zinc alloy construction with a CNC-machined brass nozzle for under $25.</p>',
+            description: '<p><strong>គុណភាពសំឡេងច្បាស់ល្អ</strong> ជាមួយតួខ្លួនលោហៈធន់រឹងមាំ។ ជាជម្រើសដ៏ល្អបំផុតសម្រាប់តម្លៃនេះ។</p><ul><li><strong>10mm Dynamic Driver</strong> with VDSF tuning</li><li>សំឡេងធំទូលាយ និងលម្អិត (Wide soundstage)</li><li>អាចដោះខ្សែបាន 0.78mm 2-pin (ឌុយ 3.5mm)</li></ul><p>ផលិតពី Zinc Alloy ជាមួយក្បាលបំពង់សំឡេង Brass ធានាគុណភាពលើសតម្លៃ។</p>',
             images: ['assets/images/Main-03.jpg', 'assets/images/Main-02.jpg', 'assets/images/Main-01.jpg', 'assets/images/Main-04.jpg']
         },
         {
@@ -146,7 +230,7 @@
             name: 'QKZ AK3',
             price: 8,
             category: 'iem',
-            description: '<p><strong>Dazzling Clear Design & Studio-Grade Sound</strong>.</p><ul><li><strong>Transparent Resin Shell</strong></li><li><strong>Hi-Fi Acoustic Tuning</strong></li><li>28° angled nozzle</li><li><strong>3.5mm cable with Mic</strong></li></ul>',
+            description: '<p><strong>រចនាបទថ្លា និងសំឡេងបែប Studio</strong>។</p><ul><li><strong>តួខ្លួន Resin ថ្លា</strong> មើលឃើញខាងក្នុង</li><li><strong>Hi-Fi Acoustic Tuning</strong></li><li>ក្បាលបំពង់មុំ 28° ងាយស្រួលពាក់</li><li><strong>ខ្សែមាន Mic និយាយបាន (3.5mm)</strong></li></ul>',
             images: ['assets/images/QkzAK3__0005.webp', 'assets/images/QkzAK3__0006.webp', 'assets/images/QkzAK3__0007webp', 'assets/images/QkzAK3__0008.webp']
         },
         {
@@ -154,7 +238,7 @@
             name: 'QKZ X HBB',
             price: 22,
             category: 'iem',
-            description: '<p><strong>Bass-Tuned Collaboration</strong>. Designed with Hawaii Bad Boy (HBB) for rich, impactful low-end without muddying the mids.</p><ul><li><strong>Optimized Magnetic Circuit</strong></li><li>Custom tuned for Rock, Hip-Hop, and Pop</li><li>Detachable 2-pin cable</li></ul>',
+            description: '<p><strong>ផ្តោតលើ Bass (Bass-Tuned)</strong>។ សហការរចនាជាមួយ Hawaii Bad Boy (HBB) សម្រាប់អ្នកចូលចិត្តបាសធ្ងន់ៗ ប៉ុន្តែនៅស្តាប់ចម្រៀងបានច្បាស់។</p><ul><li><strong>Optimized Magnetic Circuit</strong></li><li>សាកសមបំផុតសម្រាប់ Rock, Hip-Hop, និង Pop</li><li>អាចដោះខ្សែបាន (2-pin)</li></ul>',
             images: ['assets/images/QkzXHBB__0001.webp', 'assets/images/QkzXHBB__0002.webp', 'assets/images/QkzXHBB__0003.webp', 'assets/images/QkzXHBB__0004.webp']
         },
         {
@@ -162,7 +246,7 @@
             name: 'KZ Castor Pro',
             price: 22,
             category: 'iem',
-            description: '<p><strong>Dual Dynamic Driver Power & Customizable Sound</strong>.</p><ul><li><strong>Dual Drivers</strong> (10mm + 6mm)</li><li><strong>4-Way Tuning Switches</strong></li><li>Ergonomic resin shell</li></ul>',
+            description: '<p><strong>កម្លាំង Dual Driver និងអាចសារ៉េសំឡេងបាន</strong>។</p><ul><li><strong>Dual Drivers</strong> (10mm + 6mm)</li><li><strong>កុងតាក់សារ៉េសំឡេង 4-Way</strong> (Tuning Switches)</li><li>តួខ្លួន Resin ស្រួលពាក់</li></ul>',
             images: ['assets/images/KZCastorPro__0001.webp', 'assets/images/KZCastorPro__0002.webp', 'assets/images/KZCastorPro__0003.webp', 'assets/images/KZCastorPro__0004.webp']
         },
         {
@@ -170,7 +254,7 @@
             name: 'Tanchjim Bunny Type C',
             price: 25,
             category: 'iem',
-            description: '<p><strong>All-in-One Hi-Fi Audio Experience</strong> with built-in DSP.</p><ul><li><strong>Built-in DAC & Amp</strong></li><li><strong>Dual Dynamic Driver</strong></li><li>Plug-and-Play USB-C</li></ul>',
+            description: '<p><strong>កាស Hi-Fi ភ្ជាប់មកជាមួយ DSP</strong>។</p><ul><li><strong>មាន DAC & Amp ក្នុងខ្លួនស្រាប់</strong></li><li><strong>Dual Dynamic Driver</strong></li><li>ដោតប្រើបានភ្លាមៗជាមួយ USB-C</li></ul>',
             images: ['assets/images/TBunny__0003.webp', 'assets/images/TBunny__0002.webp', 'assets/images/TBunny__0001.webp', 'assets/images/TBunny__0004.webp']
         },
         {
@@ -178,7 +262,7 @@
             name: 'Tanchjim Bunny 3.5mm',
             price: 25,
             category: 'iem',
-            description: '<p><strong>Pure Analog Audio Performance</strong>.</p><ul><li><strong>Dual Dynamic Driver System</strong></li><li><strong>Universal 3.5mm Connection</strong></li><li>Lightweight ergonomic shell</li></ul>',
+            description: '<p><strong>កាស Analog សំឡេងសុទ្ធ</strong>។</p><ul><li><strong>ប្រព័ន្ធ Dual Dynamic Driver</strong></li><li><strong>ឌុយ 3.5mm Universal</strong></li><li>ទម្ងន់ស្រាល ពាក់មិនឈឺត្រចៀក</li></ul>',
             images: ['assets/images/TBunny__0003.webp', 'assets/images/TBunny_3.5_0001.webp', 'assets/images/TBunny_3.5_0002.webp', 'assets/images/TBunny__0004.webp']
         },
         {
@@ -186,7 +270,7 @@
             name: 'Tangzu Waner SG 2 Green',
             price: 38,
             category: 'iem',
-            description: '<p><strong>Space Jam Edition</strong>. High-performance, neutrally-tuned audio.</p><ul><li><strong>Neutral-Balanced Tuning</strong></li><li><strong>Dual Magnetic Circuit Driver</strong></li><li>Collectible design</li></ul>',
+            description: '<p><strong>Space Jam Edition (ពណ៌បៃតង)</strong>។ សំឡេងមានតុល្យភាព (Neutral-tuned) និងដំណើរការខ្ពស់។</p><ul><li><strong>Neutral-Balanced Tuning</strong></li><li><strong>Dual Magnetic Circuit Driver</strong></li><li>ការរចនាបែប Collectible គួរឱ្យចង់សន្សំ</li></ul>',
             images: ['assets/images/TWanerSG2B_0002.webp', 'assets/images/TWanerSG2B_0001.webp', 'assets/images/TWanerSG2B_0003.webp', 'assets/images/TWanerSG2B_0004.webp']
         },
         {
@@ -194,7 +278,7 @@
             name: 'Tangzu Waner SG 2 Black',
             price: 38,
             category: 'iem',
-            description: '<p><strong>Space Jam Edition</strong> in Black.</p><ul><li><strong>Neutral-Balanced Tuning</strong></li><li><strong>Dual Magnetic Circuit Driver</strong></li><li>Collectible design</li></ul>',
+            description: '<p><strong>Space Jam Edition (ពណ៌ខ្មៅ)</strong>។</p><ul><li><strong>Neutral-Balanced Tuning</strong></li><li><strong>Dual Magnetic Circuit Driver</strong></li><li>ការរចនាបែប Collectible</li></ul>',
             images: ['assets/images/TWanerSG2B_0003-1.webp', 'assets/images/TWanerSG2B_0001-1.webp', 'assets/images/TWanerSG2B_0003-1.webp', 'assets/images/TWanerSG2B_0004-1.webp']
         },
         {
@@ -202,279 +286,208 @@
             name: 'Monitor Stand',
             price: 15,
             category: 'accessories',
-            description: '<p><strong>Expanded Workspace with Integrated Hub</strong>.</p><ul><li><strong>Spacious Platform:</strong> 55cm x 20cm</li><li><strong>Integrated 4-Port USB Hub</strong></li><li><strong>7.5cm Ergonomic Height</strong></li></ul>',
+            description: '<p><strong>ជើងទ្រអេក្រង់ ជួយបង្កើនទំហំតុធ្វើការ</strong>។</p><ul><li><strong>ទំហំធំទូលាយ:</strong> 55cm x 20cm</li><li><strong>មានរន្ធ USB 4 គ្រាប់ (Hub)</strong></li><li><strong>កម្ពស់ 7.5cm ជួយមិនឱ្យឈឺក</strong></li></ul>',
             images: ['assets/images/MonitorStand_0001.webp', 'assets/images/MonitorStand_0002.webp', 'assets/images/MonitorStand_0003.webp', 'assets/images/MonitorStand_0004.webp']
         },
     ];
 
-    /* ----------------------- Utilities ----------------------- */
-    const $ = (sel, ctx = document) => ctx.querySelector(sel);
-    const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
-    const fmtPrice = v => new Intl.NumberFormat(undefined, {style: 'currency', currency: 'USD'}).format(v);
+    /* ================= LOGIC ================= */
+    const $ = s => document.querySelector(s);
+    const $$ = s => document.querySelectorAll(s);
+    const fmt = n => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
 
-    /* ----------------------- Description Popup Logic ----------------------- */
-    const descPopup = $('#descPopup');
-    const descPopupText = $('#descPopupText');
-    const descCloseBtn = $('#descCloseBtn');
+    // --- State ---
+    let activeCategory = 'all';
+    let searchQuery = '';
 
-    function openDescPopup(fullText) {
-        descPopupText.innerHTML = fullText;
-        const content = descPopup.querySelector('.bg-white');
-        descPopup.classList.remove('hidden');
-        descPopup.classList.add('flex');
+    // --- Render Grid ---
+    const gridEl = $('#grid');
+    const emptyState = $('#emptyState');
 
-        // Small delay for animation
-        setTimeout(() => {
-            content.classList.remove('scale-95', 'opacity-0');
-            content.classList.add('scale-100', 'opacity-100');
-        }, 10);
+    function renderProducts() {
+        // Filter
+        let filtered = PRODUCTS.filter(p => {
+            const matchesCat = activeCategory === 'all' || p.category === activeCategory;
+            const matchesSearch = p.name.toLowerCase().includes(searchQuery) || p.description.toLowerCase().includes(searchQuery);
+            return matchesCat && matchesSearch;
+        });
+
+        if (filtered.length === 0) {
+            gridEl.innerHTML = '';
+            emptyState.classList.remove('hidden');
+            emptyState.classList.add('flex');
+            return;
+        }
+
+        emptyState.classList.add('hidden');
+        emptyState.classList.remove('flex');
+
+        gridEl.innerHTML = filtered.map((p, i) => `
+            <article class="product-card bg-white rounded-2xl border border-gray-100 overflow-hidden cursor-pointer animate-fade-in"
+                style="animation-delay: ${i * 50}ms"
+                onclick="openProductModal('${p.id}')">
+                <div class="aspect-square bg-gray-50 relative group rounded-2xl overflow-hidden">
+                    <img src="${p.images[0]}"
+                         onerror="this.src='https://placehold.co/400?text=Angkorkey'"
+                         class="w-full h-full object-contain mix-blend-multiply p-4 group-hover:scale-105 transition-transform duration-300"
+                         alt="${p.name}">
+                    ${i < 3 ? `<span class="absolute top-2 left-2 bg-black text-white text-[10px] font-bold px-2 py-1 rounded-full">HOT</span>` : ''}
+                </div>
+                <div class="p-3">
+                    <h3 class="text-sm font-medium text-gray-900 line-clamp-1 font-inter">${p.name}</h3>
+                    <div class="flex items-center justify-between mt-1">
+                        <span class="text-base font-bold text-accent font-inter">${fmt(p.price)}</span>
+                        <button class="size-7 rounded-full bg-gray-50 text-gray-400 flex items-center justify-center hover:bg-accent hover:text-white transition-colors">
+                            <i class="bi bi-plus-lg text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </article>
+        `).join('');
     }
 
-    function closeDescPopup() {
-        const content = descPopup.querySelector('.bg-white');
-        content.classList.remove('scale-100', 'opacity-100');
-        content.classList.add('scale-95', 'opacity-0');
+    // --- Event Listeners: Filters & Search ---
+    $$('.filter-chip').forEach(btn => {
+        btn.addEventListener('click', () => {
+            $$('.filter-chip').forEach(b => b.dataset.active = 'false');
+            btn.dataset.active = 'true';
+            activeCategory = btn.dataset.cat;
+            renderProducts();
+        });
+    });
+
+    let debounce;
+    $('#searchInput').addEventListener('input', (e) => {
+        clearTimeout(debounce);
+        debounce = setTimeout(() => {
+            searchQuery = e.target.value.toLowerCase().trim();
+            renderProducts();
+        }, 150);
+    });
+
+    /* ================= MAIN MODAL LOGIC ================= */
+    const modalOverlay = $('#modalOverlay');
+    const modalBackdrop = $('#modalBackdrop');
+    const modalCard = $('#modalCard');
+
+    // Elements inside modal
+    const mMainImg = $('#mMainImg');
+    const mThumbs = $('#mThumbs');
+    const mCat = $('#mCat');
+    const mTitle = $('#mTitle');
+    const mPrice = $('#mPrice');
+    const mShortDesc = $('#mShortDesc');
+    const mTelegramBtn = $('#mTelegramBtn');
+
+    function openProductModal(id) {
+        const p = PRODUCTS.find(x => x.id === id);
+        if (!p) return;
+
+        // Populate Data
+        mCat.textContent = p.category === 'iem' ? 'កាស (IEM)' : 'គ្រឿងបន្ថែម';
+        mTitle.textContent = p.name;
+        mPrice.textContent = fmt(p.price);
+        mShortDesc.innerHTML = p.description; // HTML is safe here
+        mMainImg.src = p.images[0];
+
+        // Generate Thumbs (UPDATED: rounded-xl)
+        mThumbs.innerHTML = p.images.map((img, idx) => `
+            <button onclick="switchImage(this, '${img}')"
+                class="size-12 rounded-xl border border-gray-200 bg-white overflow-hidden shrink-0 hover:border-accent transition-colors ${idx === 0 ? 'ring-2 ring-accent' : ''}">
+                <img src="${img}" class="w-full h-full object-cover">
+            </button>
+        `).join('');
+
+        // Prepare Telegram Link (Markdown - Khmer Greeting)
+        const stripDesc = p.description.replace(/<[^>]*>?/gm, '').substring(0, 100) + "...";
+        const msg = `
+*សួស្តីបង ខ្ញុំចង់កម្ម៉ង់*
+-------------------
+*ផលិតផល:* ${p.name}
+*តម្លៃ:* ${fmt(p.price)}
+*ប្រភេទ:* ${p.category}
+
+*ព័ត៌មានបន្ថែម:* ${stripDesc}
+        `.trim();
+        mTelegramBtn.href = `https://t.me/angkorkey_admin_2?text=${encodeURIComponent(msg)}`;
+
+        // Setup "Read More"
+        $('#btnReadMore').onclick = () => openSpecsSheet(p.description, p.name);
+
+        // Show Modal
+        modalOverlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // Lock Scroll
+
+        // Animate In
+        requestAnimationFrame(() => {
+            modalBackdrop.classList.remove('opacity-0');
+            modalCard.classList.remove('translate-y-full', 'opacity-0');
+            if(window.innerWidth >= 768) modalCard.classList.remove('md:translate-y-10');
+            else modalCard.classList.remove('translate-y-full');
+        });
+    }
+
+    window.switchImage = (btn, src) => {
+        mMainImg.style.opacity = '0.5';
         setTimeout(() => {
-            descPopup.classList.add('hidden');
-            descPopup.classList.remove('flex');
+            mMainImg.src = src;
+            mMainImg.style.opacity = '1';
+        }, 150);
+        // Update active thumb ring
+        Array.from(mThumbs.children).forEach(b => b.classList.remove('ring-2', 'ring-accent'));
+        btn.classList.add('ring-2', 'ring-accent');
+    };
+
+    function closeProductModal() {
+        modalBackdrop.classList.add('opacity-0');
+        modalCard.classList.add('translate-y-full', 'opacity-0');
+        if(window.innerWidth >= 768) modalCard.classList.add('md:translate-y-10');
+
+        setTimeout(() => {
+            modalOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
         }, 300);
     }
 
-    descCloseBtn.addEventListener('click', closeDescPopup);
-    descPopup.addEventListener('click', (e) => {
-        if (e.target === descPopup) closeDescPopup();
+    // Close Triggers
+    $('#modalCloseMobile').onclick = closeProductModal;
+    $('#modalCloseDesktop').onclick = closeProductModal;
+    modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay || e.target === modalBackdrop) closeProductModal();
     });
 
-    /* ----------------------- Render Products ----------------------- */
-    let currentFilter = 'all';
-    const grid = $('#productsGrid');
+    /* ================= SPECS SHEET LOGIC ================= */
+    const specsSheet = $('#specsSheet');
+    const specsPanel = $('#specsPanel');
+    const specsBackdrop = $('#specsBackdrop');
+    const specsContent = $('#specsContent');
 
-    function cardTemplate(product, i) {
-        return `
-        <article class="card rounded-2xl p-2 card-enter" style="animation-delay:${i * 60}ms" role="button" tabindex="0" aria-label="View ${product.name}" data-id="${product.id}">
-          <div class="relative group">
-            <div class="aspect-square bg-gray-100 overflow-hidden rounded-xl">
-              <img loading="lazy" src="${product.images[0]}" onerror="this.src='https://placehold.co/400?text=No+Image'" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"/>
-            </div>
-            <div class="absolute left-3 top-3 inline-flex items-center gap-1.5 bg-white/90 backdrop-blur px-2.5 py-1 rounded-full text-[11px]">
-              <span class="size-1.5 rounded-full bg-emerald-500"></span> In stock
-            </div>
-          </div>
-          <div class="p-2 pt-3">
-            <h3 class="text-sm font-medium truncate">${product.name}</h3>
-            <div class="mt-1 flex items-center justify-between">
-              <p class="text-base font-semibold text-[color:var(--accent)]">${fmtPrice(product.price)}</p>
-              <button class="text-gray-400 hover:text-[color:var(--accent)]" aria-label="Quick view"><i class="bi bi-eye"></i></button>
-            </div>
-          </div>
-        </article>`;
-    }
+    function openSpecsSheet(html, title) {
+        specsContent.innerHTML = html;
+        specsSheet.classList.remove('hidden');
 
-    function render(list) {
-        grid.innerHTML = list.map((p, i) => cardTemplate(p, i)).join('');
-        $$('#productsGrid article').forEach(card => {
-            card.addEventListener('click', () => openModal(card.dataset.id));
-            card.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    openModal(card.dataset.id);
-                }
-            });
+        requestAnimationFrame(() => {
+            specsBackdrop.classList.remove('opacity-0');
+            specsPanel.classList.remove('translate-y-full', 'md:translate-y-10');
         });
-        observeStagger();
     }
 
-    function applyFilter() {
-        const dataset = currentFilter === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.category === currentFilter);
-        render(dataset);
+    function closeSpecsSheet() {
+        specsBackdrop.classList.add('opacity-0');
+        specsPanel.classList.add('translate-y-full', 'md:translate-y-10');
+        setTimeout(() => {
+            specsSheet.classList.add('hidden');
+        }, 300);
     }
 
-    /* ----------------------- Search ----------------------- */
-    const searchEl = $('#searchInput');
-    let searchTimer;
-    searchEl.addEventListener('input', (e) => {
-        clearTimeout(searchTimer);
-        const q = e.target.value.trim().toLowerCase();
-        searchTimer = setTimeout(() => {
-            const base = currentFilter === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.category === currentFilter);
-            const filtered = q ? base.filter(p => (p.name + " " + p.description).toLowerCase().includes(q)) : base;
-            render(filtered);
-        }, 120);
+    $('#specsClose').onclick = closeSpecsSheet;
+    specsSheet.addEventListener('click', (e) => {
+        if(e.target === specsSheet || e.target === specsBackdrop) closeSpecsSheet();
     });
 
-    $$('.chip').forEach(ch => {
-        ch.addEventListener('click', () => {
-            $$('.chip').forEach(c => c.dataset.active = 'false');
-            ch.dataset.active = 'true';
-            currentFilter = ch.dataset.category;
-            applyFilter();
-        });
-    });
+    // Initialize
+    renderProducts();
 
-    /* ----------------------- Fixed Modal Logic ----------------------- */
-    const modal = $('#productModal');
-    let lastFocus = null;
-
-    // Helper to strip HTML for Telegram message
-    function stripHtml(html) {
-        let tmp = document.createElement("DIV");
-        tmp.innerHTML = html;
-        return tmp.textContent || tmp.innerText || "";
-    }
-
-    // Helper to get description snippet
-    function getDescSnippet(html) {
-        const tmp = document.createElement("DIV");
-        tmp.innerHTML = html;
-        // Get first paragraph or first 150 characters
-        const firstP = tmp.querySelector('p');
-        if (firstP) {
-            return firstP.outerHTML;
-        }
-        const text = tmp.textContent || tmp.innerText || "";
-        return text.length > 150 ? text.substring(0, 150) + '...' : text;
-    }
-
-    function modalTemplate(p) {
-        return `
-        <div class="bg-white max-w-4xl w-full rounded-2xl shadow-2xl mx-4 flex flex-col md:flex-row h-[85vh] overflow-hidden relative" role="dialog" aria-modal="true" aria-label="${p.name}">
-
-          <div class="w-full h-[45%] md:w-1/2 md:h-full bg-gray-50 flex flex-col relative group border-b md:border-b-0 md:border-r border-gray-100">
-            <div class="flex-1 relative min-h-0 p-6 flex items-center justify-center">
-               <img id="mainImg" src="${p.images[0]}" onerror="this.src='https://placehold.co/400?text=No+Image'" alt="${p.name}" class="max-w-full max-h-full object-contain drop-shadow-sm mix-blend-multiply transition-opacity duration-300"/>
-            </div>
-            <div class="h-16 shrink-0 bg-white flex items-center px-4 gap-2 overflow-x-auto scrollbar-hide border-t border-gray-100 z-10">
-               ${p.images.map((src, idx) => `
-                <button class="shrink-0 size-10 rounded-lg border border-gray-200 overflow-hidden hover:opacity-80 transition-all ${idx === 0 ? 'ring-2 ring-[color:var(--accent)]' : ''}" data-thumb>
-                    <img src="${src}" class="w-full h-full object-cover" />
-                </button>`).join('')}
-            </div>
-          </div>
-
-          <div class="w-full h-[55%] md:w-1/2 md:h-full flex flex-col bg-white relative">
-
-            <div class="p-5 pb-2 shrink-0">
-                 <div class="flex justify-between items-start">
-                    <h2 class="text-xl md:text-2xl font-bold text-gray-900 leading-tight pr-10 line-clamp-2">${p.name}</h2>
-                    <button id="closeBtn" class="absolute top-4 right-4 bg-gray-100 hover:bg-[color:var(--accent)] hover:text-white transition-colors size-8 rounded-full grid place-items-center shrink-0 z-20" aria-label="Close">
-                      <i class="bi bi-x-lg text-sm"></i>
-                    </button>
-                 </div>
-                 <p class="text-lg md:text-xl font-semibold text-[color:var(--accent)] mt-1">${fmtPrice(p.price)}</p>
-            </div>
-
-            <div class="px-5 py-2 overflow-y-auto flex-1">
-                <div class="prose prose-sm text-gray-500 leading-relaxed">
-                    ${getDescSnippet(p.description)}
-                </div>
-                <button id="descTrigger" class="mt-4 text-[color:var(--accent)] font-medium hover:underline text-sm inline-flex items-center gap-1">
-                    <i class="bi bi-arrows-fullscreen"></i> <span>Read full details</span>
-                </button>
-            </div>
-
-            <div class="p-5 pt-3 mt-auto shrink-0 border-t border-gray-50 bg-white/50 backdrop-blur-sm">
-              <a id="tgLink" href="#" target="_blank" class="w-full bg-black hover:bg-[color:var(--accent)] transition-colors text-white py-3 rounded-xl text-center text-sm font-bold tracking-wide inline-flex items-center justify-center gap-2 shadow-lg shadow-gray-200">
-                <i class="bi bi-telegram"></i><span>Order Now</span>
-              </a>
-            </div>
-          </div>
-        </div>`;
-    }
-
-    function openModal(id) {
-        const p = PRODUCTS.find(x => x.id === id);
-        if (!p) return;
-        lastFocus = document.activeElement;
-
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-        modal.innerHTML = modalTemplate(p);
-        document.body.style.overflow = 'hidden';
-
-        // Image Logic
-        const main = $('#mainImg', modal);
-        const thumbs = $$('[data-thumb]', modal);
-        thumbs.forEach((thumb, idx) => {
-            thumb.addEventListener('click', () => {
-                main.style.opacity = '0.5';
-                setTimeout(() => {
-                    main.src = p.images[idx];
-                    main.style.opacity = '1';
-                }, 100);
-                thumbs.forEach(t => t.classList.remove('ring-2', 'ring-[color:var(--accent)]'));
-                thumb.classList.add('ring-2', 'ring-[color:var(--accent)]');
-            });
-        });
-
-        // ------------------------------------------
-        // TELEGRAM MD GENERATION LOGIC
-        // ------------------------------------------
-        const descText = stripHtml(p.description).trim();
-        // Construct the Markdown message
-        const mdMessage = `
-*New Order Request*
--------------------
-*Product:* ${p.name}
-*Price:* ${fmtPrice(p.price)}
-*Category:* ${p.category}
-
-*Details:*
-${descText}
-        `.trim();
-
-        $('#tgLink', modal).href = `https://t.me/angkorkey_admin_2?text=${encodeURIComponent(mdMessage)}`;
-
-        // Description Popup Trigger
-        $('#descTrigger', modal).addEventListener('click', () => openDescPopup(p.description));
-
-        // Close Logic
-        const close = () => {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-            modal.innerHTML = '';
-            document.body.style.overflow = '';
-            if (lastFocus) lastFocus.focus();
-        }
-
-        $('#closeBtn', modal).addEventListener('click', close);
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) close();
-        });
-
-        const escClose = (e) => {
-            if (e.key === 'Escape') {
-                if (!descPopup.classList.contains('hidden')) {
-                     closeDescPopup();
-                } else {
-                    close();
-                    document.removeEventListener('keydown', escClose);
-                }
-            }
-        };
-        document.addEventListener('keydown', escClose);
-
-        $('#closeBtn', modal).focus();
-    }
-
-    /* ----------------------- Stagger on view ----------------------- */
-    function observeStagger() {
-        const cards = $$('#productsGrid .card-enter');
-        const io = new IntersectionObserver((entries) => {
-            entries.forEach(e => {
-                if (e.isIntersecting) {
-                    e.target.style.visibility = 'visible';
-                    io.unobserve(e.target);
-                }
-            });
-        }, {threshold: .06});
-        cards.forEach(c => {
-            c.style.visibility = 'hidden';
-            io.observe(c);
-        });
-    }
-
-    // Initial paint
-    applyFilter();
 </script>
 </body>
 </html>
