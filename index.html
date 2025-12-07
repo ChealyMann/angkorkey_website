@@ -29,16 +29,11 @@
                     },
                     animation: {
                         'fade-in': 'fadeIn 0.4s ease-out',
-                        'slide-up-mobile': 'slideUpMobile 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
                     },
                     keyframes: {
                         fadeIn: {
                             '0%': { opacity: '0' },
                             '100%': { opacity: '1' },
-                        },
-                        slideUpMobile: {
-                            '0%': { transform: 'translateY(100%)' },
-                            '100%': { transform: 'translateY(0)' },
                         }
                     }
                 }
@@ -47,11 +42,8 @@
     </script>
 
     <style>
-        /* Hide Scrollbar but allow scrolling */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        /* Remove tap highlight on mobile */
         body { -webkit-tap-highlight-color: transparent; }
 
         .glass {
@@ -63,14 +55,12 @@
         .product-card { transition: transform 0.2s, box-shadow 0.2s; }
         .product-card:active { transform: scale(0.97); }
 
-        /* iPhone Safe Area Fixes */
         .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
-        .mb-safe { margin-bottom: env(safe-area-inset-bottom); }
 
-        /* Smooth Text */
         * { -webkit-font-smoothing: antialiased; }
 
-        /* Tab Animation */
+        .text-shadow-sm { text-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+
         .tab-btn { position: relative; color: #94a3b8; transition: color 0.2s; }
         .tab-btn[data-active="true"] { color: #0f172a; }
         .tab-indicator {
@@ -85,7 +75,7 @@
     <header class="sticky top-0 z-30 glass border-b border-gray-100/50">
         <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-                <div class="size-10 bg-black text-white rounded-xl flex items-center justify-center font-bold text-xl shadow-lg shadow-black/10 font-inter">A</div>
+                <div class="size-10 bg-black text-white rounded-xl flex items-center justify-center font-bold text-xl shadow-sm font-inter">A</div>
                 <h1 class="text-lg font-bold tracking-tight font-inter text-gray-900">Angkorkey</h1>
             </div>
 
@@ -132,72 +122,65 @@
                 <input id="searchInput" type="search" placeholder="ស្វែងរក..."
                     class="w-full h-12 pl-12 pr-4 rounded-2xl bg-white border border-gray-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all placeholder:text-gray-400 text-base font-khmer appearance-none">
             </div>
-
             <div class="flex gap-2 overflow-x-auto no-scrollbar pb-2 snap-x px-1">
-                <button class="filter-chip snap-start px-5 py-2.5 rounded-full text-sm font-semibold transition-all border border-transparent data-[active=true]:bg-black data-[active=true]:text-white data-[active=true]:shadow-lg active:scale-95 bg-white text-gray-600 shadow-sm border-gray-100 whitespace-nowrap" data-cat="all" data-active="true">ទាំងអស់</button>
-                <button class="filter-chip snap-start px-5 py-2.5 rounded-full text-sm font-semibold transition-all border border-transparent data-[active=true]:bg-black data-[active=true]:text-white data-[active=true]:shadow-lg active:scale-95 bg-white text-gray-600 shadow-sm border-gray-100 whitespace-nowrap" data-cat="iem">កាស (IEM)</button>
-                <button class="filter-chip snap-start px-5 py-2.5 rounded-full text-sm font-semibold transition-all border border-transparent data-[active=true]:bg-black data-[active=true]:text-white data-[active=true]:shadow-lg active:scale-95 bg-white text-gray-600 shadow-sm border-gray-100 whitespace-nowrap" data-cat="accessories">គ្រឿងបន្ថែម</button>
+                <button class="filter-chip snap-start px-5 py-2.5 rounded-full text-sm font-semibold transition-all border border-transparent data-[active=true]:bg-black data-[active=true]:text-white data-[active=true]:shadow-sm active:scale-95 bg-white text-gray-600 shadow-sm border-gray-100 whitespace-nowrap" data-cat="all" data-active="true">ទាំងអស់</button>
+                <button class="filter-chip snap-start px-5 py-2.5 rounded-full text-sm font-semibold transition-all border border-transparent data-[active=true]:bg-black data-[active=true]:text-white data-[active=true]:shadow-sm active:scale-95 bg-white text-gray-600 shadow-sm border-gray-100 whitespace-nowrap" data-cat="iem">កាស (IEM)</button>
+                <button class="filter-chip snap-start px-5 py-2.5 rounded-full text-sm font-semibold transition-all border border-transparent data-[active=true]:bg-black data-[active=true]:text-white data-[active=true]:shadow-sm active:scale-95 bg-white text-gray-600 shadow-sm border-gray-100 whitespace-nowrap" data-cat="accessories">គ្រឿងបន្ថែម</button>
             </div>
         </div>
     </div>
 
     <main class="flex-1 max-w-6xl mx-auto px-4 py-4 w-full">
         <div id="grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 pb-24"></div>
-
         <div id="emptyState" class="hidden flex-col items-center justify-center py-20 text-center animate-fade-in">
-            <div class="size-20 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 mb-4 shadow-inner">
+            <div class="size-20 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 mb-4">
                 <i class="bi bi-search text-3xl"></i>
             </div>
             <h3 class="text-lg font-bold text-gray-900 font-khmer">រកមិនឃើញផលិតផល</h3>
-            <p class="text-gray-500 text-sm mt-2 font-khmer">សូមព្យាយាមស្វែងរកពាក្យផ្សេង</p>
         </div>
     </main>
 
     <div id="modalOverlay" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
-        <div class="absolute inset-0 bg-black/50 backdrop-blur-[2px] transition-opacity duration-300 opacity-0" id="modalBackdrop"></div>
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity duration-300 opacity-0" id="modalBackdrop"></div>
 
-        <div class="absolute inset-0 flex items-end justify-center pointer-events-none md:items-center md:p-10">
+        <div class="absolute inset-0 flex items-end justify-center pointer-events-none md:items-center md:p-6">
 
-            <div id="modalCard" class="bg-white w-full h-[92vh] md:h-auto md:max-h-[85vh] md:max-w-5xl rounded-t-[2rem] md:rounded-3xl shadow-2xl flex flex-col md:flex-row overflow-hidden transform transition-transform duration-300 translate-y-full pointer-events-auto relative">
+            <div id="modalCard" class="bg-white w-full h-[95vh] md:h-auto md:max-h-[85vh] md:max-w-5xl rounded-t-[2rem] md:rounded-3xl shadow-xl flex flex-col md:flex-row overflow-hidden transform transition-transform duration-300 translate-y-full pointer-events-auto relative">
 
-                <div class="absolute top-3 left-0 right-0 flex justify-center md:hidden z-20" onclick="closeProductModal()">
-                    <div class="w-12 h-1.5 bg-gray-200 rounded-full"></div>
+                <div class="absolute top-3 left-0 right-0 flex justify-center md:hidden z-30" onclick="closeProductModal()">
+                    <div class="w-12 h-1 bg-white/50 rounded-full shadow-sm backdrop-blur-md"></div>
                 </div>
 
-                <button onclick="closeProductModal()" class="absolute top-4 right-4 z-[60] size-9 rounded-full bg-gray-100/80 flex items-center justify-center text-gray-500 active:bg-gray-200 transition-colors md:top-6 md:right-6">
+                <button onclick="closeProductModal()" class="absolute top-5 right-5 z-[60] size-9 rounded-full bg-black/10 backdrop-blur-md flex items-center justify-center text-white active:bg-black/20 transition-colors md:top-6 md:right-6 md:bg-gray-100 md:text-gray-500 shadow-sm">
                     <i class="bi bi-x-lg text-sm"></i>
                 </button>
 
-                <div class="md:w-1/2 bg-[#f8fafc] relative shrink-0 flex flex-col md:border-r md:border-gray-100">
-                    <div class="w-full h-[40vh] md:h-full flex items-center justify-center p-6 relative">
+                <div class="relative w-full h-[55vh] md:h-auto md:w-1/2 bg-[#f8fafc] md:border-r md:border-gray-100 overflow-hidden shrink-0">
+                    <div class="w-full h-full flex items-center justify-center p-0 relative z-0">
                         <img id="mMainImg" src="" onclick="openLightbox()"
-                             class="max-w-full max-h-full object-contain mix-blend-multiply drop-shadow-lg transition-transform duration-300"
+                             class="w-full h-full object-cover object-center transition-transform duration-300"
                              alt="Product Image">
                     </div>
 
-                    <div class="px-6 pb-4 md:pb-6 overflow-x-auto no-scrollbar snap-x">
-                         <div class="flex items-center md:justify-center gap-3 w-max mx-auto" id="mThumbsWrapper">
-                            <div id="mThumbs" class="flex gap-3"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10 pointer-events-none"></div>
+
+                    <div class="absolute bottom-0 left-0 right-0 p-6 z-20 text-white">
+                        <span id="mCat" class="inline-block px-2 py-0.5 rounded-md bg-white/20 backdrop-blur-md text-[10px] font-bold uppercase tracking-wider text-white/90 mb-2 border border-white/10">Category</span>
+                        <h2 id="mTitle" class="text-2xl md:text-3xl font-bold leading-tight font-inter line-clamp-2 text-shadow-sm"></h2>
+
+                        <div class="flex items-center gap-4 mt-3">
+                            <span id="mPrice" class="text-3xl font-bold font-inter text-shadow-sm"></span>
+                            <span class="inline-flex items-center gap-1.5 text-emerald-300 text-[10px] font-bold uppercase tracking-wide bg-emerald-950/40 px-3 py-1 rounded-full backdrop-blur border border-emerald-500/30">
+                                <span class="size-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                In Stock
+                            </span>
                         </div>
                     </div>
                 </div>
 
                 <div class="flex-1 bg-white flex flex-col relative z-10 overflow-hidden h-full">
 
-                    <div class="flex-1 overflow-y-auto px-6 md:px-10 pt-4 md:pt-10 pb-28 md:pb-6 no-scrollbar">
-
-                        <div class="space-y-2 mb-6">
-                            <span id="mCat" class="inline-block px-2 py-0.5 rounded bg-gray-100 text-[10px] font-bold uppercase tracking-wider text-gray-500">Category</span>
-                            <h2 id="mTitle" class="text-xl md:text-3xl font-bold text-gray-900 leading-snug font-inter"></h2>
-
-                            <div class="flex items-center gap-4 pt-1">
-                                <span id="mPrice" class="text-2xl font-bold text-black font-inter"></span>
-                                <span class="inline-flex items-center gap-1.5 text-emerald-600 text-[10px] font-bold uppercase tracking-wide bg-emerald-50 px-2 py-1 rounded">
-                                    <span class="size-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                                    In Stock
-                                </span>
-                            </div>
-                        </div>
+                    <div class="flex-1 overflow-y-auto px-6 md:px-10 pt-6 pb-28 md:pb-6 no-scrollbar">
 
                         <div class="flex gap-6 border-b border-gray-100 mb-6 relative">
                             <button class="tab-btn pb-2.5 text-sm font-semibold flex-1 md:flex-none text-center" data-tab="overview" data-active="true">
@@ -210,8 +193,15 @@
                         </div>
 
                         <div class="min-h-[200px]">
-                            <div id="tabOverview" class="tab-content animate-fade-in space-y-4 pb-4">
+                            <div id="tabOverview" class="tab-content animate-fade-in space-y-6 pb-4">
                                 <div class="prose prose-sm prose-slate text-gray-600 leading-relaxed font-khmer" id="mShortDesc"></div>
+
+                                <div>
+                                    <span class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3 block">Gallery</span>
+                                    <div class="flex gap-3 overflow-x-auto no-scrollbar snap-x p-1" id="mThumbsWrapper">
+                                        <div id="mThumbs" class="flex gap-3"></div>
+                                    </div>
+                                </div>
                             </div>
 
                             <div id="tabSpecs" class="tab-content hidden animate-fade-in pb-4">
@@ -221,8 +211,8 @@
                         </div>
                     </div>
 
-                    <div class="absolute bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-100 pb-safe z-30 shadow-[0_-5px_20px_rgba(0,0,0,0.05)]">
-                        <a id="mTelegramBtn" href="#" target="_blank" class="w-full bg-gray-900 active:bg-black text-white h-12 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-gray-200 transition-transform active:scale-[0.98]">
+                    <div class="absolute bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-100 pb-safe z-30">
+                        <a id="mTelegramBtn" href="#" target="_blank" class="w-full bg-gray-900 active:bg-black text-white h-12 rounded-xl flex items-center justify-center gap-2 transition-transform active:scale-[0.98]">
                             <i class="bi bi-telegram text-[#2AABEE] text-lg"></i>
                             <div class="flex flex-col items-start leading-none">
                                 <span class="font-khmer font-bold text-sm">កម្ម៉ង់តាម Telegram</span>
@@ -235,14 +225,14 @@
     </div>
 
     <div id="lightbox" class="fixed inset-0 z-[70] bg-black hidden items-center justify-center touch-none animate-fade-in" onclick="closeLightbox()">
-        <button class="absolute top-safe right-4 text-white/80 p-2 z-50 mt-4">
-            <i class="bi bi-x-lg text-2xl"></i>
+        <button class="absolute top-safe right-4 text-white/80 p-2 z-50 mt-4 bg-white/10 rounded-full">
+            <i class="bi bi-x-lg text-xl"></i>
         </button>
         <img id="lightboxImg" src="" class="max-w-screen max-h-screen object-contain" alt="Full View">
     </div>
 
 <script>
-    /* ================= DATA (Khmer) ================= */
+    /* ================= DATA ================= */
     const PRODUCTS = [
         {
             id: '2',
@@ -255,7 +245,7 @@
                 'Material': 'Zinc Alloy',
                 'Connection': '0.78mm 2-Pin',
                 'Plug': '3.5mm SE',
-                'Sensitivity': '119dB/Vrms'
+                'Sensitivity': '119dB'
             },
             images: ['assets/images/Main-03.jpg', 'assets/images/Main-02.jpg', 'assets/images/Main-01.jpg', 'assets/images/Main-04.jpg']
         },
@@ -533,10 +523,10 @@
         mMainImg.src = p.images[0];
         mMainImg.onload = () => mMainImg.style.opacity = '1';
 
-        // --- UPDATED SPECS TO APPLE BENTO STYLE ---
+        // --- SPECS GRID (CLEANER) ---
         if (p.specs) {
             mSpecsGrid.innerHTML = Object.entries(p.specs).map(([k, v]) => `
-                <div class="bg-gray-50 p-3 rounded-xl flex flex-col gap-1 border border-gray-100">
+                <div class="bg-gray-50 p-3 rounded-xl flex flex-col gap-1 border border-gray-100/50">
                     <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest font-inter">${k}</span>
                     <span class="text-sm font-bold text-gray-900 font-inter leading-tight">${v}</span>
                 </div>
