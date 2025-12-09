@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html lang="km" class="h-full antialiased selection:bg-red-500 selection:text-white">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#ffffff" />
     <title>Angkorkey — ហាងលក់គ្រឿង Electronics</title>
+
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Kantumruy+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
                         sans: ['Kantumruy Pro', 'Inter', 'sans-serif'],
+                        khmer: ['Kantumruy Pro', 'sans-serif'],
                         inter: ['Inter', 'sans-serif']
                     },
                     colors: {
@@ -24,54 +29,56 @@
                     },
                     animation: {
                         'fade-in': 'fadeIn 0.4s ease-out',
-                        'slide-up': 'slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
                     },
                     keyframes: {
                         fadeIn: {
                             '0%': { opacity: '0' },
                             '100%': { opacity: '1' },
-                        },
-                        slideUp: {
-                            '0%': { transform: 'translateY(100%)' },
-                            '100%': { transform: 'translateY(0)' },
                         }
                     }
                 }
             }
         }
     </script>
+
     <style>
-        /* Custom Scrollbar hiding */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
         body { -webkit-tap-highlight-color: transparent; }
 
-        /* Glassmorphism utilities */
-        .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.05); }
-        .glass-modal { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(16px); }
+        .glass {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
 
-        /* Product Card Interactions */
-        .product-card { transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s; will-change: transform; }
-        .product-card:active { transform: scale(0.98); }
+        .product-card { transition: transform 0.2s, box-shadow 0.2s; }
+        .product-card:active { transform: scale(0.97); }
 
-        /* Tab Animations */
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+
+        * { -webkit-font-smoothing: antialiased; }
+
+        .text-shadow-sm { text-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+
         .tab-btn { position: relative; color: #94a3b8; transition: color 0.2s; }
-        .tab-btn[data-active="true"] { color: #0f172a; font-weight: 600; }
-        .tab-indicator { position: absolute; bottom: 0; left: 0; height: 3px; border-radius: 3px 3px 0 0; background-color: #ef4444; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-
-        /* Safe area handling for iPhone Home Bar */
-        .pb-safe { padding-bottom: env(safe-area-inset-bottom, 20px); }
+        .tab-btn[data-active="true"] { color: #0f172a; }
+        .tab-indicator {
+            position: absolute; bottom: 0; left: 0; height: 2px;
+            background-color: #0f172a; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
     </style>
 </head>
+
 <body class="bg-[#f8fafc] text-ink h-full flex flex-col font-sans overflow-x-hidden">
 
-    <header class="sticky top-0 z-30 glass transition-all duration-300" id="mainHeader">
+    <header class="sticky top-0 z-30 glass border-b border-gray-100/50">
         <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-                <div class="size-9 bg-black text-white rounded-xl flex items-center justify-center font-bold text-lg shadow-sm font-inter">A</div>
+                <div class="size-10 bg-black text-white rounded-xl flex items-center justify-center font-bold text-xl shadow-sm font-inter">A</div>
                 <h1 class="text-lg font-bold tracking-tight font-inter text-gray-900">Angkorkey</h1>
             </div>
+
             <div class="flex items-center gap-3">
                 <a href="https://t.me/angkorkey" target="_blank" class="hidden md:flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-black transition-colors px-4 py-2 rounded-full hover:bg-gray-100">
                     <i class="bi bi-telegram text-blue-500"></i> Join Channel
@@ -84,16 +91,16 @@
     </header>
 
     <div id="mobileMenu" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
-        <div id="menuBackdrop" class="absolute inset-0 bg-black/20 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
+        <div id="menuBackdrop" class="absolute inset-0 bg-black/30 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
         <div id="menuPanel" class="absolute top-0 right-0 bottom-0 w-[80%] max-w-[300px] bg-white shadow-2xl flex flex-col translate-x-full transition-transform duration-300 ease-out">
-            <div class="h-16 flex items-center justify-between px-5 border-b border-gray-50">
+            <div class="h-16 flex items-center justify-between px-5 border-b border-gray-100">
                 <span class="font-bold text-lg font-inter">Menu</span>
                 <button id="menuCloseBtn" class="size-9 rounded-full bg-gray-50 flex items-center justify-center active:bg-gray-200 text-gray-600">
                     <i class="bi bi-x-lg text-lg"></i>
                 </button>
             </div>
             <nav class="flex-1 p-4 space-y-2">
-                <a href="#" onclick="closeMenu()" class="flex items-center gap-3 px-4 py-3.5 rounded-2xl bg-gray-50 text-gray-900 font-medium active:scale-95 transition-transform">
+                <a href="#" class="flex items-center gap-3 px-4 py-3.5 rounded-2xl bg-gray-50 text-gray-900 font-medium active:scale-95 transition-transform">
                     <i class="bi bi-house-door text-gray-500 text-lg"></i>
                     <span>ទំព័រដើម (Home)</span>
                 </a>
@@ -108,11 +115,12 @@
         </div>
     </div>
 
-    <div class="sticky top-16 z-20 bg-[#f8fafc]/95 backdrop-blur-md pt-2 pb-2 md:static md:bg-transparent md:pt-8 transition-all duration-300 border-b border-transparent shadow-sm md:shadow-none md:border-none">
+    <div class="sticky top-16 z-20 bg-[#f8fafc]/95 backdrop-blur-md pt-2 pb-2 md:static md:bg-transparent md:pt-8 transition-all duration-300">
         <div class="max-w-6xl mx-auto px-4 space-y-3">
             <div class="relative group max-w-lg mx-auto md:mx-0">
                 <i class="bi bi-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-black transition-colors text-lg"></i>
-                <input id="searchInput" type="search" placeholder="ស្វែងរក..." class="w-full h-12 pl-12 pr-4 rounded-2xl bg-white border border-gray-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all placeholder:text-gray-400 text-base font-khmer appearance-none">
+                <input id="searchInput" type="search" placeholder="ស្វែងរក..."
+                    class="w-full h-12 pl-12 pr-4 rounded-2xl bg-white border border-gray-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all placeholder:text-gray-400 text-base font-khmer appearance-none">
             </div>
             <div class="flex gap-2 overflow-x-auto no-scrollbar pb-2 snap-x px-1">
                 <button class="filter-chip snap-start px-5 py-2.5 rounded-full text-sm font-semibold transition-all border border-transparent data-[active=true]:bg-black data-[active=true]:text-white data-[active=true]:shadow-sm active:scale-95 bg-white text-gray-600 shadow-sm border-gray-100 whitespace-nowrap" data-cat="all" data-active="true">ទាំងអស់</button>
@@ -124,393 +132,494 @@
 
     <main class="flex-1 max-w-6xl mx-auto px-4 py-4 w-full">
         <div id="grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 pb-24"></div>
-
         <div id="emptyState" class="hidden flex-col items-center justify-center py-20 text-center animate-fade-in">
             <div class="size-20 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 mb-4">
                 <i class="bi bi-search text-3xl"></i>
             </div>
             <h3 class="text-lg font-bold text-gray-900 font-khmer">រកមិនឃើញផលិតផល</h3>
-            <p class="text-gray-500 mt-1 font-khmer text-sm">សូមព្យាយាមស្វែងរកពាក្យផ្សេងទៀត</p>
         </div>
     </main>
 
-    <div id="modalOverlay" class="fixed inset-0 z-50 hidden isolate" role="dialog" aria-modal="true">
-        <div class="absolute inset-0 bg-black/30 backdrop-blur-[4px] transition-opacity duration-300 opacity-0" id="modalBackdrop"></div>
+    <div id="modalOverlay" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity duration-300 opacity-0" id="modalBackdrop"></div>
 
         <div class="absolute inset-0 flex items-end justify-center pointer-events-none md:items-center md:p-6">
-            <div id="modalCard" class="bg-white w-full h-[92vh] md:h-auto md:max-h-[85vh] md:max-w-5xl md:rounded-3xl shadow-2xl flex flex-col overflow-hidden transform transition-transform duration-300 translate-y-full pointer-events-auto relative rounded-t-[32px]">
 
-                <div class="flex items-center justify-between px-6 pt-5 pb-2 shrink-0 bg-white relative z-20">
-                    <div class="absolute top-3 left-1/2 -translate-x-1/2 w-12 h-1.5 bg-gray-200 rounded-full md:hidden"></div>
+            <div id="modalCard" class="bg-white w-full h-[92vh] md:h-auto md:max-h-[85vh] md:max-w-5xl rounded-t-[2rem] md:rounded-3xl shadow-xl flex flex-col md:flex-row overflow-hidden transform transition-transform duration-300 translate-y-full pointer-events-auto relative">
 
-                    <span id="mCat" class="text-xs font-bold text-gray-500 uppercase tracking-wider mt-2 md:mt-0 font-inter">Category</span>
-
-                    <button onclick="closeProductModal()" class="size-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-200 transition-colors active:scale-90">
-                        <i class="bi bi-x-lg text-sm"></i>
-                    </button>
+                <div class="absolute top-3 left-0 right-0 flex justify-center md:hidden z-30" onclick="closeProductModal()">
+                    <div class="w-12 h-1 bg-white/50 rounded-full shadow-sm backdrop-blur-md"></div>
                 </div>
 
-                <div class="flex-1 overflow-y-auto no-scrollbar md:flex md:gap-8 md:p-6">
+                <button onclick="closeProductModal()" class="absolute top-5 right-5 z-[60] size-9 rounded-full bg-black/10 backdrop-blur-md flex items-center justify-center text-white active:bg-black/20 transition-colors md:top-6 md:right-6 md:bg-gray-100 md:text-gray-500 shadow-sm">
+                    <i class="bi bi-x-lg text-sm"></i>
+                </button>
 
-                    <div class="w-full md:w-[45%] flex flex-col gap-4 p-4 md:p-0">
-                        <div class="aspect-square bg-gray-50 rounded-2xl overflow-hidden relative flex items-center justify-center group">
-                            <img id="mMainImg" src="" onclick="openLightbox()" class="max-w-full max-h-full object-contain transition-transform duration-300 cursor-zoom-in drop-shadow-sm" alt="Product Image">
-                            <div class="absolute bottom-3 right-3 bg-black/50 text-white text-xs px-2 py-1 rounded backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Tap to zoom</div>
-                        </div>
-                        <div class="flex gap-3 overflow-x-auto no-scrollbar snap-x px-1 py-1" id="mThumbs"></div>
+                <div class="relative w-full h-[38vh] md:h-auto md:w-1/2 bg-[#f8fafc] md:border-r md:border-gray-100 overflow-hidden shrink-0">
+                    <div class="w-full h-full flex items-center justify-center p-0 relative z-0">
+                        <img id="mMainImg" src="" onclick="openLightbox()"
+                             class="w-full h-full object-cover object-center transition-transform duration-300"
+                             alt="Product Image">
                     </div>
 
-                    <div class="w-full md:flex-1 px-6 pb-24 md:pb-0">
-                        <h2 id="mTitle" class="text-2xl md:text-3xl font-bold text-gray-900 mb-2 font-inter leading-tight"></h2>
+                    <div id="mGradient" class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent z-10 pointer-events-none transition-opacity duration-300"></div>
 
-                        <div class="flex gap-8 border-b border-gray-100 mb-6 relative">
-                            <button class="tab-btn pb-3 text-sm font-medium uppercase tracking-wide" data-tab="overview" data-active="true">Overview</button>
-                            <button class="tab-btn pb-3 text-sm font-medium uppercase tracking-wide" data-tab="specs" data-active="false">Specs</button>
+                    <div id="mOverlayInfo" class="absolute bottom-0 left-0 right-0 p-5 z-20 text-white transition-opacity duration-300">
+                        <span id="mCat" class="inline-block px-1.5 py-0.5 rounded-md bg-white/20 backdrop-blur-md text-[9px] font-bold uppercase tracking-wider text-white/90 mb-1 border border-white/10">Category</span>
+                        <h2 id="mTitle" class="text-xl md:text-3xl font-bold leading-tight font-inter line-clamp-2 text-shadow-sm"></h2>
+
+                        <div class="flex items-center gap-3 mt-2">
+                            <span id="mPrice" class="text-2xl font-bold font-inter text-shadow-sm"></span>
+                            <span class="inline-flex items-center gap-1.5 text-emerald-300 text-[10px] font-bold uppercase tracking-wide bg-emerald-950/40 px-2 py-0.5 rounded-full backdrop-blur border border-emerald-500/30">
+                                <span class="size-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                In Stock
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-1 bg-white flex flex-col relative z-10 overflow-hidden h-full">
+
+                    <div class="flex-1 overflow-y-auto px-6 md:px-10 pt-4 pb-28 md:pb-6 no-scrollbar">
+
+                        <div class="flex gap-6 border-b border-gray-100 mb-5 relative sticky top-0 bg-white z-40 pt-2">
+                            <button class="tab-btn pb-2.5 text-sm font-semibold flex-1 md:flex-none text-center" data-tab="overview" data-active="true">
+                                ទូទៅ (Overview)
+                            </button>
+                            <button class="tab-btn pb-2.5 text-sm font-semibold flex-1 md:flex-none text-center" data-tab="specs" data-active="false">
+                                បច្ចេកទេស (Specs)
+                            </button>
                             <div id="tabLine" class="tab-indicator w-0"></div>
                         </div>
 
                         <div class="min-h-[200px]">
-                            <div id="tabOverview" class="tab-content animate-fade-in">
-                                <div class="prose prose-sm prose-slate text-gray-600 font-khmer leading-7" id="mShortDesc"></div>
-                            </div>
-                            <div id="tabSpecs" class="tab-content hidden animate-fade-in">
-                                <div id="mSpecsList" class="flex flex-col border border-gray-100 rounded-xl overflow-hidden divide-y divide-gray-100 text-sm"></div>
-                            </div>
-                        </div>
-                </div>
+                            <div id="tabOverview" class="tab-content animate-fade-in space-y-5 pb-4">
+                                <div class="prose prose-sm prose-slate text-gray-600 leading-relaxed font-khmer" id="mShortDesc"></div>
 
-                <div class="shrink-0 bg-white border-t border-gray-100 p-4 pb-safe md:pb-4 md:rounded-b-3xl z-30 shadow-[0_-5px_15px_rgba(0,0,0,0.02)]">
-                    <div class="flex items-center gap-4 max-w-4xl mx-auto md:px-6">
-                        <div class="flex flex-col">
-                            <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Total Price</span>
-                            <span id="mPrice" class="text-2xl font-bold text-gray-900 font-inter leading-none"></span>
+                                <div>
+                                    <span class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3 block">Gallery</span>
+                                    <div class="flex gap-3 overflow-x-auto no-scrollbar snap-x p-1" id="mThumbsWrapper">
+                                        <div id="mThumbs" class="flex gap-3"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="tabSpecs" class="tab-content hidden animate-fade-in pb-4">
+                                <div id="mSpecsGrid" class="grid grid-cols-2 gap-3">
+                                    </div>
+                            </div>
                         </div>
-                        <a id="mTelegramBtn" href="#" target="_blank" class="flex-1 bg-gray-900 hover:bg-black text-white h-12 rounded-xl flex items-center justify-center gap-2 font-semibold transition-all shadow-lg shadow-gray-200 active:scale-[0.98]">
-                            <i class="bi bi-telegram text-blue-400 text-xl"></i>
-                            <span>Order via Telegram</span>
+                    </div>
+
+                    <div class="absolute bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-100 pb-safe z-30">
+                        <a id="mTelegramBtn" href="#" target="_blank" class="w-full bg-gray-900 active:bg-black text-white h-12 rounded-xl flex items-center justify-center gap-2 transition-transform active:scale-[0.98]">
+                            <i class="bi bi-telegram text-[#2AABEE] text-lg"></i>
+                            <div class="flex flex-col items-start leading-none">
+                                <span class="font-khmer font-bold text-sm">កម្ម៉ង់តាម Telegram</span>
+                            </div>
                         </a>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 
-    <div id="lightbox" class="fixed inset-0 z-[70] bg-black hidden flex items-center justify-center touch-none animate-fade-in" onclick="closeLightbox()">
-        <button class="absolute top-4 right-4 text-white p-2 z-50 bg-white/10 backdrop-blur rounded-full hover:bg-white/20">
+    <div id="lightbox" class="fixed inset-0 z-[70] bg-black hidden items-center justify-center touch-none animate-fade-in" onclick="closeLightbox()">
+        <button class="absolute top-safe right-4 text-white/80 p-2 z-50 mt-4 bg-white/10 rounded-full">
             <i class="bi bi-x-lg text-xl"></i>
         </button>
-        <img id="lightboxImg" src="" class="max-w-[95vw] max-h-[90vh] object-contain" alt="Full View">
+        <img id="lightboxImg" src="" class="max-w-screen max-h-screen object-contain" alt="Full View">
     </div>
 
-    <script>
-        /* ================= DATA ================= */
-        /* ================= DATA (YOUR ORIGINAL IMAGES) ================= */
-        const PRODUCTS = [
-            {
-                id: '2',
-                name: 'Moondrop Chu II',
-                price: 22,
-                category: 'iem',
-                description: '<p><strong>គុណភាពសំឡេងច្បាស់ល្អ</strong> ជាមួយតួខ្លួនលោហៈធន់រឹងមាំ។ ជាជម្រើសដ៏ល្អបំផុតសម្រាប់តម្លៃនេះ។ សាកសមសម្រាប់អ្នកចាប់ផ្តើមលេងកាស Hi-Fi។</p>',
-                specs: { 'Driver': '10mm Dynamic', 'Material': 'Zinc Alloy', 'Connection': '0.78mm 2-Pin', 'Plug': '3.5mm SE', 'Sensitivity': '119dB' },
-                images: ['assets/images/Main-03.jpg', 'assets/images/Main-02.jpg', 'assets/images/Main-01.jpg', 'assets/images/Main-04.jpg']
+<script>
+    /* ================= DATA ================= */
+    const PRODUCTS = [
+        {
+            id: '2',
+            name: 'Moondrop Chu II',
+            price: 22,
+            category: 'iem',
+            description: '<p><strong>គុណភាពសំឡេងច្បាស់ល្អ</strong> ជាមួយតួខ្លួនលោហៈធន់រឹងមាំ។ ជាជម្រើសដ៏ល្អបំផុតសម្រាប់តម្លៃនេះ។ សាកសមសម្រាប់អ្នកចាប់ផ្តើមលេងកាស Hi-Fi។</p>',
+            specs: {
+                'Driver': '10mm Dynamic',
+                'Material': 'Zinc Alloy',
+                'Connection': '0.78mm 2-Pin',
+                'Plug': '3.5mm SE',
+                'Sensitivity': '119dB'
             },
-            {
-                id: '3',
-                name: 'QKZ AK3',
-                price: 8,
-                category: 'iem',
-                description: '<p><strong>រចនាបទថ្លា និងសំឡេងបែប Studio</strong>។ កាសដែលផ្តល់នូវសម្លេងលម្អិត និងបាសដែលគួរសម ក្នុងតម្លៃសមរម្យបំផុត។</p>',
-                specs: { 'Driver': '10mm Dynamic', 'Impedance': '16Ω', 'Sensitivity': '96dB', 'Mic': 'Yes', 'Plug': '3.5mm' },
-                images: ['assets/images/QkzAK3__0005.webp', 'assets/images/QkzAK3__0006.webp', 'assets/images/QkzAK3__0007webp', 'assets/images/QkzAK3__0008.webp']
+            images: ['assets/images/Main-03.jpg', 'assets/images/Main-02.jpg', 'assets/images/Main-01.jpg', 'assets/images/Main-04.jpg']
+        },
+        {
+            id: '3',
+            name: 'QKZ AK3',
+            price: 8,
+            category: 'iem',
+            description: '<p><strong>រចនាបទថ្លា និងសំឡេងបែប Studio</strong>។ កាសដែលផ្តល់នូវសម្លេងលម្អិត និងបាសដែលគួរសម ក្នុងតម្លៃសមរម្យបំផុត។</p>',
+            specs: {
+                'Driver': '10mm Dynamic',
+                'Impedance': '16Ω',
+                'Sensitivity': '96dB',
+                'Mic': 'Yes',
+                'Plug': '3.5mm'
             },
-            {
-                id: '4',
-                name: 'QKZ X HBB',
-                price: 22,
-                category: 'iem',
-                description: '<p><strong>ផ្តោតលើ Bass (Bass-Tuned)</strong>។ សហការរចនាជាមួយ Hawaii Bad Boy (HBB) សម្រាប់អ្នកចូលចិត្តបាសធ្ងន់ៗ។</p>',
-                specs: { 'Driver': '10mm Titanium', 'Tuning': 'Bass-Boosted', 'Connection': 'QDC 2-Pin', 'Sensitivity': '115dB', 'Plug': '3.5mm' },
-                images: ['assets/images/QkzXHBB__0001.webp', 'assets/images/QkzXHBB__0002.webp', 'assets/images/QkzXHBB__0003.webp', 'assets/images/QkzXHBB__0004.webp']
+            images: ['assets/images/QkzAK3__0005.webp', 'assets/images/QkzAK3__0006.webp', 'assets/images/QkzAK3__0007webp', 'assets/images/QkzAK3__0008.webp']
+        },
+        {
+            id: '4',
+            name: 'QKZ X HBB',
+            price: 22,
+            category: 'iem',
+            description: '<p><strong>ផ្តោតលើ Bass (Bass-Tuned)</strong>។ សហការរចនាជាមួយ Hawaii Bad Boy (HBB) សម្រាប់អ្នកចូលចិត្តបាសធ្ងន់ៗ។</p>',
+            specs: {
+                'Driver': '10mm Titanium',
+                'Tuning': 'Bass-Boosted',
+                'Connection': 'QDC 2-Pin',
+                'Sensitivity': '115dB',
+                'Plug': '3.5mm'
             },
-            {
-                id: '5',
-                name: 'KZ Castor Pro',
-                price: 22,
-                category: 'iem',
-                description: '<p><strong>កម្លាំង Dual Driver និងអាចសារ៉េសំឡេងបាន</strong>។ មានកុងតាក់សម្រាប់សារ៉េ Bass និង Treble តាមចំណង់ចំណូលចិត្ត។</p>',
-                specs: { 'Driver': 'Dual (10+6mm)', 'Switches': '4-Level Tuning', 'Impedance': '30-50Ω', 'Freq': '20Hz-40kHz', 'Plug': '3.5mm' },
-                images: ['assets/images/KZCastorPro__0001.webp', 'assets/images/KZCastorPro__0002.webp', 'assets/images/KZCastorPro__0003.webp', 'assets/images/KZCastorPro__0004.webp']
+            images: ['assets/images/QkzXHBB__0001.webp', 'assets/images/QkzXHBB__0002.webp', 'assets/images/QkzXHBB__0003.webp', 'assets/images/QkzXHBB__0004.webp']
+        },
+        {
+            id: '5',
+            name: 'KZ Castor Pro',
+            price: 22,
+            category: 'iem',
+            description: '<p><strong>កម្លាំង Dual Driver និងអាចសារ៉េសំឡេងបាន</strong>។ មានកុងតាក់សម្រាប់សារ៉េ Bass និង Treble តាមចំណង់ចំណូលចិត្ត។</p>',
+            specs: {
+                'Driver': 'Dual (10+6mm)',
+                'Switches': '4-Level Tuning',
+                'Impedance': '30-50Ω',
+                'Freq': '20Hz-40kHz',
+                'Plug': '3.5mm'
             },
-            {
-                id: '6',
-                name: 'Tanchjim Bunny Type C',
-                price: 25,
-                category: 'iem',
-                description: '<p><strong>កាស Hi-Fi ភ្ជាប់មកជាមួយ DSP</strong>។ មិនចាំបាច់ប្រើ Dongle បន្ថែម ដោតចូលទូរស័ព្ទប្រើបានភ្លាមៗ។</p>',
-                specs: { 'Connector': 'USB Type-C', 'Chip': 'Built-in DSP', 'Driver': 'Dynamic', 'Mic': 'Yes (HD)', 'Cable': 'Fixed' },
-                images: ['assets/images/TBunny__0003.webp', 'assets/images/TBunny__0002.webp', 'assets/images/TBunny__0001.webp', 'assets/images/TBunny__0004.webp']
+            images: ['assets/images/KZCastorPro__0001.webp', 'assets/images/KZCastorPro__0002.webp', 'assets/images/KZCastorPro__0003.webp', 'assets/images/KZCastorPro__0004.webp']
+        },
+        {
+            id: '6',
+            name: 'Tanchjim Bunny Type C',
+            price: 25,
+            category: 'iem',
+            description: '<p><strong>កាស Hi-Fi ភ្ជាប់មកជាមួយ DSP</strong>។ មិនចាំបាច់ប្រើ Dongle បន្ថែម ដោតចូលទូរស័ព្ទប្រើបានភ្លាមៗ។</p>',
+            specs: {
+                'Connector': 'USB Type-C',
+                'Chip': 'Built-in DSP',
+                'Driver': 'Dynamic',
+                'Mic': 'Yes (HD)',
+                'Cable': 'Fixed'
             },
-            {
-                id: '7',
-                name: 'Tanchjim Bunny 3.5mm',
-                price: 25,
-                category: 'iem',
-                description: '<p><strong>កាស Analog សំឡេងសុទ្ធ</strong>។ សម្រាប់អ្នកដែលមាន AMP ឬ DAC ផ្ទាល់ខ្លួន។</p>',
-                specs: { 'Connector': '3.5mm Standard', 'Driver': 'Dynamic', 'Sensitivity': '120dB', 'Impedance': '32Ω', 'Cable': 'Fixed' },
-                images: ['assets/images/TBunny__0003.webp', 'assets/images/TBunny_3.5_0001.webp', 'assets/images/TBunny_3.5_0002.webp', 'assets/images/TBunny__0004.webp']
+            images: ['assets/images/TBunny__0003.webp', 'assets/images/TBunny__0002.webp', 'assets/images/TBunny__0001.webp', 'assets/images/TBunny__0004.webp']
+        },
+        {
+            id: '7',
+            name: 'Tanchjim Bunny 3.5mm',
+            price: 25,
+            category: 'iem',
+            description: '<p><strong>កាស Analog សំឡេងសុទ្ធ</strong>។ សម្រាប់អ្នកដែលមាន AMP ឬ DAC ផ្ទាល់ខ្លួន។</p>',
+            specs: {
+                'Connector': '3.5mm Standard',
+                'Driver': 'Dynamic',
+                'Sensitivity': '120dB',
+                'Impedance': '32Ω',
+                'Cable': 'Fixed'
             },
-            {
-                id: '8',
-                name: 'Tangzu Waner SG 2 Green',
-                price: 38,
-                category: 'iem',
-                description: '<p><strong>Space Jam Edition (ពណ៌បៃតង)</strong>។ សំឡេងមានតុល្យភាព (Neutral-tuned) និងដំណើរការខ្ពស់។</p>',
-                specs: { 'Edition': 'Space Jam Green', 'Driver': '10mm PET', 'Connection': '0.78mm 2-Pin', 'Impedance': '20Ω', 'Sensitivity': '107dB' },
-                images: ['assets/images/TWanerSG2B_0002.webp', 'assets/images/TWanerSG2B_0001.webp', 'assets/images/TWanerSG2B_0003.webp', 'assets/images/TWanerSG2B_0004.webp']
+            images: ['assets/images/TBunny__0003.webp', 'assets/images/TBunny_3.5_0001.webp', 'assets/images/TBunny_3.5_0002.webp', 'assets/images/TBunny__0004.webp']
+        },
+        {
+            id: '8',
+            name: 'Tangzu Waner SG 2 Green',
+            price: 38,
+            category: 'iem',
+            description: '<p><strong>Space Jam Edition (ពណ៌បៃតង)</strong>។ សំឡេងមានតុល្យភាព (Neutral-tuned) និងដំណើរការខ្ពស់។</p>',
+            specs: {
+                'Edition': 'Space Jam Green',
+                'Driver': '10mm PET',
+                'Connection': '0.78mm 2-Pin',
+                'Impedance': '20Ω',
+                'Sensitivity': '107dB'
             },
-            {
-                id: '9',
-                name: 'Tangzu Waner SG 2 Black',
-                price: 38,
-                category: 'iem',
-                description: '<p><strong>Space Jam Edition (ពណ៌ខ្មៅ)</strong>។ រចនាបទស្អាតប្លែក មានលក្ខណៈ Premium។</p>',
-                specs: { 'Edition': 'Space Jam Black', 'Driver': '10mm PET', 'Connection': '0.78mm 2-Pin', 'Impedance': '20Ω', 'Sensitivity': '107dB' },
-                images: ['assets/images/TWanerSG2B_0003-1.webp', 'assets/images/TWanerSG2B_0001-1.webp', 'assets/images/TWanerSG2B_0003-1.webp', 'assets/images/TWanerSG2B_0004-1.webp']
+            images: ['assets/images/TWanerSG2B_0002.webp', 'assets/images/TWanerSG2B_0001.webp', 'assets/images/TWanerSG2B_0003.webp', 'assets/images/TWanerSG2B_0004.webp']
+        },
+        {
+            id: '9',
+            name: 'Tangzu Waner SG 2 Black',
+            price: 38,
+            category: 'iem',
+            description: '<p><strong>Space Jam Edition (ពណ៌ខ្មៅ)</strong>។ រចនាបទស្អាតប្លែក មានលក្ខណៈ Premium។</p>',
+            specs: {
+                'Edition': 'Space Jam Black',
+                'Driver': '10mm PET',
+                'Connection': '0.78mm 2-Pin',
+                'Impedance': '20Ω',
+                'Sensitivity': '107dB'
             },
-            {
-                id: '10',
-                name: 'Monitor Stand',
-                price: 15,
-                category: 'accessories',
-                description: '<p><strong>ជើងទ្រអេក្រង់ ជួយបង្កើនទំហំតុធ្វើការ</strong>។ ជួយអោយការអង្គុយធ្វើការមានផាសុកភាពជាងមុន។</p>',
-                specs: { 'Material': 'Plastic / ABS', 'Size': '55cm x 20cm', 'USB Hub': '4 Ports (2.0)', 'Max Load': '20kg', 'Height': '7.5cm' },
-                images: ['assets/images/MonitorStand_0001.webp', 'assets/images/MonitorStand_0002.webp', 'assets/images/MonitorStand_0003.webp', 'assets/images/MonitorStand_0004.webp']
+            images: ['assets/images/TWanerSG2B_0003-1.webp', 'assets/images/TWanerSG2B_0001-1.webp', 'assets/images/TWanerSG2B_0003-1.webp', 'assets/images/TWanerSG2B_0004-1.webp']
+        },
+        {
+            id: '10',
+            name: 'Monitor Stand',
+            price: 15,
+            category: 'accessories',
+            description: '<p><strong>ជើងទ្រអេក្រង់ ជួយបង្កើនទំហំតុធ្វើការ</strong>។ ជួយអោយការអង្គុយធ្វើការមានផាសុកភាពជាងមុន។</p>',
+            specs: {
+                'Material': 'Plastic / ABS',
+                'Size': '55cm x 20cm',
+                'USB Hub': '4 Ports (2.0)',
+                'Max Load': '20kg',
+                'Height': '7.5cm'
             },
-        ];
+            images: ['assets/images/MonitorStand_0001.webp', 'assets/images/MonitorStand_0002.webp', 'assets/images/MonitorStand_0003.webp', 'assets/images/MonitorStand_0004.webp']
+        },
+    ];
 
-        /* ================= LOGIC ================= */
-        const $ = s => document.querySelector(s);
-        const $$ = s => document.querySelectorAll(s);
-        const fmt = n => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
+    /* ================= LOGIC ================= */
+    const $ = s => document.querySelector(s);
+    const $$ = s => document.querySelectorAll(s);
+    const fmt = n => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
 
-        let activeCategory = 'all';
-        let searchQuery = '';
+    let activeCategory = 'all';
+    let searchQuery = '';
+    const gridEl = $('#grid');
+    const emptyState = $('#emptyState');
 
-        const gridEl = $('#grid');
-        const emptyState = $('#emptyState');
+    // --- MOBILE MENU ---
+    const menuBtn = $('#menuBtn');
+    const mobileMenu = $('#mobileMenu');
+    const menuBackdrop = $('#menuBackdrop');
+    const menuPanel = $('#menuPanel');
+    const menuCloseBtn = $('#menuCloseBtn');
 
-        // --- MOBILE MENU ---
-        const menuBtn = $('#menuBtn');
-        const mobileMenu = $('#mobileMenu');
-        const menuBackdrop = $('#menuBackdrop');
-        const menuPanel = $('#menuPanel');
-        const menuCloseBtn = $('#menuCloseBtn');
+    function openMenu() {
+        mobileMenu.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        requestAnimationFrame(() => {
+            menuBackdrop.classList.remove('opacity-0');
+            menuPanel.classList.remove('translate-x-full');
+        });
+    }
 
-        function openMenu() {
-            mobileMenu.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-            requestAnimationFrame(() => {
-                menuBackdrop.classList.remove('opacity-0');
-                menuPanel.classList.remove('translate-x-full');
-            });
-        }
+    function closeMenu() {
+        menuBackdrop.classList.add('opacity-0');
+        menuPanel.classList.add('translate-x-full');
+        document.body.style.overflow = '';
+        setTimeout(() => {
+            mobileMenu.classList.add('hidden');
+        }, 300);
+    }
 
-        function closeMenu() {
-            menuBackdrop.classList.add('opacity-0');
-            menuPanel.classList.add('translate-x-full');
-            document.body.style.overflow = '';
-            setTimeout(() => { mobileMenu.classList.add('hidden'); }, 300);
-        }
+    menuBtn.addEventListener('click', openMenu);
+    menuCloseBtn.addEventListener('click', closeMenu);
+    mobileMenu.addEventListener('click', (e) => {
+        if(e.target === mobileMenu || e.target === menuBackdrop) closeMenu();
+    });
 
-        menuBtn.addEventListener('click', openMenu);
-        menuCloseBtn.addEventListener('click', closeMenu);
-        mobileMenu.addEventListener('click', (e) => {
-            if(e.target === mobileMenu || e.target === menuBackdrop) closeMenu();
+    // --- LIGHTBOX ---
+    const lightbox = $('#lightbox');
+    const lightboxImg = $('#lightboxImg');
+
+    window.openLightbox = () => {
+        lightboxImg.src = $('#mMainImg').src;
+        lightbox.classList.remove('hidden');
+        lightbox.classList.add('flex');
+    };
+
+    window.closeLightbox = () => {
+        lightbox.classList.add('hidden');
+        lightbox.classList.remove('flex');
+    };
+
+    // --- GRID RENDER ---
+    function renderProducts() {
+        let filtered = PRODUCTS.filter(p => {
+            const matchesCat = activeCategory === 'all' || p.category === activeCategory;
+            const matchesSearch = p.name.toLowerCase().includes(searchQuery);
+            return matchesCat && matchesSearch;
         });
 
-        // --- LIGHTBOX ---
-        const lightbox = $('#lightbox');
-        const lightboxImg = $('#lightboxImg');
+        if (filtered.length === 0) {
+            gridEl.innerHTML = '';
+            emptyState.classList.remove('hidden');
+            emptyState.classList.add('flex');
+            return;
+        }
+        emptyState.classList.add('hidden');
+        emptyState.classList.remove('flex');
 
-        window.openLightbox = () => {
-            lightboxImg.src = $('#mMainImg').src;
-            lightbox.classList.remove('hidden');
-        };
+        gridEl.innerHTML = filtered.map((p, i) => `
+            <article class="product-card bg-white rounded-2xl overflow-hidden cursor-pointer shadow-sm border border-gray-100 flex flex-col h-full animate-fade-in group"
+                style="animation-delay: ${i * 30}ms"
+                onclick="openProductModal('${p.id}')">
 
-        window.closeLightbox = () => {
-            lightbox.classList.add('hidden');
-        };
+                <div class="aspect-square bg-gray-50 p-0 relative overflow-hidden">
+                    <img src="${p.images[0]}"
+                         onerror="this.src='https://placehold.co/400?text=Angkorkey'"
+                         class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                         loading="lazy"
+                         alt="${p.name}">
+                    ${i < 2 ? `<span class="absolute top-2 left-2 bg-red-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow-sm">HOT</span>` : ''}
+                </div>
 
-        // --- GRID RENDER ---
-        function renderProducts() {
-            let filtered = PRODUCTS.filter(p => {
-                const matchesCat = activeCategory === 'all' || p.category === activeCategory;
-                const matchesSearch = p.name.toLowerCase().includes(searchQuery);
-                return matchesCat && matchesSearch;
-            });
+                <div class="p-3 flex flex-col flex-1">
+                    <div class="mb-1 text-[9px] font-bold text-gray-400 uppercase tracking-wide font-inter">${p.category === 'iem' ? 'Audio' : 'Gear'}</div>
+                    <h3 class="text-[13px] font-bold text-gray-900 line-clamp-2 leading-snug flex-1 mb-2 font-inter">${p.name}</h3>
+                    <div class="flex items-center justify-between mt-auto">
+                        <span class="text-sm font-bold text-red-600 font-inter">${fmt(p.price)}</span>
 
-            if (filtered.length === 0) {
-                gridEl.innerHTML = '';
-                emptyState.classList.remove('hidden');
-                emptyState.classList.add('flex');
-                return;
-            }
-
-            emptyState.classList.add('hidden');
-            emptyState.classList.remove('flex');
-
-            gridEl.innerHTML = filtered.map((p, i) => `
-                <article class="product-card bg-white rounded-2xl overflow-hidden cursor-pointer shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-lg border border-gray-100 flex flex-col h-full animate-fade-in group" style="animation-delay: ${i * 50}ms" onclick="openProductModal('${p.id}')">
-                    <div class="aspect-square bg-gray-50 p-4 relative overflow-hidden flex items-center justify-center">
-                        <img src="${p.images[0]}" onerror="this.src='https://placehold.co/400?text=Angkorkey'" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" loading="lazy" alt="${p.name}">
-                        ${p.price < 20 ? `<span class="absolute top-2 left-2 bg-rose-500 text-white text-[10px] font-bold px-2 py-1 rounded-md shadow-sm">HOT</span>` : ''}
-                    </div>
-                    <div class="p-4 flex flex-col flex-1">
-                        <div class="mb-1 text-[10px] font-bold text-gray-400 uppercase tracking-wide font-inter">${p.category === 'iem' ? 'Audio' : 'Gear'}</div>
-                        <h3 class="text-sm font-bold text-gray-900 line-clamp-2 leading-relaxed flex-1 mb-2 font-inter">${p.name}</h3>
-                        <div class="flex items-center justify-between mt-auto pt-2 border-t border-gray-50">
-                            <span class="text-base font-bold text-gray-900 font-inter">${fmt(p.price)}</span>
-                            <div class="size-8 rounded-full bg-gray-50 text-gray-600 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
-                                <i class="bi bi-arrow-right text-sm"></i>
-                            </div>
+                        <div class="size-6 rounded-full bg-gray-50 text-gray-400 flex items-center justify-center border border-gray-100 group-hover:bg-red-50 group-hover:text-red-500 group-hover:border-red-100 transition-colors">
+                            <i class="bi bi-plus text-sm"></i>
                         </div>
                     </div>
-                </article>
+                </div>
+            </article>
+        `).join('');
+    }
+
+    // --- MODAL LOGIC (UPDATED) ---
+    const modalOverlay = $('#modalOverlay');
+    const modalBackdrop = $('#modalBackdrop');
+    const modalCard = $('#modalCard');
+    const mMainImg = $('#mMainImg');
+
+    // Select the overlay elements
+    const mGradient = $('#mGradient');
+    const mOverlayInfo = $('#mOverlayInfo');
+
+    const mThumbs = $('#mThumbs');
+    const mCat = $('#mCat');
+    const mTitle = $('#mTitle');
+    const mPrice = $('#mPrice');
+    const mShortDesc = $('#mShortDesc');
+    const mSpecsGrid = $('#mSpecsGrid');
+    const mTelegramBtn = $('#mTelegramBtn');
+    const tabLine = $('#tabLine');
+    const tabs = $$('.tab-btn');
+    const tabContents = $$('.tab-content');
+
+    function updateTabLine(targetTab) {
+        const width = targetTab.offsetWidth;
+        const left = targetTab.offsetLeft;
+        tabLine.style.width = `${width}px`;
+        tabLine.style.transform = `translateX(${left}px)`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.setAttribute('data-active', 'false'));
+            tab.setAttribute('data-active', 'true');
+            updateTabLine(tab);
+
+            const target = tab.dataset.tab;
+            tabContents.forEach(c => c.classList.add('hidden'));
+
+            if(target === 'overview') $('#tabOverview').classList.remove('hidden');
+            if(target === 'specs') $('#tabSpecs').classList.remove('hidden');
+        });
+    });
+
+    window.openProductModal = (id) => {
+        const p = PRODUCTS.find(x => x.id === id);
+        if (!p) return;
+
+        // Reset
+        tabs[0].click();
+        mMainImg.style.opacity = '0';
+
+        // RESET: Show info by default when opening
+        mGradient.classList.remove('opacity-0');
+        mOverlayInfo.classList.remove('opacity-0');
+
+        mCat.textContent = p.category === 'iem' ? 'In-Ear Monitor' : 'Accessories';
+        mTitle.textContent = p.name;
+        mPrice.textContent = fmt(p.price);
+        mShortDesc.innerHTML = p.description;
+
+        mMainImg.src = p.images[0];
+        mMainImg.onload = () => mMainImg.style.opacity = '1';
+
+        // --- SPECS GRID ---
+        if (p.specs) {
+            mSpecsGrid.innerHTML = Object.entries(p.specs).map(([k, v]) => `
+                <div class="bg-gray-50 p-3 rounded-xl flex flex-col gap-1 border border-gray-100/50">
+                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest font-inter">${k}</span>
+                    <span class="text-sm font-bold text-gray-900 font-inter leading-tight">${v}</span>
+                </div>
             `).join('');
+        } else {
+            mSpecsGrid.innerHTML = '<div class="col-span-2 text-center text-gray-400 text-sm py-4">No specifications available</div>';
         }
 
-        // --- MODAL LOGIC ---
-        const modalOverlay = $('#modalOverlay');
-        const modalBackdrop = $('#modalBackdrop');
-        const modalCard = $('#modalCard');
-        const mMainImg = $('#mMainImg');
-        const mThumbs = $('#mThumbs');
-        const mCat = $('#mCat');
-        const mTitle = $('#mTitle');
-        const mPrice = $('#mPrice');
-        const mShortDesc = $('#mShortDesc');
-        const mSpecsList = $('#mSpecsList');
-        const mTelegramBtn = $('#mTelegramBtn');
-        const tabLine = $('#tabLine');
-        const tabs = $$('.tab-btn');
-        const tabContents = $$('.tab-content');
+        // Thumbs: Pass index (idx) to switchImage
+        mThumbs.innerHTML = p.images.map((img, idx) => `
+            <button onclick="switchImage(this, '${img}', ${idx})"
+                class="size-12 rounded-lg border-2 bg-white p-0.5 overflow-hidden transition-all snap-start shrink-0 ${idx === 0 ? 'border-black' : 'border-transparent opacity-70'}">
+                <img src="${img}" class="w-full h-full object-cover">
+            </button>
+        `).join('');
 
-        function updateTabLine(targetTab) {
-            const width = targetTab.offsetWidth;
-            const left = targetTab.offsetLeft;
-            tabLine.style.width = `${width}px`;
-            tabLine.style.transform = `translateX(${left}px)`;
+        const msg = `*Order:* ${p.name}\n*Price:* ${fmt(p.price)}`;
+        mTelegramBtn.href = `https://t.me/angkorkey_admin_2?text=${encodeURIComponent(msg)}`;
+
+        modalOverlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+
+        requestAnimationFrame(() => {
+            modalBackdrop.classList.remove('opacity-0');
+            modalCard.classList.remove('translate-y-full');
+            setTimeout(() => updateTabLine(tabs[0]), 150);
+        });
+    };
+
+    // UPDATED: Check index to hide/show overlay
+    window.switchImage = (btn, src, idx) => {
+        mMainImg.src = src;
+
+        if (idx === 0) {
+            mGradient.classList.remove('opacity-0');
+            mOverlayInfo.classList.remove('opacity-0');
+        } else {
+            mGradient.classList.add('opacity-0');
+            mOverlayInfo.classList.add('opacity-0');
         }
 
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                tabs.forEach(t => t.setAttribute('data-active', 'false'));
-                tab.setAttribute('data-active', 'true');
-                updateTabLine(tab);
-                const target = tab.dataset.tab;
-                tabContents.forEach(c => c.classList.add('hidden'));
-                $(`#tab${target.charAt(0).toUpperCase() + target.slice(1)}`).classList.remove('hidden');
-            });
+        Array.from(mThumbs.children).forEach(b => {
+            b.classList.remove('border-black');
+            b.classList.add('border-transparent', 'opacity-70');
         });
+        btn.classList.remove('border-transparent', 'opacity-70');
+        btn.classList.add('border-black');
+    };
 
-        window.openProductModal = (id) => {
-            const p = PRODUCTS.find(x => x.id === id);
-            if (!p) return;
+    window.closeProductModal = () => {
+        modalBackdrop.classList.add('opacity-0');
+        modalCard.classList.add('translate-y-full');
+        document.body.style.overflow = '';
+        setTimeout(() => {
+            modalOverlay.classList.add('hidden');
+        }, 300);
+    };
 
-            tabs[0].click(); // Reset to Overview tab
+    // --- SEARCH ---
+    let debounce;
+    $('#searchInput').addEventListener('input', (e) => {
+        clearTimeout(debounce);
+        debounce = setTimeout(() => {
+            searchQuery = e.target.value.toLowerCase().trim();
+            renderProducts();
+        }, 150);
+    });
 
-            mMainImg.style.opacity = '0';
-            mCat.textContent = p.category === 'iem' ? 'In-Ear Monitor' : 'Accessories';
-            mTitle.textContent = p.name;
-            mPrice.textContent = fmt(p.price);
-            mShortDesc.innerHTML = p.description;
-            mMainImg.src = p.images[0];
-            mMainImg.onload = () => mMainImg.style.opacity = '1';
-
-            // Clean List Layout for Specs
-            if (p.specs) {
-                mSpecsList.innerHTML = Object.entries(p.specs).map(([k, v]) => `
-                    <div class="flex items-center justify-between p-3 bg-gray-50/50">
-                        <span class="text-xs font-medium text-gray-500 uppercase font-inter">${k}</span>
-                        <span class="text-sm font-semibold text-gray-900 font-inter text-right">${v}</span>
-                    </div>
-                `).join('');
-            } else {
-                mSpecsList.innerHTML = '<div class="text-center text-gray-400 py-4 text-sm">No specs available</div>';
-            }
-
-            // Thumbnails
-            mThumbs.innerHTML = p.images.map((img, idx) => `
-                <button onclick="switchImage(this, '${img}')" class="size-14 rounded-xl border-2 bg-white overflow-hidden transition-all ${idx === 0 ? 'border-black opacity-100 scale-100' : 'border-transparent opacity-60 scale-95'} shrink-0 hover:opacity-100">
-                    <img src="${img}" class="w-full h-full object-contain p-1">
-                </button>
-            `).join('');
-
-            const msg = `Hi Angkorkey,\nI want to order: ${p.name}\nPrice: ${fmt(p.price)}`;
-            mTelegramBtn.href = `https://t.me/angkorkey_admin_2?text=${encodeURIComponent(msg)}`;
-
-            modalOverlay.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-            requestAnimationFrame(() => {
-                modalBackdrop.classList.remove('opacity-0');
-                modalCard.classList.remove('translate-y-full');
-                setTimeout(() => updateTabLine(tabs[0]), 200);
-            });
-        };
-
-        window.switchImage = (btn, src) => {
-            // Simple fade effect
-            mMainImg.style.opacity = '0.5';
-            setTimeout(() => {
-                mMainImg.src = src;
-                mMainImg.style.opacity = '1';
-            }, 100);
-
-            Array.from(mThumbs.children).forEach(b => {
-                b.classList.remove('border-black', 'scale-100', 'opacity-100');
-                b.classList.add('border-transparent', 'scale-95', 'opacity-60');
-            });
-            btn.classList.remove('border-transparent', 'scale-95', 'opacity-60');
-            btn.classList.add('border-black', 'scale-100', 'opacity-100');
-        };
-
-        window.closeProductModal = () => {
-            modalBackdrop.classList.add('opacity-0');
-            modalCard.classList.add('translate-y-full');
-            document.body.style.overflow = '';
-            setTimeout(() => { modalOverlay.classList.add('hidden'); }, 300);
-        };
-
-        // --- SEARCH ---
-        let debounce;
-        $('#searchInput').addEventListener('input', (e) => {
-            clearTimeout(debounce);
-            debounce = setTimeout(() => {
-                searchQuery = e.target.value.toLowerCase().trim();
-                renderProducts();
-            }, 150);
+    // --- FILTER ---
+    $$('.filter-chip').forEach(btn => {
+        btn.addEventListener('click', () => {
+            $$('.filter-chip').forEach(b => b.dataset.active = 'false');
+            btn.dataset.active = 'true';
+            activeCategory = btn.dataset.cat;
+            renderProducts();
         });
+    });
 
-        // --- FILTER ---
-        $$('.filter-chip').forEach(btn => {
-            btn.addEventListener('click', () => {
-                $$('.filter-chip').forEach(b => {
-                    b.dataset.active = 'false';
-                    b.classList.remove('bg-black', 'text-white');
-                    b.classList.add('bg-white', 'text-gray-600');
-                });
-                btn.dataset.active = 'true';
-                btn.classList.remove('bg-white', 'text-gray-600');
-                btn.classList.add('bg-black', 'text-white');
-                activeCategory = btn.dataset.cat;
-                renderProducts();
-            });
-        });
+    // Init
+    renderProducts();
 
-        // Init
-        renderProducts();
-    </script>
+</script>
 </body>
 </html>
