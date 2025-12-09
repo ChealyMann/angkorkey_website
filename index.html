@@ -160,10 +160,16 @@
                     <i class="bi bi-x-lg text-sm"></i>
                 </button>
 
-                <div class="relative w-full h-[38vh] md:h-auto md:w-1/2 bg-[#f8fafc] md:border-r md:border-gray-100 overflow-hidden shrink-0">
+                <div class="relative w-full h-[38vh] md:h-auto md:w-1/2 bg-[#f8fafc] md:border-r md:border-gray-100 overflow-hidden shrink-0 group/img">
+
+                    <button onclick="openLightbox()" class="absolute top-4 left-4 z-20 bg-black/60 hover:bg-black/40 backdrop-blur-md border border-white/20 text-white px-3 py-1.5 rounded-full flex items-center gap-2 transition-all active:scale-95 group/zoom shadow-sm">
+                        <i class="bi bi-arrows-fullscreen text-xs group-hover/zoom:scale-110 transition-transform"></i>
+                        <span class="text-[10px] font-bold font-khmer pt-0.5">ពង្រីក</span>
+                    </button>
+
                     <div class="w-full h-full flex items-center justify-center p-0 relative z-0">
                         <img id="mMainImg" src="" onclick="openLightbox()"
-                             class="w-full h-full object-cover object-center transition-transform duration-300"
+                             class="w-full h-full object-cover object-center transition-transform duration-300 cursor-zoom-in"
                              alt="Product Image">
                     </div>
 
@@ -250,7 +256,8 @@
                 'Material': 'Zinc Alloy',
                 'Connection': '0.78mm 2-Pin',
                 'Plug': '3.5mm SE',
-                'Sensitivity': '119dB'
+                'Sensitivity': '119dB',
+                'Comfort' : 'Silicon Eartip'
             },
             images: ['assets/images/Main-03.jpg', 'assets/images/Main-02.jpg', 'assets/images/Main-01.jpg', 'assets/images/Main-04.jpg']
         },
