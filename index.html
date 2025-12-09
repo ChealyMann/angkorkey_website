@@ -67,6 +67,10 @@
             position: absolute; bottom: 0; left: 0; height: 2px;
             background-color: #0f172a; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        .logo_attri {
+            width : 80px;
+            height : 80px;
+        }
     </style>
 </head>
 
@@ -75,8 +79,9 @@
     <header class="sticky top-0 z-30 glass border-b border-gray-100/50">
         <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-                <div class="size-10 bg-black text-white rounded-xl flex items-center justify-center font-bold text-xl shadow-sm font-inter">A</div>
-                <h1 class="text-lg font-bold tracking-tight font-inter text-gray-900">Angkorkey</h1>
+                <div class=" rounded-xl flex items-center justify-center font-bold text-xl shadow-sm font-inter">
+                     <img src="assets/images/Angkorkey_logo.png" alt="" class="logo_attri">
+                </div>
             </div>
 
             <div class="flex items-center gap-3">
@@ -555,7 +560,7 @@
             </button>
         `).join('');
 
-        const msg = `*Order:* ${p.name}\n*Price:* ${fmt(p.price)}`;
+        const msg = `Order: ${p.name}\nPrice: ${fmt(p.price)}`;
         mTelegramBtn.href = `https://t.me/angkorkey_admin_2?text=${encodeURIComponent(msg)}`;
 
         modalOverlay.classList.remove('hidden');
