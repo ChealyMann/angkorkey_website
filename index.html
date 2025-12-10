@@ -14,7 +14,8 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Kantumruy+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Kantumruy+Pro:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -45,9 +46,20 @@
 
     <style>
         /* UTILS */
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        body { -webkit-tap-highlight-color: transparent; }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        body {
+            -webkit-tap-highlight-color: transparent;
+            background-color: aliceblue !important;
+
+        }
 
         .glass {
             background: rgba(255, 255, 255, 0.9);
@@ -55,34 +67,64 @@
             -webkit-backdrop-filter: blur(12px);
         }
 
-        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
-        * { -webkit-font-smoothing: antialiased; }
-        .text-shadow-sm { text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); }
+        .pb-safe {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        * {
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .text-shadow-sm {
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
 
         /* TAB ANIMATION */
-        .tab-btn { position: relative; color: #94a3b8; transition: color 0.2s; }
-        .tab-btn[data-active="true"] { color: #0f172a; }
+        .tab-btn {
+            position: relative;
+            color: #94a3b8;
+            transition: color 0.2s;
+        }
+
+        .tab-btn[data-active="true"] {
+            color: #0f172a;
+        }
+
         .tab-indicator {
-            position: absolute; bottom: 0; left: 0; height: 2px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
             background-color: #0f172a;
             transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1), width 0.25s;
             will-change: transform, width;
         }
 
-        .logo_attri { width: 80px; height: 80px; }
+        .logo_attri {
+            width: 80px;
+            height: 80px;
+        }
 
         /* PERFORMANCE OPTIMIZATIONS */
         .product-card {
             transform: translateZ(0); /* Hardware Acceleration Trigger */
             content-visibility: auto; /* Browser Rendering Optimization */
         }
-        .product-card:active { transform: scale(0.98); }
+
+        .product-card:active {
+            transform: scale(0.98);
+        }
 
         /* MARQUEE */
         @keyframes marquee {
-            from { transform: translate3d(100vw, 0, 0); }
-            to { transform: translate3d(-100%, 0, 0); }
+            from {
+                transform: translate3d(100vw, 0, 0);
+            }
+            to {
+                transform: translate3d(-100%, 0, 0);
+            }
         }
+
         .animate-marquee {
             animation: marquee 10s linear infinite;
             will-change: transform;
@@ -95,16 +137,18 @@
             will-change: transform;
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); /* iOS-style spring */
         }
+
     </style>
 </head>
 
-<body class="bg-[#f8fafc] text-ink h-full flex flex-col font-sans overflow-x-hidden">
+<body class="bg-[#f8fafc] text-ink h-full flex flex-col font-sans overflow-x-hidden ">
 
 <header class="sticky top-0 z-30 glass border-b border-gray-100/50">
     <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         <div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
             <div class="rounded-xl flex items-center justify-center font-bold text-xl shadow-sm font-inter">
-                <img src="assets/images/Angkorkey_logo.png" onerror="this.src='https://placehold.co/80x80?text=AK'" alt="" class="logo_attri">
+                <img src="assets/images/Angkorkey_logo.png" onerror="this.src='https://placehold.co/80x80?text=AK'"
+                     alt="" class="logo_attri">
             </div>
         </div>
 
@@ -122,20 +166,25 @@
 </header>
 
 <div id="mobileMenu" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
-    <div id="menuBackdrop" class="absolute inset-0 bg-black/30 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
-    <div id="menuPanel" class="absolute top-0 right-0 bottom-0 w-[80%] max-w-[300px] bg-white shadow-2xl flex flex-col translate-x-full transition-transform duration-300 ease-out will-change-transform">
+    <div id="menuBackdrop"
+         class="absolute inset-0 bg-black/30 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
+    <div id="menuPanel"
+         class="absolute top-0 right-0 bottom-0 w-[80%] max-w-[300px] bg-white shadow-2xl flex flex-col translate-x-full transition-transform duration-300 ease-out will-change-transform">
         <div class="h-16 flex items-center justify-between px-5 border-b border-gray-100">
             <span class="font-bold text-lg font-inter">Menu</span>
-            <button id="menuCloseBtn" class="size-9 rounded-full bg-gray-50 flex items-center justify-center active:bg-gray-200 text-gray-600">
+            <button id="menuCloseBtn"
+                    class="size-9 rounded-full bg-gray-50 flex items-center justify-center active:bg-gray-200 text-gray-600">
                 <i class="bi bi-x-lg text-lg"></i>
             </button>
         </div>
         <nav class="flex-1 p-4 space-y-2">
-            <a href="#" class="flex items-center gap-3 px-4 py-3.5 rounded-2xl bg-gray-50 text-gray-900 font-medium active:scale-95 transition-transform">
+            <a href="#"
+               class="flex items-center gap-3 px-4 py-3.5 rounded-2xl bg-gray-50 text-gray-900 font-medium active:scale-95 transition-transform">
                 <i class="bi bi-house-door text-gray-500 text-lg"></i>
                 <span>ទំព័រដើម (Home)</span>
             </a>
-            <a href="https://t.me/angkorkey" target="_blank" class="flex items-center gap-3 px-4 py-3.5 rounded-2xl text-gray-600 hover:bg-gray-50 active:scale-95 transition-transform">
+            <a href="https://t.me/angkorkey" target="_blank"
+               class="flex items-center gap-3 px-4 py-3.5 rounded-2xl text-gray-600 hover:bg-gray-50 active:scale-95 transition-transform">
                 <i class="bi bi-telegram text-blue-500 text-lg"></i>
                 <span>Telegram Channel</span>
             </a>
@@ -181,7 +230,8 @@
 </main>
 
 <div id="modalOverlay" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
-    <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity duration-300 opacity-0" id="modalBackdrop"></div>
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity duration-300 opacity-0"
+         id="modalBackdrop"></div>
 
     <div class="absolute inset-0 flex items-end justify-center pointer-events-none md:items-center md:p-6">
 
@@ -217,7 +267,7 @@
 
                 <div class="w-full h-full flex items-center justify-center p-0 relative z-0">
                     <img id="mMainImg" src="" onclick="openLightbox()"
-                         class="w-full h-full object-cover object-center transition-opacity duration-200 ease-out cursor-zoom-in opacity-0"
+                         class="w-80 h-80 object-cover object-center transition-opacity duration-200 ease-out cursor-zoom-in opacity-0"
                          alt="Product Image" decoding="async">
                 </div>
 
@@ -470,7 +520,80 @@
                 'Humidity Resistance': 'Excellent'
             },
             images: ['assets/images/A1.webp', 'assets/images/A2.webp']
+        }, {
+            id: '12',
+            name: 'Adapter 3.5mm to Type C',
+            price: 2.5,
+            category: 'accessories',
+            description: '<p><strong>Adapter 3.5mm to Type C</strong>។ ឧបករណ៍នេះអនុញ្ញាតឱ្យអ្នកប្រើ កាស ឬ ឧបករណ៍សំឡេង ដែលមានដោត 3.5mm ភ្ជាប់ជាមួយឧបករណ៍ទំនើបៗដែលមានរន្ធ Type-C ដូចជាទូរសព្ទ ថេប្លេត ឬកុំព្យូទ័រយួរដៃ។ ងាយស្រួលប្រើ និងផ្តល់នូវ គុណភាពសំឡេងល្អ។</p>',
+            specs: {
+                "Connector A": "3.5mm",
+                "Connector B": "USB Type-C",
+                "Function": "Audio Transmission",
+                "Compatibility": "Devices with USB-C port (phones, tablets, laptops)"
+            },
+            images: ['assets/images/adapter_0001.webp', 'assets/images/adapter_0002.webp']
+        }, {
+            id: '13',
+            name: 'Adapter 3.5mm to Lighting',
+            price: 2.5,
+            category: 'accessories',
+            description: '<p><strong>Adapter 3.5mm to Lighting </strong>' +
+                'ឧបករណ៍តូចនេះអនុញ្ញាតឱ្យអ្នកប្រើ កាស ឬ ឧបករណ៍សំឡេង ដែលមានរន្ធដោត 3.5mm បុរាណ ភ្ជាប់ជាមួយឧបករណ៍ Apple iPhone ឬ iPad របស់អ្នក ដែលប្រើរន្ធ Lightning។</p>',
+            specs: {
+                'Connector A': '3.5mm',
+                'Connector B': 'Lightning',
+                'Jacket Material': 'TPU or Braided Nylon',
+                'Function': 'Audio Transmission',
+                'Compatibility': 'iPhone, iPad, iPod with Lightning port'
+            },
+            images: ['assets/images/adapter_0002.webp']
         },
+        {
+            id: '14',
+            name: 'Attack Shark X11',
+            price: 22,
+            category: 'mouse',
+            description: '<p><strong>Tri-Mode Wireless (មាន Charging Dock)</strong>។ រចនាបទស្រាល (63g) សាកសមសម្រាប់ដៃតូច និងមធ្យម ប្រើប្រាស់ Sensor PAW3311។</p>',
+            specs: {
+                'Sensor': 'PAW3311',
+                'Weight': '63g',
+                'Connection': 'Tri-Mode (2.4G/BT/Wired)',
+                'DPI': 'Up to 22000',
+                'Battery': '65 Hours'
+            },
+            images: ['assets/images/X11_0001.webp', 'assets/images/X11_0002.webp', 'assets/images/X11_0003.webp', 'assets/images/X11_0004.webp', 'assets/images/X11_0005.webp', 'assets/images/X11_0006.webp']
+        },
+        {
+            id: '15',
+            name: 'Madlions Nano 68 HE',
+            price: 48,
+            category: 'keyboards',
+            description: '<p><strong>Rapid Trigger (RGB)</strong>។ បំពាក់បច្ចេកវិទ្យា Hall Effect ល្បឿន 8K Polling Rate ជាមួយភ្លើង RGB 16.8 លានពណ៌។ ប្រើខ្សែ (Single Mode) ដើម្បីធានាបាននូវ Latency ទាបបំផុត។</p>',
+            specs: {
+                'Switch': 'Magnetic White/Jade',
+                'Layout': '65% (68 Keys)',
+                'Polling Rate': '8000Hz',
+                'Rapid Trigger': '0.02mm - 3.3mm',
+                'Connection': 'Wired Type-C'
+            },
+            images: ['assets/images/Nano68_0002.webp', 'assets/images/Nano68_0004.webp', 'assets/images/Nano68_0001.webp', 'assets/images/Nano68_0003.webp']
+        },
+        {
+            id: '16',
+            name: 'Madlions Mad 60 HE',
+            price: 35,
+            category: 'keyboards',
+            description: '<p><strong>60% Compact (Rapid Trigger)</strong>។ រចនាបទតូច 60% សន្សំសំចៃកន្លែង។ បំពាក់ Switch Hall Effect និងមាន 8K Polling Rate ល្បឿនលឿន។ (Single Mode)</p>',
+            specs: {
+                'Layout': '60% (61 Keys)',
+                'Switch': 'Magnetic (Hall Effect)',
+                'Polling Rate': '8000Hz',
+                'Rapid Trigger': 'Supported',
+                'Connection': 'Wired Type-C'
+            },
+            images: ['assets/images/Mad60HeBA_0002.webp', 'assets/images/Mad60HeW_0001.webp', 'assets/images/Mad60HeW_0003.webp', 'assets/images/Mad60HeBA_0001.webp', 'assets/images/Mad60HeB_0002.webp', 'assets/images/Mad60HeB_0003.webp']
+        }
     ];
 
     /* ================= LOGIC ================= */
