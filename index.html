@@ -9,14 +9,12 @@
     <title>Angkorkey — ហាងលក់គ្រឿង Electronics</title>
 
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"/>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Kantumruy+Pro:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet">
-
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Kantumruy+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -32,11 +30,11 @@
                         ink: '#0f172a',
                     },
                     animation: {
-                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                        'fade-in': 'fadeIn 0.5s ease-out forwards',
                     },
                     keyframes: {
                         fadeIn: {
-                            '0%': {opacity: '0', transform: 'translateY(15px)'},
+                            '0%': {opacity: '0', transform: 'translateY(10px)'},
                             '100%': {opacity: '1', transform: 'translateY(0)'},
                         }
                     }
@@ -67,20 +65,18 @@
         .tab-indicator {
             position: absolute; bottom: 0; left: 0; height: 2px;
             background-color: #0f172a;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1), width 0.25s;
             will-change: transform, width;
         }
 
         .logo_attri { width: 80px; height: 80px; }
 
-        /* PERFORMANCE & CARD ANIMATIONS */
+        /* PERFORMANCE OPTIMIZATIONS */
         .product-card {
-            transition: transform 0.2s, box-shadow 0.2s;
-            will-change: transform;
-            content-visibility: auto;
-            contain-intrinsic-size: 300px;
+            transform: translateZ(0); /* Hardware Acceleration Trigger */
+            content-visibility: auto; /* Browser Rendering Optimization */
         }
-        .product-card:active { transform: scale(0.97); }
+        .product-card:active { transform: scale(0.98); }
 
         /* MARQUEE */
         @keyframes marquee {
@@ -92,16 +88,12 @@
             will-change: transform;
         }
 
-        /* IMAGE LOAD TRANSITION CLASS */
-        .img-loading {
-            opacity: 0;
-            transform: scale(0.95);
-            filter: blur(10px);
-        }
-        .img-loaded {
-            opacity: 1;
-            transform: scale(1);
-            filter: blur(0);
+        /* MODAL ANIMATION (GPU) */
+        #modalCard {
+            /* Start hidden below screen */
+            transform: translate3d(0, 100%, 0);
+            will-change: transform;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); /* iOS-style spring */
         }
     </style>
 </head>
@@ -111,8 +103,8 @@
 <header class="sticky top-0 z-30 glass border-b border-gray-100/50">
     <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         <div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-            <div class=" rounded-xl flex items-center justify-center font-bold text-xl shadow-sm font-inter">
-                <img src="assets/images/Angkorkey_logo.png" alt="" class="logo_attri">
+            <div class="rounded-xl flex items-center justify-center font-bold text-xl shadow-sm font-inter">
+                <img src="assets/images/Angkorkey_logo.png" onerror="this.src='https://placehold.co/80x80?text=AK'" alt="" class="logo_attri">
             </div>
         </div>
 
@@ -130,25 +122,20 @@
 </header>
 
 <div id="mobileMenu" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
-    <div id="menuBackdrop"
-         class="absolute inset-0 bg-black/30 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
-    <div id="menuPanel"
-         class="absolute top-0 right-0 bottom-0 w-[80%] max-w-[300px] bg-white shadow-2xl flex flex-col translate-x-full transition-transform duration-300 ease-out will-change-transform">
+    <div id="menuBackdrop" class="absolute inset-0 bg-black/30 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
+    <div id="menuPanel" class="absolute top-0 right-0 bottom-0 w-[80%] max-w-[300px] bg-white shadow-2xl flex flex-col translate-x-full transition-transform duration-300 ease-out will-change-transform">
         <div class="h-16 flex items-center justify-between px-5 border-b border-gray-100">
             <span class="font-bold text-lg font-inter">Menu</span>
-            <button id="menuCloseBtn"
-                    class="size-9 rounded-full bg-gray-50 flex items-center justify-center active:bg-gray-200 text-gray-600">
+            <button id="menuCloseBtn" class="size-9 rounded-full bg-gray-50 flex items-center justify-center active:bg-gray-200 text-gray-600">
                 <i class="bi bi-x-lg text-lg"></i>
             </button>
         </div>
         <nav class="flex-1 p-4 space-y-2">
-            <a href="#"
-               class="flex items-center gap-3 px-4 py-3.5 rounded-2xl bg-gray-50 text-gray-900 font-medium active:scale-95 transition-transform">
+            <a href="#" class="flex items-center gap-3 px-4 py-3.5 rounded-2xl bg-gray-50 text-gray-900 font-medium active:scale-95 transition-transform">
                 <i class="bi bi-house-door text-gray-500 text-lg"></i>
                 <span>ទំព័រដើម (Home)</span>
             </a>
-            <a href="https://t.me/angkorkey" target="_blank"
-               class="flex items-center gap-3 px-4 py-3.5 rounded-2xl text-gray-600 hover:bg-gray-50 active:scale-95 transition-transform">
+            <a href="https://t.me/angkorkey" target="_blank" class="flex items-center gap-3 px-4 py-3.5 rounded-2xl text-gray-600 hover:bg-gray-50 active:scale-95 transition-transform">
                 <i class="bi bi-telegram text-blue-500 text-lg"></i>
                 <span>Telegram Channel</span>
             </a>
@@ -194,13 +181,12 @@
 </main>
 
 <div id="modalOverlay" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
-    <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity duration-300 opacity-0"
-         id="modalBackdrop"></div>
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity duration-300 opacity-0" id="modalBackdrop"></div>
 
     <div class="absolute inset-0 flex items-end justify-center pointer-events-none md:items-center md:p-6">
 
         <div id="modalCard"
-             class="bg-white w-full h-[92vh] md:h-auto md:max-h-[85vh] md:max-w-5xl rounded-t-[2rem] md:rounded-3xl shadow-xl flex flex-col md:flex-row overflow-hidden transform transition-transform duration-300 translate-y-full pointer-events-auto relative">
+             class="bg-white w-full h-[92vh] md:h-auto md:max-h-[85vh] md:max-w-5xl rounded-t-[2rem] md:rounded-3xl shadow-xl flex flex-col md:flex-row overflow-hidden pointer-events-auto relative">
 
             <div class="absolute top-3 left-0 right-0 flex justify-center md:hidden z-30" onclick="closeProductModal()">
                 <div class="w-12 h-1 bg-white/50 rounded-full shadow-sm backdrop-blur-md"></div>
@@ -231,7 +217,7 @@
 
                 <div class="w-full h-full flex items-center justify-center p-0 relative z-0">
                     <img id="mMainImg" src="" onclick="openLightbox()"
-                         class="w-full h-full object-cover object-center transition-all duration-300 ease-out cursor-zoom-in opacity-0"
+                         class="w-full h-full object-cover object-center transition-opacity duration-200 ease-out cursor-zoom-in opacity-0"
                          alt="Product Image" decoding="async">
                 </div>
 
@@ -295,13 +281,7 @@
                     <a id="mTelegramBtn" href="#" target="_blank"
                        class="w-full bg-gray-900 active:bg-black text-white h-12 rounded-xl flex items-center justify-center gap-3 transition-transform active:scale-[0.98] group">
 
-                        <lottie-player
-                                id="telegramLottie"
-                                background="transparent"
-                                speed="1"
-                                style="width: 30px; height: 30px; filter: invert(1);"
-                                autoplay>
-                        </lottie-player>
+                        <i class="bi bi-telegram text-2xl group-hover:scale-110 transition-transform"></i>
 
                         <div class="flex flex-col items-start leading-none">
                             <span class="font-khmer font-bold text-sm">កម្ម៉ង់តាម Telegram</span>
@@ -314,17 +294,13 @@
 </div>
 
 <div id="lightbox" class="fixed inset-0 z-[70] bg-black hidden items-center justify-center touch-none animate-fade-in">
-
-    <div id="lbTopBar"
-         class="absolute top-0 left-0 w-full h-12 bg-white z-[90] flex items-center overflow-hidden transition-opacity duration-500 shadow-md">
-        <img src="assets/images/slide_logo.webp"
-             class="h-8 w-auto object-contain animate-marquee"
-             alt="Logo">
-    </div>
-
     <button id="lbPrev" onclick="navigateImage(-1)"
             class="absolute left-4 top-1/2 -translate-y-1/2 z-[90] size-12 rounded-full bg-black/50  backdrop-blur-md text-white flex items-center justify-center transition-all duration-500 active:scale-90">
         <i class="bi bi-chevron-left text-2xl"></i>
+    </button>
+
+    <button onclick="closeLightbox()" class="absolute top-5 right-5 z-[80] text-white p-4">
+        <i class="bi bi-x-lg text-2xl"></i>
     </button>
 
     <button id="lbNext" onclick="navigateImage(1)"
@@ -340,1044 +316,8 @@
 </div>
 
 <script>
-    /* ================= LOTTIE DATA ================= */
-    // PASTE YOUR JSON HERE
-     const lottieAnimationData = {
-        "v": "5.9.0", "fr": 25, "ip": 0, "op": 65, "w": 500, "h": 500, "nm": "26 email", "ddd": 0, "assets": [],
-        "layers": [{
-            "ddd": 0,
-            "ind": 1,
-            "ty": 3,
-            "nm": "Main Stroke width - Color Ctrl",
-            "parent": 7,
-            "sr": 1,
-            "ks": {
-                "o": {"a": 0, "k": 0, "ix": 11},
-                "r": {"a": 0, "k": 0, "ix": 10},
-                "p": {"a": 0, "k": [0, 0, 0], "ix": 2, "l": 2},
-                "a": {"a": 0, "k": [50, 50, 0], "ix": 1, "l": 2},
-                "s": {"a": 0, "k": [100, 100, 100], "ix": 6, "l": 2}
-            },
-            "ao": 0,
-            "ef": [{
-                "ty": 5,
-                "nm": "Stroke width",
-                "np": 3,
-                "mn": "ADBE Slider Control",
-                "ix": 1,
-                "en": 0,
-                "ef": [{
-                    "ty": 0,
-                    "nm": "Deslizador",
-                    "mn": "ADBE Slider Control-0001",
-                    "ix": 1,
-                    "v": {"a": 0, "k": 16, "ix": 1}
-                }]
-            }, {
-                "ty": 5,
-                "nm": "Base Color",
-                "np": 3,
-                "mn": "ADBE Color Control",
-                "ix": 2,
-                "en": 0,
-                "ef": [{
-                    "ty": 2,
-                    "nm": "Color",
-                    "mn": "ADBE Color Control-0001",
-                    "ix": 1,
-                    "v": {"a": 0, "k": [0, 0, 0, 1], "ix": 1}
-                }]
-            }, {
-                "ty": 5,
-                "nm": "Highlight",
-                "np": 3,
-                "mn": "ADBE Color Control",
-                "ix": 3,
-                "en": 0,
-                "ef": [{
-                    "ty": 2,
-                    "nm": "Color",
-                    "mn": "ADBE Color Control-0001",
-                    "ix": 1,
-                    "v": {"a": 0, "k": [0.20000000298, 0.800000011921, 0.800000011921, 1], "ix": 1}
-                }]
-            }],
-            "ip": 0,
-            "op": 65,
-            "st": 0,
-            "bm": 0
-        }, {
-            "ddd": 0,
-            "ind": 2,
-            "ty": 4,
-            "nm": "Mesagge",
-            "parent": 1,
-            "sr": 1,
-            "ks": {
-                "o": {"a": 0, "k": 100, "ix": 11},
-                "r": {
-                    "a": 1,
-                    "k": [{
-                        "i": {"x": [0.2], "y": [1]},
-                        "o": {"x": [0.6], "y": [0]},
-                        "t": 2,
-                        "s": [5]
-                    }, {
-                        "i": {"x": [0.2], "y": [1]},
-                        "o": {"x": [0.6], "y": [0]},
-                        "t": 23,
-                        "s": [-4]
-                    }, {"i": {"x": [0.2], "y": [1]}, "o": {"x": [0.6], "y": [0]}, "t": 41, "s": [13]}, {
-                        "t": 58,
-                        "s": [5]
-                    }],
-                    "ix": 10
-                },
-                "p": {"a": 0, "k": [50, 51.552, 0], "ix": 2, "l": 2},
-                "a": {"a": 0, "k": [174.185, 139.337, 0], "ix": 1, "l": 2},
-                "s": {"a": 0, "k": [100, 100, 100], "ix": 6, "l": 2}
-            },
-            "ao": 0,
-            "shapes": [{
-                "ty": "gr", "it": [{
-                    "ind": 0, "ty": "sh", "ix": 1, "ks": {
-                        "a": 1,
-                        "k": [{
-                            "i": {"x": 0.2, "y": 1},
-                            "o": {"x": 0.6, "y": 0},
-                            "t": 2,
-                            "s": [{
-                                "i": [[0, 0], [0, 0], [-5.867, 5.89], [0, 0]],
-                                "o": [[0, 0], [6.794, 4.791], [0, 0], [0, 0]],
-                                "v": [[-183.705, -65.19], [-1.309, 61.64], [20.157, 59.777], [176.934, -96.381]],
-                                "c": true
-                            }]
-                        }, {
-                            "i": {"x": 0.2, "y": 1},
-                            "o": {"x": 0.6, "y": 0},
-                            "t": 23,
-                            "s": [{
-                                "i": [[0, 0], [0, 0], [-5.867, 5.89], [0, 0]],
-                                "o": [[0, 0], [6.794, 4.791], [0, 0], [0, 0]],
-                                "v": [[-126.517, -35.226], [-2.258, 52.392], [19.208, 50.529], [126.517, -57.183]],
-                                "c": true
-                            }]
-                        }, {
-                            "i": {"x": 0.2, "y": 1},
-                            "o": {"x": 0.6, "y": 0},
-                            "t": 41,
-                            "s": [{
-                                "i": [[0, 0], [0, 0], [-5.867, 5.89], [0, 0]],
-                                "o": [[0, 0], [6.794, 4.791], [0, 0], [0, 0]],
-                                "v": [[-126.517, -35.226], [-2.258, 52.392], [19.208, 50.529], [126.517, -57.183]],
-                                "c": true
-                            }]
-                        }, {
-                            "t": 58,
-                            "s": [{
-                                "i": [[0, 0], [0, 0], [-5.867, 5.89], [0, 0]],
-                                "o": [[0, 0], [6.794, 4.791], [0, 0], [0, 0]],
-                                "v": [[-183.705, -65.19], [-1.309, 61.64], [20.157, 59.777], [176.934, -96.381]],
-                                "c": true
-                            }]
-                        }],
-                        "ix": 2
-                    }, "nm": "Trazado 1", "mn": "ADBE Vector Shape - Group", "hd": false
-                }, {
-                    "ty": "st",
-                    "c": {"a": 0, "k": [0, 0, 0, 1], "ix": 3},
-                    "o": {"a": 0, "k": 100, "ix": 4},
-                    "w": {"a": 0, "k": 16, "ix": 5},
-                    "lc": 2,
-                    "lj": 2,
-                    "bm": 0,
-                    "nm": "Trazo 1",
-                    "mn": "ADBE Vector Graphic - Stroke",
-                    "hd": false
-                }, {
-                    "ty": "tr",
-                    "p": {"a": 0, "k": [166.517, 97.183], "ix": 2},
-                    "a": {"a": 0, "k": [0, 0], "ix": 1},
-                    "s": {"a": 0, "k": [100, 100], "ix": 3},
-                    "r": {"a": 0, "k": 0, "ix": 6},
-                    "o": {"a": 0, "k": 100, "ix": 7},
-                    "sk": {"a": 0, "k": 0, "ix": 4},
-                    "sa": {"a": 0, "k": 0, "ix": 5},
-                    "nm": "Transformar"
-                }], "nm": "Grupo 1", "np": 2, "cix": 2, "bm": 0, "ix": 1, "mn": "ADBE Vector Group", "hd": false
-            }, {
-                "ty": "gr", "it": [{
-                    "ind": 0,
-                    "ty": "sh",
-                    "ix": 1,
-                    "ks": {
-                        "a": 1,
-                        "k": [{
-                            "i": {"x": 0.2, "y": 1},
-                            "o": {"x": 0.6, "y": 0},
-                            "t": 2,
-                            "s": [{
-                                "i": [[0, 0], [0, 0], [0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0], [0, 0], [0, 0]],
-                                "v": [[-169.677, 143.098], [-191.372, -107.345], [169.266, -138.535], [190.962, 111.908]],
-                                "c": true
-                            }]
-                        }, {
-                            "i": {"x": 0.2, "y": 1},
-                            "o": {"x": 0.6, "y": 0},
-                            "t": 23,
-                            "s": [{
-                                "i": [[0, 0], [0, 0], [0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0], [0, 0], [0, 0]],
-                                "v": [[-118.85, 99.337], [-134.185, -77.38], [118.849, -99.337], [134.185, 77.38]],
-                                "c": true
-                            }]
-                        }, {
-                            "i": {"x": 0.2, "y": 1},
-                            "o": {"x": 0.6, "y": 0},
-                            "t": 41,
-                            "s": [{
-                                "i": [[0, 0], [0, 0], [0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0], [0, 0], [0, 0]],
-                                "v": [[-118.85, 99.337], [-134.185, -77.38], [118.849, -99.337], [134.185, 77.38]],
-                                "c": true
-                            }]
-                        }, {
-                            "t": 58,
-                            "s": [{
-                                "i": [[0, 0], [0, 0], [0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0], [0, 0], [0, 0]],
-                                "v": [[-169.677, 143.098], [-191.372, -107.345], [169.266, -138.535], [190.962, 111.908]],
-                                "c": true
-                            }]
-                        }],
-                        "ix": 2
-                    },
-                    "nm": "Trazado 1",
-                    "mn": "ADBE Vector Shape - Group",
-                    "hd": false
-                }, {
-                    "ty": "st",
-                    "c": {"a": 0, "k": [0, 0, 0, 1], "ix": 3},
-                    "o": {"a": 0, "k": 100, "ix": 4},
-                    "w": {"a": 0, "k": 16, "ix": 5},
-                    "lc": 2,
-                    "lj": 2,
-                    "bm": 0,
-                    "nm": "Trazo 1",
-                    "mn": "ADBE Vector Graphic - Stroke",
-                    "hd": false
-                }, {
-                    "ty": "tr",
-                    "p": {"a": 0, "k": [174.185, 139.337], "ix": 2},
-                    "a": {"a": 0, "k": [0, 0], "ix": 1},
-                    "s": {"a": 0, "k": [100, 100], "ix": 3},
-                    "r": {"a": 0, "k": 0, "ix": 6},
-                    "o": {"a": 0, "k": 100, "ix": 7},
-                    "sk": {"a": 0, "k": 0, "ix": 4},
-                    "sa": {"a": 0, "k": 0, "ix": 5},
-                    "nm": "Transformar"
-                }], "nm": "Grupo 2", "np": 2, "cix": 2, "bm": 0, "ix": 2, "mn": "ADBE Vector Group", "hd": false
-            }],
-            "ip": 0,
-            "op": 65,
-            "st": 0,
-            "bm": 0
-        }, {
-            "ddd": 0,
-            "ind": 3,
-            "ty": 4,
-            "nm": "Mesagge lines 2",
-            "parent": 1,
-            "sr": 1,
-            "ks": {
-                "o": {"a": 0, "k": 100, "ix": 11},
-                "r": {
-                    "a": 1,
-                    "k": [{
-                        "i": {"x": [0.2], "y": [1]},
-                        "o": {"x": [0.6], "y": [0]},
-                        "t": 2,
-                        "s": [5]
-                    }, {
-                        "i": {"x": [0.2], "y": [1]},
-                        "o": {"x": [0.6], "y": [0]},
-                        "t": 23,
-                        "s": [-4]
-                    }, {"i": {"x": [0.2], "y": [1]}, "o": {"x": [0.6], "y": [0]}, "t": 41, "s": [13]}, {
-                        "t": 58,
-                        "s": [5]
-                    }],
-                    "ix": 10
-                },
-                "p": {"a": 0, "k": [50, 51.552, 0], "ix": 2, "l": 2},
-                "a": {"a": 0, "k": [174.185, 139.337, 0], "ix": 1, "l": 2},
-                "s": {"a": 0, "k": [100, 100, 100], "ix": 6, "l": 2}
-            },
-            "ao": 0,
-            "shapes": [{
-                "ty": "gr",
-                "it": [{
-                    "ind": 0,
-                    "ty": "sh",
-                    "ix": 1,
-                    "ks": {
-                        "a": 1,
-                        "k": [{
-                            "i": {"x": 0.2, "y": 1},
-                            "o": {"x": 0.6, "y": 0},
-                            "t": 2,
-                            "s": [{
-                                "i": [[0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0]],
-                                "v": [[-84.853, 102.721], [13.318, -64.192]],
-                                "c": false
-                            }]
-                        }, {
-                            "i": {"x": 0.2, "y": 1},
-                            "o": {"x": 0.6, "y": 0},
-                            "t": 23,
-                            "s": [{
-                                "i": [[0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0]],
-                                "v": [[-34.026, 58.96], [34.026, -58.96]],
-                                "c": false
-                            }]
-                        }, {
-                            "i": {"x": 0.2, "y": 1},
-                            "o": {"x": 0.6, "y": 0},
-                            "t": 41,
-                            "s": [{
-                                "i": [[0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0]],
-                                "v": [[-34.026, 58.96], [34.026, -58.96]],
-                                "c": false
-                            }]
-                        }, {
-                            "t": 58,
-                            "s": [{
-                                "i": [[0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0]],
-                                "v": [[-84.853, 102.721], [13.318, -64.192]],
-                                "c": false
-                            }]
-                        }],
-                        "ix": 2
-                    },
-                    "nm": "Trazado 1",
-                    "mn": "ADBE Vector Shape - Group",
-                    "hd": false
-                }, {
-                    "ty": "tm",
-                    "s": {"a": 0, "k": 0, "ix": 1},
-                    "e": {
-                        "a": 1,
-                        "k": [{"i": {"x": [0.2], "y": [1]}, "o": {"x": [0.6], "y": [0]}, "t": 44, "s": [0]}, {
-                            "t": 61,
-                            "s": [100]
-                        }],
-                        "ix": 2
-                    },
-                    "o": {"a": 0, "k": 0, "ix": 3},
-                    "m": 1,
-                    "ix": 2,
-                    "nm": "Recortar trazados 1",
-                    "mn": "ADBE Vector Filter - Trim",
-                    "hd": false
-                }, {
-                    "ty": "st",
-                    "c": {"a": 0, "k": [0.20000000298, 0.800000011921, 0.800000011921, 1], "ix": 3},
-                    "o": {"a": 0, "k": 100, "ix": 4},
-                    "w": {"a": 0, "k": 16, "ix": 5},
-                    "lc": 2,
-                    "lj": 2,
-                    "bm": 0,
-                    "nm": "Trazo 1",
-                    "mn": "ADBE Vector Graphic - Stroke",
-                    "hd": false
-                }, {
-                    "ty": "tr",
-                    "p": {"a": 0, "k": [89.361, 179.714], "ix": 2},
-                    "a": {"a": 0, "k": [0, 0], "ix": 1},
-                    "s": {"a": 0, "k": [100, 100], "ix": 3},
-                    "r": {"a": 0, "k": 0, "ix": 6},
-                    "o": {"a": 0, "k": 100, "ix": 7},
-                    "sk": {"a": 0, "k": 0, "ix": 4},
-                    "sa": {"a": 0, "k": 0, "ix": 5},
-                    "nm": "Transformar"
-                }],
-                "nm": "Grupo 3",
-                "np": 3,
-                "cix": 2,
-                "bm": 0,
-                "ix": 1,
-                "mn": "ADBE Vector Group",
-                "hd": false
-            }, {
-                "ty": "gr",
-                "it": [{
-                    "ind": 0,
-                    "ty": "sh",
-                    "ix": 1,
-                    "ks": {
-                        "a": 1,
-                        "k": [{
-                            "i": {"x": 0.2, "y": 1},
-                            "o": {"x": 0.6, "y": 0},
-                            "t": 2,
-                            "s": [{
-                                "i": [[0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0]],
-                                "v": [[100.451, 86.745], [-23.783, -61.315]],
-                                "c": false
-                            }]
-                        }, {
-                            "i": {"x": 0.2, "y": 1},
-                            "o": {"x": 0.6, "y": 0},
-                            "t": 23,
-                            "s": [{
-                                "i": [[0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0]],
-                                "v": [[43.673, 52.217], [-43.674, -52.217]],
-                                "c": false
-                            }]
-                        }, {
-                            "i": {"x": 0.2, "y": 1},
-                            "o": {"x": 0.6, "y": 0},
-                            "t": 41,
-                            "s": [{
-                                "i": [[0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0]],
-                                "v": [[43.673, 52.217], [-43.674, -52.217]],
-                                "c": false
-                            }]
-                        }, {
-                            "t": 58,
-                            "s": [{
-                                "i": [[0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0]],
-                                "v": [[100.451, 86.745], [-23.783, -61.315]],
-                                "c": false
-                            }]
-                        }],
-                        "ix": 2
-                    },
-                    "nm": "Trazado 1",
-                    "mn": "ADBE Vector Shape - Group",
-                    "hd": false
-                }, {
-                    "ty": "st",
-                    "c": {"a": 0, "k": [0.20000000298, 0.800000011921, 0.800000011921, 1], "ix": 3},
-                    "o": {"a": 0, "k": 100, "ix": 4},
-                    "w": {"a": 0, "k": 16, "ix": 5},
-                    "lc": 2,
-                    "lj": 2,
-                    "bm": 0,
-                    "nm": "Trazo 1",
-                    "mn": "ADBE Vector Graphic - Stroke",
-                    "hd": false
-                }, {
-                    "ty": "tm",
-                    "s": {"a": 0, "k": 0, "ix": 1},
-                    "e": {
-                        "a": 1,
-                        "k": [{"i": {"x": [0.2], "y": [1]}, "o": {"x": [0.6], "y": [0]}, "t": 46, "s": [0]}, {
-                            "t": 63,
-                            "s": [100]
-                        }],
-                        "ix": 2
-                    },
-                    "o": {"a": 0, "k": 0, "ix": 3},
-                    "m": 1,
-                    "ix": 3,
-                    "nm": "Recortar trazados 1",
-                    "mn": "ADBE Vector Filter - Trim",
-                    "hd": false
-                }, {
-                    "ty": "tr",
-                    "p": {"a": 0, "k": [264.696, 164.499], "ix": 2},
-                    "a": {"a": 0, "k": [0, 0], "ix": 1},
-                    "s": {"a": 0, "k": [100, 100], "ix": 3},
-                    "r": {"a": 0, "k": 0, "ix": 6},
-                    "o": {"a": 0, "k": 100, "ix": 7},
-                    "sk": {"a": 0, "k": 0, "ix": 4},
-                    "sa": {"a": 0, "k": 0, "ix": 5},
-                    "nm": "Transformar"
-                }],
-                "nm": "Grupo 4",
-                "np": 3,
-                "cix": 2,
-                "bm": 0,
-                "ix": 2,
-                "mn": "ADBE Vector Group",
-                "hd": false
-            }],
-            "ip": 0,
-            "op": 65,
-            "st": 0,
-            "bm": 0
-        }, {
-            "ddd": 0,
-            "ind": 4,
-            "ty": 4,
-            "nm": "Mesagge lines",
-            "parent": 1,
-            "sr": 1,
-            "ks": {
-                "o": {"a": 0, "k": 100, "ix": 11},
-                "r": {
-                    "a": 1,
-                    "k": [{
-                        "i": {"x": [0.2], "y": [1]},
-                        "o": {"x": [0.6], "y": [0]},
-                        "t": 2,
-                        "s": [5]
-                    }, {
-                        "i": {"x": [0.2], "y": [1]},
-                        "o": {"x": [0.6], "y": [0]},
-                        "t": 23,
-                        "s": [-4]
-                    }, {"i": {"x": [0.2], "y": [1]}, "o": {"x": [0.6], "y": [0]}, "t": 41, "s": [13]}, {
-                        "t": 58,
-                        "s": [5]
-                    }],
-                    "ix": 10
-                },
-                "p": {"a": 0, "k": [50, 51.552, 0], "ix": 2, "l": 2},
-                "a": {"a": 0, "k": [174.185, 139.337, 0], "ix": 1, "l": 2},
-                "s": {"a": 0, "k": [100, 100, 100], "ix": 6, "l": 2}
-            },
-            "ao": 0,
-            "shapes": [{
-                "ty": "gr",
-                "it": [{
-                    "ind": 0,
-                    "ty": "sh",
-                    "ix": 1,
-                    "ks": {
-                        "a": 1,
-                        "k": [{
-                            "i": {"x": 0.2, "y": 1},
-                            "o": {"x": 0.6, "y": 0},
-                            "t": 2,
-                            "s": [{
-                                "i": [[0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0]],
-                                "v": [[-84.853, 102.721], [13.318, -64.192]],
-                                "c": false
-                            }]
-                        }, {
-                            "i": {"x": 0.2, "y": 1},
-                            "o": {"x": 0.6, "y": 0},
-                            "t": 23,
-                            "s": [{
-                                "i": [[0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0]],
-                                "v": [[-34.026, 58.96], [34.026, -58.96]],
-                                "c": false
-                            }]
-                        }, {
-                            "i": {"x": 0.2, "y": 1},
-                            "o": {"x": 0.6, "y": 0},
-                            "t": 41,
-                            "s": [{
-                                "i": [[0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0]],
-                                "v": [[-34.026, 58.96], [34.026, -58.96]],
-                                "c": false
-                            }]
-                        }, {
-                            "t": 58,
-                            "s": [{
-                                "i": [[0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0]],
-                                "v": [[-84.853, 102.721], [13.318, -64.192]],
-                                "c": false
-                            }]
-                        }],
-                        "ix": 2
-                    },
-                    "nm": "Trazado 1",
-                    "mn": "ADBE Vector Shape - Group",
-                    "hd": false
-                }, {
-                    "ty": "tm",
-                    "s": {"a": 0, "k": 0, "ix": 1},
-                    "e": {
-                        "a": 1,
-                        "k": [{"i": {"x": [0.2], "y": [1]}, "o": {"x": [0.6], "y": [0]}, "t": 4, "s": [0]}, {
-                            "t": 19,
-                            "s": [100]
-                        }],
-                        "ix": 2
-                    },
-                    "o": {"a": 0, "k": 0, "ix": 3},
-                    "m": 1,
-                    "ix": 2,
-                    "nm": "Recortar trazados 1",
-                    "mn": "ADBE Vector Filter - Trim",
-                    "hd": false
-                }, {
-                    "ty": "st",
-                    "c": {"a": 0, "k": [0, 0, 0, 1], "ix": 3},
-                    "o": {"a": 0, "k": 100, "ix": 4},
-                    "w": {"a": 0, "k": 16, "ix": 5},
-                    "lc": 2,
-                    "lj": 2,
-                    "bm": 0,
-                    "nm": "Trazo 1",
-                    "mn": "ADBE Vector Graphic - Stroke",
-                    "hd": false
-                }, {
-                    "ty": "tr",
-                    "p": {"a": 0, "k": [89.361, 179.714], "ix": 2},
-                    "a": {"a": 0, "k": [0, 0], "ix": 1},
-                    "s": {"a": 0, "k": [100, 100], "ix": 3},
-                    "r": {"a": 0, "k": 0, "ix": 6},
-                    "o": {"a": 0, "k": 100, "ix": 7},
-                    "sk": {"a": 0, "k": 0, "ix": 4},
-                    "sa": {"a": 0, "k": 0, "ix": 5},
-                    "nm": "Transformar"
-                }],
-                "nm": "Grupo 3",
-                "np": 3,
-                "cix": 2,
-                "bm": 0,
-                "ix": 1,
-                "mn": "ADBE Vector Group",
-                "hd": false
-            }, {
-                "ty": "gr",
-                "it": [{
-                    "ind": 0,
-                    "ty": "sh",
-                    "ix": 1,
-                    "ks": {
-                        "a": 1,
-                        "k": [{
-                            "i": {"x": 0.2, "y": 1},
-                            "o": {"x": 0.6, "y": 0},
-                            "t": 2,
-                            "s": [{
-                                "i": [[0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0]],
-                                "v": [[100.451, 86.745], [-23.783, -61.315]],
-                                "c": false
-                            }]
-                        }, {
-                            "i": {"x": 0.2, "y": 1},
-                            "o": {"x": 0.6, "y": 0},
-                            "t": 23,
-                            "s": [{
-                                "i": [[0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0]],
-                                "v": [[43.673, 52.217], [-43.674, -52.217]],
-                                "c": false
-                            }]
-                        }, {
-                            "i": {"x": 0.2, "y": 1},
-                            "o": {"x": 0.6, "y": 0},
-                            "t": 41,
-                            "s": [{
-                                "i": [[0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0]],
-                                "v": [[43.673, 52.217], [-43.674, -52.217]],
-                                "c": false
-                            }]
-                        }, {
-                            "t": 58,
-                            "s": [{
-                                "i": [[0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0]],
-                                "v": [[100.451, 86.745], [-23.783, -61.315]],
-                                "c": false
-                            }]
-                        }],
-                        "ix": 2
-                    },
-                    "nm": "Trazado 1",
-                    "mn": "ADBE Vector Shape - Group",
-                    "hd": false
-                }, {
-                    "ty": "st",
-                    "c": {"a": 0, "k": [0, 0, 0, 1], "ix": 3},
-                    "o": {"a": 0, "k": 100, "ix": 4},
-                    "w": {"a": 0, "k": 16, "ix": 5},
-                    "lc": 2,
-                    "lj": 2,
-                    "bm": 0,
-                    "nm": "Trazo 1",
-                    "mn": "ADBE Vector Graphic - Stroke",
-                    "hd": false
-                }, {
-                    "ty": "tm",
-                    "s": {"a": 0, "k": 0, "ix": 1},
-                    "e": {
-                        "a": 1,
-                        "k": [{"i": {"x": [0.2], "y": [1]}, "o": {"x": [0.6], "y": [0]}, "t": 6, "s": [0]}, {
-                            "t": 21,
-                            "s": [100]
-                        }],
-                        "ix": 2
-                    },
-                    "o": {"a": 0, "k": 0, "ix": 3},
-                    "m": 1,
-                    "ix": 3,
-                    "nm": "Recortar trazados 1",
-                    "mn": "ADBE Vector Filter - Trim",
-                    "hd": false
-                }, {
-                    "ty": "tr",
-                    "p": {"a": 0, "k": [264.696, 164.499], "ix": 2},
-                    "a": {"a": 0, "k": [0, 0], "ix": 1},
-                    "s": {"a": 0, "k": [100, 100], "ix": 3},
-                    "r": {"a": 0, "k": 0, "ix": 6},
-                    "o": {"a": 0, "k": 100, "ix": 7},
-                    "sk": {"a": 0, "k": 0, "ix": 4},
-                    "sa": {"a": 0, "k": 0, "ix": 5},
-                    "nm": "Transformar"
-                }],
-                "nm": "Grupo 4",
-                "np": 3,
-                "cix": 2,
-                "bm": 0,
-                "ix": 2,
-                "mn": "ADBE Vector Group",
-                "hd": false
-            }],
-            "ip": 0,
-            "op": 65,
-            "st": 0,
-            "bm": 0
-        }, {
-            "ddd": 0,
-            "ind": 5,
-            "ty": 4,
-            "nm": "Mesagge ",
-            "parent": 1,
-            "sr": 1,
-            "ks": {
-                "o": {"a": 0, "k": 100, "ix": 11},
-                "r": {
-                    "a": 1,
-                    "k": [{
-                        "i": {"x": [0.2], "y": [1]},
-                        "o": {"x": [0.6], "y": [0]},
-                        "t": 2,
-                        "s": [5]
-                    }, {
-                        "i": {"x": [0.2], "y": [1]},
-                        "o": {"x": [0.6], "y": [0]},
-                        "t": 23,
-                        "s": [-4]
-                    }, {"i": {"x": [0.2], "y": [1]}, "o": {"x": [0.6], "y": [0]}, "t": 41, "s": [13]}, {
-                        "t": 58,
-                        "s": [5]
-                    }],
-                    "ix": 10
-                },
-                "p": {"a": 0, "k": [50, 51.552, 0], "ix": 2, "l": 2},
-                "a": {"a": 0, "k": [174.185, 139.337, 0], "ix": 1, "l": 2},
-                "s": {"a": 0, "k": [100, 100, 100], "ix": 6, "l": 2}
-            },
-            "ao": 0,
-            "shapes": [{
-                "ty": "gr",
-                "it": [{
-                    "ind": 0,
-                    "ty": "sh",
-                    "ix": 1,
-                    "ks": {
-                        "a": 1,
-                        "k": [{
-                            "i": {"x": 0.2, "y": 1},
-                            "o": {"x": 0.6, "y": 0},
-                            "t": 2,
-                            "s": [{
-                                "i": [[0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0]],
-                                "v": [[-84.853, 102.721], [13.318, -64.192]],
-                                "c": false
-                            }]
-                        }, {
-                            "i": {"x": 0.2, "y": 1},
-                            "o": {"x": 0.6, "y": 0},
-                            "t": 23,
-                            "s": [{
-                                "i": [[0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0]],
-                                "v": [[-34.026, 58.96], [34.026, -58.96]],
-                                "c": false
-                            }]
-                        }, {
-                            "i": {"x": 0.2, "y": 1},
-                            "o": {"x": 0.6, "y": 0},
-                            "t": 41,
-                            "s": [{
-                                "i": [[0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0]],
-                                "v": [[-34.026, 58.96], [34.026, -58.96]],
-                                "c": false
-                            }]
-                        }, {
-                            "t": 58,
-                            "s": [{
-                                "i": [[0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0]],
-                                "v": [[-84.853, 102.721], [13.318, -64.192]],
-                                "c": false
-                            }]
-                        }],
-                        "ix": 2
-                    },
-                    "nm": "Trazado 1",
-                    "mn": "ADBE Vector Shape - Group",
-                    "hd": false
-                }, {
-                    "ty": "st",
-                    "c": {"a": 0, "k": [0.20000000298, 0.800000011921, 0.800000011921, 1], "ix": 3},
-                    "o": {"a": 0, "k": 100, "ix": 4},
-                    "w": {"a": 0, "k": 16, "ix": 5},
-                    "lc": 2,
-                    "lj": 2,
-                    "bm": 0,
-                    "nm": "Trazo 1",
-                    "mn": "ADBE Vector Graphic - Stroke",
-                    "hd": false
-                }, {
-                    "ty": "tr",
-                    "p": {"a": 0, "k": [89.361, 179.714], "ix": 2},
-                    "a": {"a": 0, "k": [0, 0], "ix": 1},
-                    "s": {"a": 0, "k": [100, 100], "ix": 3},
-                    "r": {"a": 0, "k": 0, "ix": 6},
-                    "o": {"a": 0, "k": 100, "ix": 7},
-                    "sk": {"a": 0, "k": 0, "ix": 4},
-                    "sa": {"a": 0, "k": 0, "ix": 5},
-                    "nm": "Transformar"
-                }],
-                "nm": "Grupo 3",
-                "np": 2,
-                "cix": 2,
-                "bm": 0,
-                "ix": 1,
-                "mn": "ADBE Vector Group",
-                "hd": false
-            }, {
-                "ty": "gr",
-                "it": [{
-                    "ind": 0,
-                    "ty": "sh",
-                    "ix": 1,
-                    "ks": {
-                        "a": 1,
-                        "k": [{
-                            "i": {"x": 0.2, "y": 1},
-                            "o": {"x": 0.6, "y": 0},
-                            "t": 2,
-                            "s": [{
-                                "i": [[0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0]],
-                                "v": [[100.451, 86.745], [-23.783, -61.315]],
-                                "c": false
-                            }]
-                        }, {
-                            "i": {"x": 0.2, "y": 1},
-                            "o": {"x": 0.6, "y": 0},
-                            "t": 23,
-                            "s": [{
-                                "i": [[0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0]],
-                                "v": [[43.673, 52.217], [-43.674, -52.217]],
-                                "c": false
-                            }]
-                        }, {
-                            "i": {"x": 0.2, "y": 1},
-                            "o": {"x": 0.6, "y": 0},
-                            "t": 41,
-                            "s": [{
-                                "i": [[0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0]],
-                                "v": [[43.673, 52.217], [-43.674, -52.217]],
-                                "c": false
-                            }]
-                        }, {
-                            "t": 58,
-                            "s": [{
-                                "i": [[0, 0], [0, 0]],
-                                "o": [[0, 0], [0, 0]],
-                                "v": [[100.451, 86.745], [-23.783, -61.315]],
-                                "c": false
-                            }]
-                        }],
-                        "ix": 2
-                    },
-                    "nm": "Trazado 1",
-                    "mn": "ADBE Vector Shape - Group",
-                    "hd": false
-                }, {
-                    "ty": "st",
-                    "c": {"a": 0, "k": [0.20000000298, 0.800000011921, 0.800000011921, 1], "ix": 3},
-                    "o": {"a": 0, "k": 100, "ix": 4},
-                    "w": {"a": 0, "k": 16, "ix": 5},
-                    "lc": 2,
-                    "lj": 2,
-                    "bm": 0,
-                    "nm": "Trazo 1",
-                    "mn": "ADBE Vector Graphic - Stroke",
-                    "hd": false
-                }, {
-                    "ty": "tr",
-                    "p": {"a": 0, "k": [264.696, 164.499], "ix": 2},
-                    "a": {"a": 0, "k": [0, 0], "ix": 1},
-                    "s": {"a": 0, "k": [100, 100], "ix": 3},
-                    "r": {"a": 0, "k": 0, "ix": 6},
-                    "o": {"a": 0, "k": 100, "ix": 7},
-                    "sk": {"a": 0, "k": 0, "ix": 4},
-                    "sa": {"a": 0, "k": 0, "ix": 5},
-                    "nm": "Transformar"
-                }],
-                "nm": "Grupo 4",
-                "np": 2,
-                "cix": 2,
-                "bm": 0,
-                "ix": 2,
-                "mn": "ADBE Vector Group",
-                "hd": false
-            }],
-            "ip": 0,
-            "op": 65,
-            "st": 0,
-            "bm": 0
-        }, {
-            "ddd": 0,
-            "ind": 6,
-            "ty": 4,
-            "nm": "Lines",
-            "parent": 1,
-            "sr": 1,
-            "ks": {
-                "o": {"a": 0, "k": 100, "ix": 11},
-                "r": {"a": 0, "k": 0, "ix": 10},
-                "p": {"a": 0, "k": [50, 51.552, 0], "ix": 2, "l": 2},
-                "a": {"a": 0, "k": [197.509, 170.678, 0], "ix": 1, "l": 2},
-                "s": {"a": 0, "k": [100, 100, 100], "ix": 6, "l": 2}
-            },
-            "ao": 0,
-            "shapes": [{
-                "ty": "gr",
-                "it": [{
-                    "ind": 0,
-                    "ty": "sh",
-                    "ix": 1,
-                    "ks": {
-                        "a": 0,
-                        "k": {
-                            "i": [[28.875, 0], [0, 0], [0, 28.875], [0, 0], [-28.875, 0], [0, 0], [0, -28.874], [0, 0]],
-                            "o": [[0, 0], [-28.875, 0], [0, 0], [0, -28.874], [0, 0], [28.875, 0], [0, 0], [0, 28.875]],
-                            "v": [[129.227, 154.678], [-129.227, 154.678], [-181.509, 102.395], [-181.509, -102.395], [-129.227, -154.678], [129.227, -154.678], [181.509, -102.395], [181.509, 102.395]],
-                            "c": true
-                        },
-                        "ix": 2
-                    },
-                    "nm": "Trazado 1",
-                    "mn": "ADBE Vector Shape - Group",
-                    "hd": false
-                }, {
-                    "ty": "st",
-                    "c": {"a": 0, "k": [0.20000000298, 0.800000011921, 0.800000011921, 1], "ix": 3},
-                    "o": {"a": 0, "k": 100, "ix": 4},
-                    "w": {"a": 0, "k": 16, "ix": 5},
-                    "lc": 2,
-                    "lj": 2,
-                    "bm": 0,
-                    "d": [{"n": "d", "nm": "guión", "v": {"a": 0, "k": 10.12, "ix": 1}}, {
-                        "n": "g",
-                        "nm": "espacio",
-                        "v": {"a": 0, "k": 30.361, "ix": 2}
-                    }, {"n": "o", "nm": "desplazamiento", "v": {"a": 0, "k": 0, "ix": 7}}],
-                    "nm": "Trazo 1",
-                    "mn": "ADBE Vector Graphic - Stroke",
-                    "hd": false
-                }, {
-                    "ty": "tr",
-                    "p": {"a": 0, "k": [197.509, 170.678], "ix": 2},
-                    "a": {"a": 0, "k": [0, 0], "ix": 1},
-                    "s": {"a": 0, "k": [100, 100], "ix": 3},
-                    "r": {"a": 0, "k": 0, "ix": 6},
-                    "o": {"a": 0, "k": 100, "ix": 7},
-                    "sk": {"a": 0, "k": 0, "ix": 4},
-                    "sa": {"a": 0, "k": 0, "ix": 5},
-                    "nm": "Transformar"
-                }],
-                "nm": "Grupo 1",
-                "np": 2,
-                "cix": 2,
-                "bm": 0,
-                "ix": 1,
-                "mn": "ADBE Vector Group",
-                "hd": false
-            }, {
-                "ty": "tm",
-                "s": {
-                    "a": 1,
-                    "k": [{
-                        "i": {"x": [0.393], "y": [1]},
-                        "o": {"x": [0.427], "y": [0.014]},
-                        "t": 35,
-                        "s": [0]
-                    }, {"t": 60, "s": [100]}],
-                    "ix": 1
-                },
-                "e": {
-                    "a": 1,
-                    "k": [{"i": {"x": [0.2], "y": [1]}, "o": {"x": [0.6], "y": [0]}, "t": 2, "s": [0]}, {
-                        "t": 29,
-                        "s": [100]
-                    }],
-                    "ix": 2
-                },
-                "o": {
-                    "a": 1,
-                    "k": [{
-                        "i": {"x": [0.833], "y": [0.833]},
-                        "o": {"x": [0.167], "y": [0.167]},
-                        "t": 2,
-                        "s": [0]
-                    }, {"t": 35, "s": [89]}],
-                    "ix": 3
-                },
-                "m": 1,
-                "ix": 2,
-                "nm": "Recortar trazados 1",
-                "mn": "ADBE Vector Filter - Trim",
-                "hd": false
-            }],
-            "ip": 3,
-            "op": 59,
-            "st": 0,
-            "bm": 0
-        }, {
-            "ddd": 0,
-            "ind": 7,
-            "ty": 3,
-            "nm": "Zero | troke width - Color Ctrl",
-            "hd": true,
-            "sr": 1,
-            "ks": {
-                "o": {"a": 0, "k": 0, "ix": 11},
-                "r": {"a": 0, "k": 0, "ix": 10},
-                "p": {"a": 0, "k": [250, 250, 0], "ix": 2, "l": 2},
-                "a": {"a": 0, "k": [0, 0, 0], "ix": 1, "l": 2},
-                "s": {"a": 0, "k": [100, 100, 100], "ix": 6, "l": 2}
-            },
-            "ao": 0,
-            "ip": 0,
-            "op": 65,
-            "st": 0,
-            "bm": 0
-        }], "markers": []
-    };
     /* ================= DATA ================= */
+    // Kept your product list structure
     const PRODUCTS = [
         {
             id: '2',
@@ -1538,71 +478,47 @@
     const $$ = s => document.querySelectorAll(s);
     const fmt = n => new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(n);
 
+    // CACHED ELEMENTS (For Speed)
+    const els = {
+        grid: $('#grid'),
+        emptyState: $('#emptyState'),
+        modalOverlay: $('#modalOverlay'),
+        modalBackdrop: $('#modalBackdrop'),
+        modalCard: $('#modalCard'),
+        mMainImg: $('#mMainImg'),
+        mTitle: $('#mTitle'),
+        mPrice: $('#mPrice'),
+        mShortDesc: $('#mShortDesc'),
+        mSpecsGrid: $('#mSpecsGrid'),
+        mThumbs: $('#mThumbs'),
+        mCat: $('#mCat'),
+        mGradient: $('#mGradient'),
+        mOverlayInfo: $('#mOverlayInfo'),
+        mTelegramBtn: $('#mTelegramBtn'),
+        tabLine: $('#tabLine'),
+        tabs: $$('.tab-btn'),
+        tabContents: $$('.tab-content'),
+        lightbox: $('#lightbox'),
+        lightboxImg: $('#lightboxImg'),
+        searchInput: $('#searchInput')
+    };
+
     let activeCategory = 'all';
     let searchQuery = '';
-
-    // STATE
     let currentImageIndex = 0;
     let currentProductImages = [];
 
-    const gridEl = $('#grid');
-    const emptyState = $('#emptyState');
-
-    // --- MOBILE MENU ---
-    const menuBtn = $('#menuBtn');
-    const mobileMenu = $('#mobileMenu');
-    const menuBackdrop = $('#menuBackdrop');
-    const menuPanel = $('#menuPanel');
-    const menuCloseBtn = $('#menuCloseBtn');
-
-    function openMenu() {
-        mobileMenu.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-        requestAnimationFrame(() => {
-            menuBackdrop.classList.remove('opacity-0');
-            menuPanel.classList.remove('translate-x-full');
-        });
-    }
-
-    function closeMenu() {
-        menuBackdrop.classList.add('opacity-0');
-        menuPanel.classList.add('translate-x-full');
-        document.body.style.overflow = '';
-        setTimeout(() => {
-            mobileMenu.classList.add('hidden');
-        }, 300);
-    }
-
-    menuBtn.addEventListener('click', openMenu);
-    menuCloseBtn.addEventListener('click', closeMenu);
-    mobileMenu.addEventListener('click', (e) => {
-        if (e.target === mobileMenu || e.target === menuBackdrop) closeMenu();
-    });
-
-    // --- LIGHTBOX ---
-    const lightbox = $('#lightbox');
-    const lightboxImg = $('#lightboxImg');
-
-    window.openLightbox = () => {
-        lightboxImg.src = currentProductImages[currentImageIndex];
-        lightbox.classList.remove('hidden');
-        lightbox.classList.add('flex');
-    };
-
-    window.closeLightbox = () => {
-        lightbox.classList.add('hidden');
-        lightbox.classList.remove('flex');
-    };
-
-    // --- PRELOADER ---
-    const preloadImages = (urls) => {
-        urls.forEach(url => {
+    // --- MOBILE PRE-RENDER LOGIC (Key for Speed) ---
+    // Loads image on "TouchStart" (before click)
+    window.preloadProductData = (id) => {
+        const p = PRODUCTS.find(x => x.id === id);
+        if (p && p.images && p.images.length > 0) {
             const img = new Image();
-            img.src = url;
-        });
-    }
+            img.src = p.images[0]; // Browser will cache this immediately
+        }
+    };
 
-    // --- GRID RENDER (WITH IMAGE ANIMATION) ---
+    // --- RENDER GRID ---
     function renderProducts() {
         let filtered = PRODUCTS.filter(p => {
             const matchesCat = activeCategory === 'all' || p.category === activeCategory;
@@ -1611,28 +527,30 @@
         });
 
         if (filtered.length === 0) {
-            gridEl.innerHTML = '';
-            emptyState.classList.remove('hidden');
-            emptyState.classList.add('flex');
+            els.grid.innerHTML = '';
+            els.emptyState.classList.remove('hidden');
+            els.emptyState.classList.add('flex');
             return;
         }
-        emptyState.classList.add('hidden');
-        emptyState.classList.remove('flex');
+        els.emptyState.classList.add('hidden');
+        els.emptyState.classList.remove('flex');
 
-        gridEl.innerHTML = filtered.map((p, i) => `
+        els.grid.innerHTML = filtered.map((p, i) => `
             <article class="product-card bg-white rounded-2xl overflow-hidden cursor-pointer shadow-sm border border-gray-100 flex flex-col h-full animate-fade-in group"
-                style="animation-delay: ${i < 8 ? i * 30 : 0}ms"
+                style="animation-delay: ${i < 6 ? i * 50 : 0}ms"
+                ontouchstart="preloadProductData('${p.id}')"
                 onclick="openProductModal('${p.id}')">
+
                 <div class="aspect-square bg-gray-50 p-0 relative overflow-hidden">
                     <img src="${p.images[0]}"
                          onerror="this.src='https://placehold.co/400?text=Angkorkey'"
-                         class="w-full h-full object-cover object-center group-hover:scale-105 transition-all duration-700 ease-out will-change-transform opacity-0 scale-95 blur-md"
-                         onload="this.classList.remove('opacity-0', 'scale-95', 'blur-md'); this.classList.add('opacity-100', 'scale-100', 'blur-0')"
+                         class="w-full h-full object-cover object-center group-hover:scale-105 transition-all duration-500 ease-out will-change-transform opacity-0 scale-95 blur-sm"
+                         onload="this.classList.remove('opacity-0', 'scale-95', 'blur-sm'); this.classList.add('opacity-100', 'scale-100', 'blur-0')"
                          loading="${i < 4 ? 'eager' : 'lazy'}"
                          decoding="async"
                          alt="${p.name}">
-                    ${i < 2 ? `<span class="absolute top-2 left-2 bg-red-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow-sm">HOT</span>` : ''}
                 </div>
+
                 <div class="p-3 flex flex-col flex-1">
                     <div class="mb-1 text-[9px] font-bold text-gray-400 uppercase tracking-wide font-inter">${p.category === 'iem' ? 'Audio' : 'Gear'}</div>
                     <h3 class="text-[13px] font-bold text-gray-900 line-clamp-2 leading-snug flex-1 mb-2 font-inter">${p.name}</h3>
@@ -1648,73 +566,41 @@
     }
 
     // --- MODAL LOGIC ---
-    const modalOverlay = $('#modalOverlay');
-    const modalBackdrop = $('#modalBackdrop');
-    const modalCard = $('#modalCard');
-    const mMainImg = $('#mMainImg');
-
-    const mGradient = $('#mGradient');
-    const mOverlayInfo = $('#mOverlayInfo');
-    const mThumbs = $('#mThumbs');
-    const mCat = $('#mCat');
-    const mTitle = $('#mTitle');
-    const mPrice = $('#mPrice');
-    const mShortDesc = $('#mShortDesc');
-    const mSpecsGrid = $('#mSpecsGrid');
-    const mTelegramBtn = $('#mTelegramBtn');
-    const tabLine = $('#tabLine');
-    const tabs = $$('.tab-btn');
-    const tabContents = $$('.tab-content');
-
     function updateTabLine(targetTab) {
-        const width = targetTab.offsetWidth;
-        const left = targetTab.offsetLeft;
-        tabLine.style.width = `${width}px`;
-        tabLine.style.transform = `translateX(${left}px)`;
+        els.tabLine.style.width = `${targetTab.offsetWidth}px`;
+        els.tabLine.style.transform = `translateX(${targetTab.offsetLeft}px)`;
     }
-
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            tabs.forEach(t => t.setAttribute('data-active', 'false'));
-            tab.setAttribute('data-active', 'true');
-            updateTabLine(tab);
-            const target = tab.dataset.tab;
-            tabContents.forEach(c => c.classList.add('hidden'));
-            if (target === 'overview') $('#tabOverview').classList.remove('hidden');
-            if (target === 'specs') $('#tabSpecs').classList.remove('hidden');
-        });
-    });
 
     window.openProductModal = (id) => {
         const p = PRODUCTS.find(x => x.id === id);
         if (!p) return;
 
-        tabs[0].click();
+        // Reset Tab
+        els.tabs[0].click();
+
+        // Setup Data
         currentImageIndex = 0;
         currentProductImages = p.images;
 
-        // Preload next images
-        if(p.images.length > 1) {
-            preloadImages(p.images.slice(1));
-        }
+        els.mCat.textContent = p.category === 'iem' ? 'In-Ear Monitor' : 'Accessories';
+        els.mTitle.textContent = p.name;
+        els.mPrice.textContent = fmt(p.price);
+        els.mShortDesc.innerHTML = p.description;
 
-        mCat.textContent = p.category === 'iem' ? 'In-Ear Monitor' : 'Accessories';
-        mTitle.textContent = p.name;
-        mPrice.textContent = fmt(p.price);
-        mShortDesc.innerHTML = p.description;
-
+        // Populate Specs
         if (p.specs) {
-            mSpecsGrid.innerHTML = Object.entries(p.specs).map(([k, v]) => `
+            els.mSpecsGrid.innerHTML = Object.entries(p.specs).map(([k, v]) => `
                 <div class="bg-gray-50 p-3 rounded-xl flex flex-col gap-1 border border-gray-100/50">
                     <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest font-inter">${k}</span>
                     <span class="text-sm font-bold text-gray-900 font-inter leading-tight">${v}</span>
                 </div>
             `).join('');
         } else {
-            mSpecsGrid.innerHTML = '<div class="col-span-2 text-center text-gray-400 text-sm py-4">No specifications available</div>';
+            els.mSpecsGrid.innerHTML = '<div class="col-span-2 text-center text-gray-400 text-sm py-4">No specifications available</div>';
         }
 
-        mThumbs.innerHTML = p.images.map((img, idx) => `
+        // Populate Thumbs
+        els.mThumbs.innerHTML = p.images.map((img, idx) => `
             <button onclick="switchImage(${idx})"
                 class="size-12 rounded-lg border-2 bg-white p-0.5 overflow-hidden transition-all snap-start shrink-0 thumb-btn"
                 data-index="${idx}">
@@ -1722,71 +608,80 @@
             </button>
         `).join('');
 
-        switchImage(0);
-
+        // Link Telegram
         const msg = `Order: ${p.name}\nPrice: ${fmt(p.price)}`;
-        mTelegramBtn.href = `https://t.me/angkorkey_admin_2?text=${encodeURIComponent(msg)}`;
+        els.mTelegramBtn.href = `https://t.me/angkorkey_admin_2?text=${encodeURIComponent(msg)}`;
 
-        // Lottie
-        const player = document.getElementById('telegramLottie');
-        if (player) {
-            // Check if JSON object has layers, otherwise use fallback or simple empty object
-            if(lottieAnimationData.layers && lottieAnimationData.layers.length > 0) {
-                 player.load(JSON.stringify(lottieAnimationData));
-                 player.play();
-            }
+        // Set Main Image (With Transition Fix)
+        els.mMainImg.style.opacity = '0';
+        els.mMainImg.src = p.images[0];
+
+        // Handle Image Load State
+        const onImgLoad = () => {
+            els.mMainImg.style.opacity = '1';
+        };
+
+        if (els.mMainImg.complete) {
+            onImgLoad();
+        } else {
+            els.mMainImg.onload = onImgLoad;
         }
 
-        modalOverlay.classList.remove('hidden');
+        // Update Thumb Highlight
+        updateThumbHighlight(0);
+
+        // Show Modal (GPU Accelerated)
+        els.modalOverlay.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
 
         requestAnimationFrame(() => {
-            modalBackdrop.classList.remove('opacity-0');
-            modalCard.classList.remove('translate-y-full');
-            setTimeout(() => updateTabLine(tabs[0]), 150);
+            els.modalBackdrop.classList.remove('opacity-0');
+            // Using translate3d for GPU smoothness
+            els.modalCard.style.transform = 'translate3d(0, 0, 0)';
+            setTimeout(() => updateTabLine(els.tabs[0]), 150);
         });
     };
 
-    window.navigateImage = (direction) => {
-        const newIndex = (currentImageIndex + direction + currentProductImages.length) % currentProductImages.length;
-        switchImage(newIndex);
+    window.closeProductModal = () => {
+        els.modalBackdrop.classList.add('opacity-0');
+        // Slide down
+        els.modalCard.style.transform = 'translate3d(0, 100%, 0)';
+        document.body.style.overflow = '';
+        setTimeout(() => {
+            els.modalOverlay.classList.add('hidden');
+        }, 300);
     };
 
     window.switchImage = (idx) => {
         currentImageIndex = idx;
         const src = currentProductImages[idx];
 
-        // Animated Modal Image Switch
-        mMainImg.style.opacity = '0'; // Blur out/fade out
-        mMainImg.style.transform = 'scale(0.98)';
-
+        // Smooth fade out/in
+        els.mMainImg.style.opacity = '0.7';
         setTimeout(() => {
-            mMainImg.src = src;
-            // Force browser repaint logic to ensure transition happens
-            mMainImg.onload = () => {
-                mMainImg.style.opacity = '1';
-                mMainImg.style.transform = 'scale(1)';
-            };
-            // Fallback for cached images
-            if(mMainImg.complete) {
-                mMainImg.style.opacity = '1';
-                mMainImg.style.transform = 'scale(1)';
-            }
-        }, 150);
+            els.mMainImg.src = src;
+            els.mMainImg.onload = () => els.mMainImg.style.opacity = '1';
+        }, 100);
 
-        if (!lightbox.classList.contains('hidden')) {
-            lightboxImg.src = src;
+        // Lightbox sync
+        if (!els.lightbox.classList.contains('hidden')) {
+            els.lightboxImg.src = src;
         }
 
+        // Gradient logic
         if (idx === 0) {
-            mGradient.classList.remove('opacity-0');
-            mOverlayInfo.classList.remove('opacity-0');
+            els.mGradient.classList.remove('opacity-0');
+            els.mOverlayInfo.classList.remove('opacity-0');
         } else {
-            mGradient.classList.add('opacity-0');
-            mOverlayInfo.classList.add('opacity-0');
+            els.mGradient.classList.add('opacity-0');
+            els.mOverlayInfo.classList.add('opacity-0');
         }
 
-        const thumbBtns = mThumbs.querySelectorAll('.thumb-btn');
+        updateThumbHighlight(idx);
+    };
+
+    function updateThumbHighlight(idx) {
+        const thumbBtns = els.mThumbs.querySelectorAll('.thumb-btn');
         thumbBtns.forEach(btn => {
             const btnIdx = parseInt(btn.dataset.index);
             if (btnIdx === idx) {
@@ -1798,19 +693,60 @@
                 btn.classList.remove('border-black', 'scale-105');
             }
         });
+    }
+
+    window.navigateImage = (direction) => {
+        const newIndex = (currentImageIndex + direction + currentProductImages.length) % currentProductImages.length;
+        switchImage(newIndex);
     };
 
-    window.closeProductModal = () => {
-        modalBackdrop.classList.add('opacity-0');
-        modalCard.classList.add('translate-y-full');
+    // --- LIGHTBOX LOGIC ---
+    window.openLightbox = () => {
+        els.lightboxImg.src = currentProductImages[currentImageIndex];
+        els.lightbox.classList.remove('hidden');
+        els.lightbox.classList.add('flex');
+    };
+
+    window.closeLightbox = () => {
+        els.lightbox.classList.add('hidden');
+        els.lightbox.classList.remove('flex');
+    };
+
+    // --- MENUS & TABS ---
+    const mobileMenu = $('#mobileMenu');
+    $('#menuBtn').addEventListener('click', () => {
+        mobileMenu.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        requestAnimationFrame(() => {
+            $('#menuBackdrop').classList.remove('opacity-0');
+            $('#menuPanel').classList.remove('translate-x-full');
+        });
+    });
+
+    const closeMenu = () => {
+        $('#menuBackdrop').classList.add('opacity-0');
+        $('#menuPanel').classList.add('translate-x-full');
         document.body.style.overflow = '';
-        setTimeout(() => {
-            modalOverlay.classList.add('hidden');
-        }, 300);
+        setTimeout(() => mobileMenu.classList.add('hidden'), 300);
     };
+    $('#menuCloseBtn').addEventListener('click', closeMenu);
+    $('#menuBackdrop').addEventListener('click', closeMenu);
 
+    els.tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            els.tabs.forEach(t => t.setAttribute('data-active', 'false'));
+            tab.setAttribute('data-active', 'true');
+            updateTabLine(tab);
+            const target = tab.dataset.tab;
+            els.tabContents.forEach(c => c.classList.add('hidden'));
+            if (target === 'overview') $('#tabOverview').classList.remove('hidden');
+            if (target === 'specs') $('#tabSpecs').classList.remove('hidden');
+        });
+    });
+
+    // --- SEARCH ---
     let debounce;
-    $('#searchInput').addEventListener('input', (e) => {
+    els.searchInput.addEventListener('input', (e) => {
         clearTimeout(debounce);
         debounce = setTimeout(() => {
             searchQuery = e.target.value.toLowerCase().trim();
@@ -1827,17 +763,9 @@
         });
     });
 
+    // INITIAL RENDER
     renderProducts();
 
-    const tLottie = document.getElementById('telegramLottie');
-    if (tLottie) {
-        tLottie.addEventListener('complete', () => {
-            setTimeout(() => {
-                tLottie.stop();
-                tLottie.play();
-            }, 1000);
-        });
-    }
 </script>
 </body>
 </html>
